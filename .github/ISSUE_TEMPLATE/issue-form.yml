@@ -1,5 +1,5 @@
 name: '이슈 생성'
-description: 'Repo에 이슈를 생성합니다.
+description: 'Repo에 이슈를 생성합니다.'
 title: '이슈 이름을 작성해주세요'
 labels: [Feat]
 
