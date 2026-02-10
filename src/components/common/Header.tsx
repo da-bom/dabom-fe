@@ -4,17 +4,17 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import DabomLogo from '@/assets/icons/logo.svg'; 
 import BackIcon from '@/assets/icons/back.svg';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
-
-  Back?: boolean;
-  className?: string;
+  isBackVisible?: boolean;
   onBackClick?: () => void;
+  className?: string;
 }
 
 const Header = ({
-  Back = false,
-  className = '',
+  isBackVisible = true,
+  className,
   onBackClick,
 }: HeaderProps) => {
   const router = useRouter();
@@ -29,24 +29,28 @@ const Header = ({
 
   return (
     <header 
-      className={`sticky flex top-0 h-[64px] w-full items-center justify-between bg-white shadow-sm transition-all ${className}`}
+      className={cn(
+        "sticky top-0 z-50 flex h-[64px] w-full items-center justify-between bg-white shadow-sm transition-all",
+        className
+      )}
     >
       <div className="flex w-10 items-center justify-start">
-        {Back && (
+        {isBackVisible && (
           <button 
             type="button" 
             onClick={handleBack}
             aria-label="Go back"
-            className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100 active:bg-gray-200"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100 active:bg-gray-200"
           >
             <BackIcon width={9.5} height={16} />
           </button>
         )}
       </div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+
+      <div>
         <DabomLogo width={66} height={12} aria-label="DABOM Logo" />
       </div>
-      <div className="flex w-10 items-center justify-end">
+      <div className='flex w-10 items-center'>
       </div>
     </header>
   );
