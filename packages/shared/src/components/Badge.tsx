@@ -11,7 +11,7 @@ interface BadgeProps {
   size?: BadgeSize;
 }
 
-export const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeProps) => {
+const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeProps) => {
   const variants: Record<BadgeVariant, string> = {
     primary: "bg-primary-400 text-brand-white border-transparent",
     white: "bg-brand-white text-primary-400 border-transparent",
@@ -37,3 +37,5 @@ export const Badge = ({ children, className, variant = "primary", size = "sm" }:
     </span>
   );
 };
+
+export default Badge;

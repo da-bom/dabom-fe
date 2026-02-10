@@ -3,9 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   transpilePackages: ["@repo/shared"],
   experimental: {
-    // 1. TS 에러를 피하기 위해 turbo라는 키를 사용하되,
-    // 2. 타입을 any로 캐스팅하여 'unknown property' 에러를 강제 해결합니다.
-    turbo: {
+    // Next.js 16 런타임이 요구하는 정확한 키 이름은 'turbopack'입니다.
+    turbopack: {
       rules: {
         "*.svg": {
           loaders: ["@svgr/webpack"],
@@ -13,8 +12,9 @@ const nextConfig: NextConfig = {
         },
       },
     },
-  } as any, // 👈 experimental 전체를 any로 처리하는 것이 가장 깔끔합니다.
+  } as any, // 👈 'turbopack' 키가 타입에 없을 수 있으므로 any로 우회합니다.
 
+  // Turbopack이 실패할 경우를 대비한 Webpack 하위 호환성
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

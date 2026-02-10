@@ -1,0 +1,12 @@
+export { default as Back } from "./back.svg";
+export { default as Bell } from "./bell.svg";
+export { default as BellColor } from "./bellColor.svg";
+export { default as Home } from "./home.svg";
+export { default as HomeColor } from "./homeColor.svg";
+export { default as Logo } from "./logo.svg";
+export { default as My } from "./my.svg";
+export { default as MyColor } from "./myColor.svg";
+export { default as Noti } from "./noti.svg";
+export { default as NotiColor } from "./notiColor.svg";
+export { default as Policy } from "./policy.svg";
+export { default as PolicyColor } from "./policyColor.svg";
