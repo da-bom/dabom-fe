@@ -3,6 +3,7 @@
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 import Home from '@/assets/icons/home.svg';
 import HomeColor from '@/assets/icons/homeColor.svg';
@@ -44,17 +45,14 @@ const NavBar = () => {
             <li key={item.href} className="flex-1">
               <Link
                 href={item.href}
-                className={`flex h-full flex-col items-center justify-center space-y-[4px] transition-colors duration-200 ${
-                  isActive ? 'text-pink-500' : 'text-gray-400'
-                }`}
+                className="flex h-full flex-col items-center justify-center space-y-[4px] transition-opacity duration-200 hover:opacity-80"
                 aria-current={isActive ? 'page' : undefined}
               >
-                <IconComponent 
-                  width={14} 
-                  height={16} 
-                  fill="currentColor" 
-                />
-                <span className="text-[11px, 17px] font-medium">
+                <IconComponent />
+                <span className={cn(
+                  "text-caption-m font-medium",
+                  isActive ? "text-pink-500" : "text-gray-400"
+                )}>
                   {item.label}
                 </span>
               </Link>
