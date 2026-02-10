@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-type BadgeVariant = "default" | "white" | "gray" | "outline";
+type BadgeVariant = "primary" | "white" | "gray" | "outline";
 type BadgeSize = "sm" | "lg";
 
 interface BadgeProps {
@@ -11,12 +11,12 @@ interface BadgeProps {
   size?: BadgeSize;
 }
 
-export const Badge = ({ children, className, variant = "default", size = "sm" }: BadgeProps) => {
+export const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeProps) => {
   const variants: Record<BadgeVariant, string> = {
-    default: "bg-primary-400 text-brand-white border-transparent", 
+    primary: "bg-primary-400 text-brand-white border-transparent", 
     white: "bg-brand-white text-primary-400 border-transparent",
-    gray: "bg-grayscale-200 border-transparent",
-    outline: "bg-brand-white text-primary-400 border-2 border-primary-400",
+    gray: "bg-grayscale-200 text-border-transparent",
+    outline: "bg-brand-white text-brand-dark border-2 border-primary-400",
   };
 
   const sizes: Record<BadgeSize, string> = {
