@@ -10,3 +10,6 @@ export { default as Noti } from "./noti.svg";
 export { default as NotiColor } from "./notiColor.svg";
 export { default as Policy } from "./policy.svg";
 export { default as PolicyColor } from "./policyColor.svg";
+export { default as Bomi } from "./bomi.svg";
+export { default as EyeOn } from "./eye_on.svg";
+export { default as EyeOff } from "./eye_off.svg";
