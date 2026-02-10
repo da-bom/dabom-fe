@@ -1,28 +1,14 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  
-  webpack(config) {
-    const fileLoaderRule = config.module.rules.find((rule) =>
-      rule.test?.test?.('.svg'),
-    )
-    config.module.rules.push(
-      {
-        ...fileLoaderRule,
-        test: /\.svg$/i,
-        resourceQuery: /url/,
-      },
-      {
-        test: /\.svg$/i,
-        issuer: fileLoaderRule.issuer,
-        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, 
-        use: ['@svgr/webpack'],
-      },
-    )
+import type { NextConfig } from "next";
 
-    fileLoaderRule.exclude = /\.svg$/i
+const nextConfig: NextConfig = {
+  webpack(config: any) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
 
-    return config
+    return config;
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
