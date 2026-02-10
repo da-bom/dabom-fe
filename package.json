@@ -1,9 +1,16 @@
 {
   "name": "dabom-web-core",
   "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf **/.next"
+  },
   "devDependencies": {
-    "next": "16.1.6",
+    "turbo": "latest",
     "typescript": "^5",
-    "turbo": "latest"
-  }
+    "eslint": "^9"
+  },
+  "packageManager": "pnpm@9.0.0"
 }
