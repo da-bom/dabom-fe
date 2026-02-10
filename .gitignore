@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
+# [Dependencies] - pnpm 워크스페이스용
+node_modules
+**/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -10,38 +11,46 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# [Next.js Build Outputs] - 모든 앱의 빌드 결과물 제외
+.next/
+**/ .next/
+out/
+**/out/
+build/
+**/build/
+dist/
+**/dist/
+
+# [Testing]
 /coverage
 
-# next.js
-/.next/
-/out/
+# [Env Files] - 보안을 위해 절대 올라가면 안 됨
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.local
 
-# production
-/build
-
-# misc
+# [Misc / Debug]
 .DS_Store
 *.pem
-
-# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
 .vercel
+.turbo
 
-# typescript
+# [TypeScript]
 *.tsbuildinfo
-next-env.d.ts
+**/next-env.d.ts
 
-# prettierrc
-.prettierrc
-
-# idea
+# [IDE / Editors]
 .idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+# [Prettier]
+.prettierrc
