@@ -3,7 +3,6 @@
 
 @import "tailwindcss";
 
-
 /* 테마 설정 */
 @theme {
   /* 폰트 */
@@ -13,7 +12,7 @@
   --color-primary-100: #ffeaf5;
   --color-primary-200: #ffe0ef;
   --color-primary-300: #febedf;
-  --color-primary-400: #fd2e97;
+  --color-primary: #fd2e97;
   --color-primary-500: #e42988;
   --color-primary-600: #ca2579;
   --color-primary-700: #be2371;
@@ -35,10 +34,8 @@
   --color-background-sub: #f7f7f7;
   --color-background-base: #f0f1f3;
 
-/* radius*/
-  --radius-none: 0;
+  /* radius*/
   --radius-sm: 4px;
-  --radius: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-xl: 32px;
@@ -121,7 +118,7 @@
   display: grid;
   width: 100%;
   margin-inline: auto;
-  
+
   /* Mobile */
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;

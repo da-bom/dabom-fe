@@ -31,7 +31,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               "w-full rounded-[14px] border-none bg-white px-5 py-4",
               "text-body1-m text-gray-900 placeholder:text-gray-400",
-              "shadow-sm ring-1 ring-inset ring-gray-100 focus:ring-2 focus:ring-primary-400",
+              "shadow-sm ring-1 ring-inset ring-gray-100 focus:ring-2 focus:ring-primary",
               "outline-none transition-all",
               type === "password" && "pr-12",
               className,

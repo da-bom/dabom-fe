@@ -13,10 +13,10 @@ interface BadgeProps {
 
 const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeProps) => {
   const variants: Record<BadgeVariant, string> = {
-    primary: "bg-primary-400 text-brand-white border-transparent",
-    white: "bg-brand-white text-primary-400 border-transparent",
+    primary: "bg-primary text-brand-white border-transparent",
+    white: "bg-brand-white text-primary border-transparent",
     gray: "bg-grayscale-200 text-brand-dark border-transparent",
-    outline: "bg-brand-white text-brand-dark border-2 border-primary-400",
+    outline: "bg-brand-white text-brand-dark border-2 border-primary",
   };
 
   const sizes: Record<BadgeSize, string> = {

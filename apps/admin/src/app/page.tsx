@@ -5,6 +5,7 @@ const Home = () => {
   return (
     <>
       <Button />
+      <p className="text-primary">dddd</p>
       <Icon name="Back" />
     </>
   );
