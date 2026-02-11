@@ -1,4 +1,4 @@
-import { Badge, cn } from "@repo/shared";
+import { cn, Badge } from "@repo/shared/src";
 
 interface NotiBoxProps {
   title: string;

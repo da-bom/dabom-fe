@@ -1,10 +1,8 @@
-import { Button } from "@repo/shared";
-import { Icon } from "@repo/shared";
+import { Icon } from "@repo/shared/src";
 
 const Home = () => {
   return (
     <>
-      <Button />
       <p className="text-primary">dddd</p>
       <Icon name="Back" />
     </>
