@@ -18,7 +18,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background-base">
-
       <main className="px-5 pt-53.25">
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
           <div className="flex flex-col gap-10">
@@ -37,11 +36,12 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          <div className="flex justify-center mt-53.25">
-            <Button size="lg" color="dark">
-              로그인
-            </Button>
-          </div>
+            
+            <div className="flex justify-center mt-53.25">
+              <Button size="lg" color="dark">
+                로그인
+              </Button>
+            </div>
           </div>
         </form>
       </main>

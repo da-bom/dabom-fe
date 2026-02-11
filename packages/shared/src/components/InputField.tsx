@@ -6,7 +6,8 @@ import { Icon } from "./Icon";
 
 type InputType = "text" | "password" | "tel" | "id";
 
-interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
   label?: string;
   type?: InputType;
 }
@@ -22,7 +23,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="flex w-full flex-col gap-2">
-        {label && <label className="ml-1 text-body2-m font-bold text-gray-900">{label}</label>}
+        {label && (
+          <label className="ml-1 text-body2-m font-bold text-gray-900">
+            {label}
+          </label>
+        )}
 
         <div className="flex items-center w-full h-[45px] px-5 rounded-[14px] bg-white shadow-sm ring-1 ring-inset ring-gray-100 focus-within:ring-2 focus-within:ring-primary transition-all">
           <input
@@ -42,7 +47,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
               className="ml-2 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors"
             >
-              <Icon name={isPasswordVisible ? "EyeOn" : "EyeOff"} width={24} />
+              <Icon
+                name={isPasswordVisible ? "EyeOn" : "EyeOff"}
+                width={24}
+              />
             </button>
           )}
         </div>
@@ -50,5 +58,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
+
 Input.displayName = "Input";
 export default Input;
