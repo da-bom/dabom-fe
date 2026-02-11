@@ -9,6 +9,9 @@ interface InputFieldProps {
   label: string;
   type: InputType;
   placeholder?: string;
+  // TODO: 퍼블리싱 완료 후 타입 수정
+  value?: any;
+  onChange?: (e: any) => void;
 }
 
 const Input = ({
@@ -46,6 +49,8 @@ const InputField = ({
   label,
   type,
   placeholder = "입력하세요",
+  value,
+  onChange,
 }: InputFieldProps) => {
   return (
     <div className="flex w-full flex-col gap-2">

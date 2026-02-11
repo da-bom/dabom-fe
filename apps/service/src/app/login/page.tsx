@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header, Button } from "@repo/shared/src";
-import Input from "@repo/shared/src/components/InputField";
+import InputField from "@repo/shared/src/components/InputField";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,13 +17,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background-base">
+    <div className="bg-background-base min-h-screen">
       <Header isBackVisible={true} className="bg-background-base" />
 
       <main className="px-5 pt-10">
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
           <div className="flex flex-col gap-6">
-            <Input
+            <InputField
               label="전화번호"
               type="tel"
               placeholder="전화번호를 입력해주세요"
@@ -31,7 +31,7 @@ export default function LoginPage() {
               onChange={(e) => setPhone(e.target.value)}
             />
 
-            <Input
+            <InputField
               label="비밀번호"
               type="password"
               placeholder="비밀번호를 입력해주세요"
@@ -41,7 +41,9 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-10">
-            <Button type="submit">로그인</Button>
+            <Button size="lg" color="dark">
+              로그인
+            </Button>
           </div>
         </form>
       </main>
