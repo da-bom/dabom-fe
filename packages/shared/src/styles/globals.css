@@ -11,6 +11,7 @@
   --font-sans: "Pretendard", sans-serif;
 
   /* 색상 */
+  --color-primary-50: #fff5fa;
   --color-primary-100: #ffeaf5;
   --color-primary-200: #ffe0ef;
   --color-primary-300: #febedf;
@@ -131,7 +132,6 @@
 
   /* Desktop */
   @media (min-width: 1280px) {
-    max-width: 1280px;
     grid-template-columns: repeat(12, 1fr);
     gap: 24px;
     padding-inline: 32px;

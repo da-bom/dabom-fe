@@ -1,11 +1,5 @@
-import Sidebar from "@admin/components/Sidebar";
-
 const FamilyPage = () => {
-  return (
-    <div>
-      <Sidebar />
-    </div>
-  );
+  return <div>family</div>;
 };
 
 export default FamilyPage;
