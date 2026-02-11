@@ -18,7 +18,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-base ">
+    <div className="min-h-screen bg-background-base ">
       <main className="pt-44.5 px-5">
         <Bomi className="mx-auto animate-bounce" />
         <Logo className="w-38 h-7 mx-auto"/>
