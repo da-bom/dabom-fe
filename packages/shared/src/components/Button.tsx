@@ -1,20 +1,26 @@
 import { cn } from "../utils/cn";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   size: "sm" | "md" | "md-short" | "lg";
   color: "dark" | "light";
 }
 
+const SIZE_STYLES = {
+  lg: "w-82 h-14 rounded-lg",
+  md: "w-55 h-14 rounded-lg",
+  "md-short": "w-31 h-14 rounded-lg",
+  sm: "w-14 h-8 rounded-md",
+};
+
+const COLOR_STYLES = {
+  dark: "bg-brand-dark text-brand-white",
+  light: "bg-background-sub text-brand-black",
+};
+
 const Button = ({ children, size, color }: ButtonProps) => {
   return (
-    <button
-      className={cn(
-        color === "dark" && "bg-brand-dark",
-        size === "lg" && "w-82 h-14",
-        "text-brand-white rounded-2xl border-gray-200 border-[1px]",
-      )}
-    >
+    <button className={cn("border-gray-200 border-[1px]", SIZE_STYLES[size], COLOR_STYLES[color])}>
       {children}
     </button>
   );
