@@ -14,7 +14,8 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx",
-    "../../packages/shared/src/**/*"
+    "../../packages/shared/src/**/*",
+    "../service/src/components/Input.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Header, Button } from "@repo/shared";
-import Input from "@repo/shared/src/components/input";
+import { Header, Button } from "@repo/shared/src";
+import Input from "../../components/input";
 
 export default function LoginPage() {
   const router = useRouter();

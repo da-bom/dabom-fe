@@ -10,5 +10,9 @@
     "declaration": true,
     "declarationMap": true
   },
-  "include": ["src", "../../apps/service/next.config.ts"]
+  "include": [
+    "src",
+    "../../apps/service/next.config.ts",
+    "../../apps/service/src/components/Input.tsx"
+  ]
 }
