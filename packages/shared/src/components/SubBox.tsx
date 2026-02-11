@@ -5,7 +5,7 @@ const SubBox = ({
   className,
 }: {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }) => {
   return (
     <div

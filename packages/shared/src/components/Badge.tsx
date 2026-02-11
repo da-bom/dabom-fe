@@ -21,7 +21,8 @@ const Badge = ({
     primary: "bg-primary text-brand-white",
     white: "bg-brand-white text-primary",
     gray: "bg-gray-200",
-    outline: "bg-brand-white text-brand-dark border-2 border-primary",
+    outline:
+      "bg-brand-white text-brand-dark border-2 border-primary text-primary",
   };
 
   const sizes: Record<BadgeSize, string> = {

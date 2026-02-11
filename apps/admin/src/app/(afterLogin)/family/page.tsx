@@ -1,3 +1,4 @@
+import FamilyDetail from "@admin/components/family/FamilyDetail";
 import FamilyList from "@admin/components/family/FamilyList";
 import MainBox from "@repo/shared/src/components/MainBox";
 import SubBox from "@repo/shared/src/components/SubBox";
@@ -14,7 +15,9 @@ const FamilyPage = () => {
         <MainBox className="bg-brand-white w-86 p-4">
           <FamilyList />
         </MainBox>
-        <MainBox className="bg-brand-white w-full flex-1">detail</MainBox>
+        <MainBox className="bg-brand-white w-full flex-1">
+          <FamilyDetail />
+        </MainBox>
       </div>
     </div>
   );
