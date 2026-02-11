@@ -1,6 +1,7 @@
 import "@repo/shared/src/styles/globals.css";
 import "../../globals.css";
 import Sidebar from "@admin/components/Sidebar";
+import Header from "@admin/components/Header";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,10 @@ export default function RootLayout({
     <html lang="ko">
       <body className="flex h-screen w-full overflow-hidden">
         <Sidebar />
-        {children}
+        <div className="flex w-full flex-col gap-8 p-5">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );

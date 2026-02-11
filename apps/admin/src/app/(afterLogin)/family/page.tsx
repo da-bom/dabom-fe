@@ -4,8 +4,7 @@ import SubBox from "@repo/shared/src/components/SubBox";
 
 const FamilyPage = () => {
   return (
-    <div className="flex h-screen w-full flex-col gap-5 overflow-hidden p-5">
-      <Header type="FAMILY" />
+    <div className="flex h-screen w-full flex-col gap-5 overflow-hidden">
       <MainBox className="bg-brand-white flex w-full justify-between gap-8 p-5">
         <SubBox className="h-11 w-38">type</SubBox>
         <SubBox className="w-full">search</SubBox>

@@ -1,10 +1,14 @@
-import { MENU } from "src/constants/MENU";
-import { MenuType } from "src/types/MenuType";
+"use client";
 
-const Header = ({ type }: { type: MenuType }) => {
+import { usePathname } from "next/navigation";
+import { MENU } from "src/constants/MENU";
+
+const Header = () => {
+  const pathname = usePathname();
+
   const name = "Admin";
 
-  const currentMenu = MENU.find((item) => item.id === type);
+  const currentMenu = MENU.find((item) => item.path === pathname);
 
   return (
     <header className="mx-1 flex items-center justify-between">
