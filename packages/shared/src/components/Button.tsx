@@ -1,31 +1,19 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "../utils/cn";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  variant?: "primary" | "secondary";
-  fullWidth?: boolean;
+interface ButtonProps {
+  children: React.ReactNode;
+  size: "sm" | "md" | "md-short" | "lg";
+  color: "dark" | "light";
 }
 
-export const Button = ({
-  children,
-  className,
-  variant = "primary",
-  fullWidth = true,
-  ...props
-}: ButtonProps) => {
+const Button = ({ children, size, color }: ButtonProps) => {
   return (
     <button
       className={cn(
-        "flex items-center justify-center rounded-[14px] px-6 py-4 transition-all active:scale-[0.98]",
-        "text-body1-m font-bold",
-        "disabled:bg-grayscale-300 disabled:cursor-not-allowed",
-
-        variant === "primary" && "bg-brand-dark text-brand-white hover:bg-black",
-        fullWidth ? "w-full" : "w-auto",
-        className,
+        color === "dark" && "bg-brand-dark",
+        size === "lg" && "w-82 h-14",
+        "text-brand-white rounded-2xl border-gray-200 border-[1px]",
       )}
-      {...props}
     >
       {children}
     </button>

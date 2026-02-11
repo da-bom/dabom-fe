@@ -1,10 +1,11 @@
-import { Icon } from "@repo/shared/src";
+import { Button } from "@repo/shared/src";
 
 const Home = () => {
   return (
     <>
-      <p className="text-primary">dddd</p>
-      <Icon name="Back" />
+      <Button size="lg" color="dark">
+        button
+      </Button>
     </>
   );
 };
