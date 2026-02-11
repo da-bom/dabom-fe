@@ -1,25 +1,16 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "../utils/cn";
-import {
-  Home,
-  HomeColor,
-  Policy,
-  PolicyColor,
-  Noti,
-  NotiColor,
-  My,
-  MyColor,
-} from "../assets/icons";
+import { Icon, IconName } from "./Icon";
 
 interface NavItem {
   label: string;
   href: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  activeIcon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon: IconName;
+  activeIcon: IconName;
 }
 
 const NavBar = () => {
@@ -27,10 +18,10 @@ const NavBar = () => {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: "홈", href: "/", icon: Home, activeIcon: HomeColor },
-      { label: "정책", href: "/policy", icon: Policy, activeIcon: PolicyColor },
-      { label: "알림", href: "/notification", icon: Noti, activeIcon: NotiColor },
-      { label: "MY", href: "/mypage", icon: My, activeIcon: MyColor },
+      { label: "홈", href: "/", icon: "Home", activeIcon: "HomeColor" },
+      { label: "정책", href: "/policy", icon: "Policy", activeIcon: "PolicyColor" },
+      { label: "알림", href: "/notification", icon: "Noti", activeIcon: "NotiColor" },
+      { label: "MY", href: "/mypage", icon: "My", activeIcon: "MyColor" },
     ],
     [],
   );
@@ -50,7 +41,7 @@ const NavBar = () => {
                 className="flex h-full flex-col items-center justify-center space-y-[4px] transition-opacity duration-200 hover:opacity-80"
                 aria-current={isActive ? "page" : undefined}
               >
-                <IconComponent />
+                <Icon name={isActive ? item.activeIcon : item.icon} />
                 <span
                   className={cn(
                     "text-caption-m font-medium",
