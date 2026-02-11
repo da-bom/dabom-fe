@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Header, Button } from "@repo/shared/src";
-// import { Logo } from "@repo/shared/src/assets/icons/logo.svg";
-// import { Bomi } from "@repo/shared/src/assets/icons/bomi.svg";
-
-
-import Input from "@repo/shared/src/components/InputField";
+import { Button } from "@repo/shared/src";
 import Link from "next/link";
+import { Bomi, Logo } from "@repo/shared/src/assets";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,20 +18,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-base">
-        {/* <Bomi /> */}
+    <div className="min-h-screen bg-base ">
+      <main className="pt-44.5 px-5">
+        <Bomi className="mx-auto animate-bounce" />
+        <Logo className="w-38 h-7 mx-auto"/>
 
-        {/* <Logo /> */}
-      <main className="px-5 pt-53">
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
-            
-          <div className="flex justify-center mt-53">
+          <div className="flex justify-center mt-35">
             <div className="flex justify-center">
                 <Button size="lg" color="dark">
                     회원가입
                 </Button>
-            </div>
+        </div>
           </div>
             <section className="flex items-center justify-center gap-2 text-sm text-gray-600">
           <span>이미 계정이 있다면?</span>
