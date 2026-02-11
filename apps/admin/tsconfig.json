@@ -1,6 +1,10 @@
 {
   "extends": "@repo/shared/src/configs/tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@admin/components/*": ["./src/components/*"]
+    },
     "plugins": [
       {
         "name": "next"
