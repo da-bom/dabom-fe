@@ -8,22 +8,26 @@ import { usePathname } from "next/navigation";
 const Sidebar = () => {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   return (
-    <div className="flex flex-col bg-brand-white w-62 h-screen justify-between py-5 border-r-[1px] border-gray-100">
-      <div className="flex flex-col items-center gap-7 w-full">
+    <div className="bg-brand-white flex h-screen w-62 flex-col justify-between border-r-[1px] border-gray-100 py-5">
+      <div className="flex w-full flex-col items-center gap-7">
         <Icon name="LogoAdmin" />
-        <div className="border-[1px] w-38 border-gray-100" />
+        <div className="w-38 border-[1px] border-gray-100" />
 
-        <div className="flex flex-col w-full gap-5 px-2">
+        <div className="flex w-full flex-col gap-5 px-2">
           {MENU.map((item, index) => {
-            return <MenuItem key={index} isSelected={pathname === item.path} name={item.label} />;
+            return (
+              <MenuItem
+                key={index}
+                isSelected={pathname === item.path}
+                name={item.label}
+              />
+            );
           })}
         </div>
       </div>
-      <div className="flex text-gray-400 px-5">
-        <div className="w-5 h-5 bg-gray-400" />
+      <div className="flex px-5 text-gray-400">
+        <div className="h-5 w-5 bg-gray-400" />
         <span>로그아웃</span>
       </div>
     </div>
