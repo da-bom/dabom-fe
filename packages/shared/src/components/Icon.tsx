@@ -1,29 +1,36 @@
 import React from "react";
-import * as Icons from "../assets/icons";
+import * as Icons from "../assets";
 
 export type IconName = keyof typeof Icons;
 
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
-  size?: number;
+  width?: number | "auto";
+  height?: number | "auto";
+  fill?: string;
 }
 
-export const Icon = ({ name, size = 24, fill, ...props }: IconProps) => {
-  const RawIcon = Icons[name];
+export const Icon = ({ name, width = "auto", height = 50, fill, style, ...props }: IconProps) => {
+  const RawIcon = Icons[name] as any;
 
   if (!RawIcon) {
-    console.error(`Icon "${name}"을 찾을 수 없습니다.`);
+    console.error(`Icon "${name}"을(를) 찾을 수 없습니다.`);
     return null;
   }
 
-  const SVGComponent = (
-    typeof RawIcon === "function" ? RawIcon : (RawIcon as any).default) as React.FC<
-    React.SVGProps<SVGSVGElement>
-  >;
+  const SVGComponent = RawIcon.default || RawIcon;
 
-  if (!SVGComponent || typeof SVGComponent !== "function") {
-    return null;
-  }
-
-  return <SVGComponent width={size} height={size} fill={fill} {...props} />;
+  return (
+    <SVGComponent
+      width={width}
+      height={height}
+      fill={fill || "currentColor"}
+      style={{
+        color: fill,
+        flexShrink: 0,
+        ...style,
+      }}
+      {...props}
+    />
+  );
 };

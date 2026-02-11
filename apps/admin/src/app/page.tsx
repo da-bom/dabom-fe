@@ -2,10 +2,9 @@ import { Icon } from "@repo/shared/src";
 
 const Home = () => {
   return (
-    <>
-      <p className="text-primary">dddd</p>
-      <Icon name="Back" />
-    </>
+    <div className="flex flex-col">
+      <Icon name="Logo" width={500} height="auto" />
+    </div>
   );
 };
 
