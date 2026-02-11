@@ -25,11 +25,9 @@ export default function SignupPage() {
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
             <div className="flex justify-center mt-35">
-              <div className="flex justify-center">
-                <Button size="lg" color="dark">
-                  회원가입
-                </Button>
-              </div>
+              <Button type="submit" size="lg" color="dark">
+                회원가입
+              </Button>
             </div>
             
             <section className="flex items-center justify-center gap-2 text-sm text-gray-600">

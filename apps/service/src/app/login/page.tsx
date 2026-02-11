@@ -36,9 +36,9 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            
+
             <div className="flex justify-center mt-53.25">
-              <Button size="lg" color="dark">
+              <Button type="submit" size="lg" color="dark">
                 로그인
               </Button>
             </div>

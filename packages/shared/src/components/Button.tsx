@@ -18,7 +18,13 @@ const COLOR_STYLES = {
   light: "bg-background-sub text-brand-black",
 };
 
-const Button = ({ children, size, color, className, ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  size,
+  color,
+  className,
+  ...props
+}: ButtonProps) => {
   return (
     <button
       className={cn(
