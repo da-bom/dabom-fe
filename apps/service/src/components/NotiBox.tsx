@@ -7,23 +7,30 @@ interface NotiBoxProps {
   className?: string;
 }
 
-export const NotiBox = ({ title, description, isRead = true, className }: NotiBoxProps) => {
+export const NotiBox = ({
+  title,
+  description,
+  isRead = true,
+  className,
+}: NotiBoxProps) => {
   return (
     <div
       className={cn(
-        "w-full h-[80px] ",
+        "h-[80px] w-full",
         "flex flex-col justify-center px-5",
-        "bg-brand-white rounded-lg shadow-sm border transition-all",
+        "bg-brand-white rounded-lg border shadow-sm transition-all",
 
         !isRead ? "border-primary-400" : "border-grayscale-200",
         className,
       )}
     >
       <div className="flex items-center gap-2">
-        {!isRead && <Badge variant="primary">NEW</Badge>}
-        <h3 className="text-body1-m text-brand-black truncate">{title}</h3>
+        {!isRead && <Badge color="primary">NEW</Badge>}
+        <h3 className="text-body1-m truncate">{title}</h3>
       </div>
-      <p className="text-body2-m text-grayscale-600 line-clamp-1">{description}</p>
+      <p className="text-body2-m text-grayscale-600 line-clamp-1">
+        {description}
+      </p>
     </div>
   );
 };

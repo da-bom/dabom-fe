@@ -1,5 +1,4 @@
 import "@repo/shared/src/styles/globals.css";
-import "../../globals.css";
 import Sidebar from "@admin/components/Sidebar";
 import Header from "@admin/components/Header";
 
