@@ -1,0 +1,134 @@
+/* 폰트 불러오기 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@import "tailwindcss";
+
+/* 테마 설정 */
+@theme {
+  /* 폰트 */
+  --font-sans: "Pretendard", sans-serif;
+
+  /* 색상 */
+  --color-primary-100: #ffeaf5;
+  --color-primary-200: #ffe0ef;
+  --color-primary-300: #febedf;
+  --color-primary: #fd2e97;
+  --color-primary-500: #e42988;
+  --color-primary-600: #ca2579;
+  --color-primary-700: #be2371;
+  --color-primary-800: #591035;
+
+  --color-grayscale-100: #eaeaea;
+  --color-grayscale-200: #dedede;
+  --color-grayscale-300: #c6c6c6;
+  --color-grayscale-400: #bebebe;
+  --color-grayscale-500: #b9b9b9;
+  --color-grayscale-600: #949494;
+  --color-grayscale-700: #6f6f6f;
+  --color-grayscale-800: #565656;
+
+  --color-brand-white: #fefefe;
+  --color-brand-dark: #2d2d2d;
+  --color-brand-black: #101010;
+
+  --color-background-sub: #f7f7f7;
+  --color-background-base: #f0f1f3;
+
+  /* radius*/
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+}
+
+/* typography */
+
+/* Web */
+@utility text-display-d {
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+@utility text-h1-d {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+@utility text-h2-d {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+@utility text-body1-d {
+  font-size: 1.125rem;
+  line-height: 150%;
+  font-weight: 600;
+}
+@utility text-body2-d {
+  font-size: 1rem;
+  line-height: 150%;
+  font-weight: 600;
+}
+@utility text-caption-d {
+  font-size: 0.8125rem;
+  line-height: 140%;
+  font-weight: 600;
+}
+
+/* Mobile */
+@utility text-main-m {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+@utility text-display-m {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+@utility text-h1-m {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+@utility text-h2-m {
+  font-size: 1.25rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+@utility text-body1-m {
+  font-size: 1rem;
+  line-height: 150%;
+  font-weight: 500;
+}
+@utility text-body2-m {
+  font-size: 0.875rem;
+  line-height: 150%;
+  font-weight: 500;
+}
+@utility text-caption-m {
+  font-size: 0.75rem;
+  line-height: 140%;
+  font-weight: 500;
+}
+
+/* Grid */
+@utility layout-grid {
+  display: grid;
+  width: 100%;
+  margin-inline: auto;
+
+  /* Mobile */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-inline: 16px;
+
+  /* Desktop */
+  @media (min-width: 1280px) {
+    max-width: 1280px;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    padding-inline: 32px;
+  }
+}
