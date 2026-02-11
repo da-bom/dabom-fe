@@ -1,12 +1,10 @@
-import { Button } from "@repo/shared/src";
+import { Icon } from "@repo/shared/src";
 
 const Home = () => {
   return (
-    <>
-      <Button size="lg" color="dark">
-        button
-      </Button>
-    </>
+    <div className="flex flex-col">
+      <Icon name="Logo" width={500} height="auto" />
+    </div>
   );
 };
 
