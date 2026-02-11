@@ -10,5 +10,5 @@
     "declaration": true,
     "declarationMap": true
   },
-  "include": ["src"]
+  "include": ["src", "../../apps/service/next.config.ts"]
 }

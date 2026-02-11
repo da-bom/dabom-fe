@@ -13,7 +13,7 @@ node_modules
 
 # [Next.js Build Outputs] - 모든 앱의 빌드 결과물 제외
 .next/
-**/ .next/
+**/.next/
 out/
 **/out/
 build/
