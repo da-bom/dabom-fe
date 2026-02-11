@@ -3,6 +3,8 @@
 
 @import "tailwindcss";
 
+@source "../../../**/*.{ts,tsx,html}";
+
 /* 테마 설정 */
 @theme {
   /* 폰트 */
