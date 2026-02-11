@@ -132,7 +132,8 @@
 
   /* Desktop */
   @media (min-width: 1280px) {
-    grid-template-columns: repeat(12, 1fr);
+    max-width: 1920px;
+    grid-template-columns: repeat(fr, 1fr);
     gap: 24px;
     padding-inline: 32px;
   }

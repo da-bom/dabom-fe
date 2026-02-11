@@ -11,7 +11,7 @@ const Sidebar = () => {
   console.log(pathname);
 
   return (
-    <div className="flex flex-col bg-brand-white w-55 h-screen justify-between py-5 border-r-[1px] border-gray-100">
+    <div className="flex flex-col bg-brand-white w-62 h-screen justify-between py-5 border-r-[1px] border-gray-100">
       <div className="flex flex-col items-center gap-7 w-full">
         <Icon name="LogoAdmin" />
         <div className="border-[1px] w-38 border-gray-100" />
