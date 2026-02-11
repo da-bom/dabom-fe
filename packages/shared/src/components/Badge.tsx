@@ -1,18 +1,23 @@
 import { cn } from "../utils/cn";
 import { ReactNode } from "react";
 
-type BadgeVariant = "primary" | "white" | "gray" | "outline";
+type BadgeColor = "primary" | "white" | "gray" | "outline";
 type BadgeSize = "sm" | "lg";
 
 interface BadgeProps {
   children: ReactNode;
   className?: string;
-  variant?: BadgeVariant;
+  color?: BadgeColor;
   size?: BadgeSize;
 }
 
-const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeProps) => {
-  const variants: Record<BadgeVariant, string> = {
+const Badge = ({
+  children,
+  className,
+  color = "primary",
+  size = "sm",
+}: BadgeProps) => {
+  const colors: Record<BadgeColor, string> = {
     primary: "bg-primary text-brand-white border-transparent",
     white: "bg-brand-white text-primary border-transparent",
     gray: "bg-grayscale-200 text-brand-dark border-transparent",
@@ -26,10 +31,10 @@ const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeP
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center shrink-0 whitespace-nowrap",
+        "inline-flex shrink-0 items-center justify-center whitespace-nowrap",
 
         sizes[size],
-        variants[variant],
+        colors[color],
         className,
       )}
     >

@@ -1,4 +1,4 @@
-import Header from "@admin/components/Header";
+import FamilyList from "@admin/components/family/FamilyList";
 import MainBox from "@repo/shared/src/components/MainBox";
 import SubBox from "@repo/shared/src/components/SubBox";
 
@@ -11,7 +11,9 @@ const FamilyPage = () => {
         <div className="flex w-20 items-center">초기화</div>
       </MainBox>
       <div className="flex h-full gap-5">
-        <MainBox className="bg-brand-white w-86">list</MainBox>
+        <MainBox className="bg-brand-white w-86">
+          <FamilyList />
+        </MainBox>
         <MainBox className="bg-brand-white w-full flex-1">detail</MainBox>
       </div>
     </div>
