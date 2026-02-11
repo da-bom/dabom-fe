@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, forwardRef } from "react";
-import { cn } from "@repo/shared/src/utils/cn";
-import { Icon } from "@repo/shared/src/components/Icon";
+import { cn } from "../utils/cn";
+import { Icon } from "./Icon";
 
 type InputType = "text" | "password" | "tel" | "id";
 

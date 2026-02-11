@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header, Button } from "@repo/shared/src";
-import Input from "../../components/input";
+import Input from "@repo/shared/src/components/InputField";
 
 export default function LoginPage() {
   const router = useRouter();
