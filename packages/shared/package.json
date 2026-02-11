@@ -2,6 +2,9 @@
   "name": "@repo/shared",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "icons": "npx @svgr/cli --out-dir src/assets/icons --typescript --replace-attr-values \"#000=currentColor\" src/assets/svgs/*.svg"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
