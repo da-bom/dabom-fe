@@ -5,19 +5,25 @@ export type IconName = keyof typeof Icons;
 
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
-  size?: number;
+  width?: number | "auto";
+  height?: number | "auto";
   fill?: string;
 }
 
-export const Icon = ({ name, size = 24, fill, style, ...props }: IconProps) => {
+export const Icon = ({ name, width = "auto", height = 50, fill, style, ...props }: IconProps) => {
   const RawIcon = Icons[name] as any;
+
+  if (!RawIcon) {
+    console.error(`Icon "${name}"을(를) 찾을 수 없습니다.`);
+    return null;
+  }
 
   const SVGComponent = RawIcon.default || RawIcon;
 
   return (
     <SVGComponent
-      width={size}
-      height={size}
+      width={width}
+      height={height}
       fill={fill || "currentColor"}
       style={{
         color: fill,
