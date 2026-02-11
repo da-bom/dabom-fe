@@ -18,15 +18,15 @@ const Badge = ({
   size = "sm",
 }: BadgeProps) => {
   const colors: Record<BadgeColor, string> = {
-    primary: "bg-primary text-brand-white border-transparent",
-    white: "bg-brand-white text-primary border-transparent",
-    gray: "bg-grayscale-200 text-brand-dark border-transparent",
+    primary: "bg-primary text-brand-white",
+    white: "bg-brand-white text-primary",
+    gray: "bg-gray-200",
     outline: "bg-brand-white text-brand-dark border-2 border-primary",
   };
 
   const sizes: Record<BadgeSize, string> = {
-    sm: "px-2.5 py-0.5 text-caption-d rounded-full h-[18px]",
-    lg: "px-4 py-1 text-caption-d rounded-full h-[32px]",
+    sm: "px-3 text-caption-d rounded-full",
+    lg: "px-4 py-1 text-caption-d rounded-full",
   };
   return (
     <span

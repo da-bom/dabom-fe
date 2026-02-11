@@ -18,16 +18,17 @@ const FamilyItem = ({
         "cursor-pointer rounded-md border-[1px] p-2",
         isSelected
           ? "bg-primary-50 border-primary-300"
-          : "bg-brand-white border-gray-500",
+          : "bg-brand-white border-gray-300",
       )}
       onClick={() => {
         setSelectedFam(id);
-        console.log("누름");
       }}
     >
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
-          <Badge color={isSelected ? "white" : "gray"}>FAM-{id}</Badge>
+          <Badge color={isSelected ? "white" : "gray"} size="sm">
+            FAM-{id}
+          </Badge>
           <span className="text-body1-d">{customers[0].name}</span>
         </div>
         <span className="text-caption-d text-gray-500">

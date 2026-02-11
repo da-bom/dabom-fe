@@ -11,7 +11,7 @@ const FamilyPage = () => {
         <div className="flex w-20 items-center">초기화</div>
       </MainBox>
       <div className="flex h-full gap-5">
-        <MainBox className="bg-brand-white w-86">
+        <MainBox className="bg-brand-white w-86 p-4">
           <FamilyList />
         </MainBox>
         <MainBox className="bg-brand-white w-full flex-1">detail</MainBox>
