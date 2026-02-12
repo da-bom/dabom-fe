@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import MainBox from '@repo/shared/src/components/MainBox';
 import { Header } from '@repo/shared/src';
-import { FAMILY_DETAIL } from '../../../../admin/src/data/familyDetail';
+import { FAMILY_DETAIL } from '../data/familyDetail';
 import { useFamilyDashboard } from '../../hooks/useFamilyDashboard';
 import { CONFIG } from './contents';
 import { MonthNavigator } from '../../components/MonthNavigator';
