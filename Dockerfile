@@ -38,6 +38,10 @@ RUN pnpm turbo build --filter=${APP_NAME}
 FROM base AS runner
 WORKDIR /app
 
+RUN addgroup -S -g 1001 nodejs
+RUN adduser -S -u 1001 nextjs
+RUN apk add --no-cache wget
+
 ENV NODE_ENV=production
 ENV HOSTNAME="0.0.0.0"
 ENV PORT=3000
@@ -45,14 +49,15 @@ ENV PORT=3000
 ARG APP_NAME=service
 
 # standalone output contains the entire server
-COPY --from=builder /app/apps/${APP_NAME}/.next/standalone ./
-COPY --from=builder /app/apps/${APP_NAME}/.next/static ./apps/${APP_NAME}/.next/static
-COPY --from=builder /app/apps/${APP_NAME}/public ./apps/${APP_NAME}/public
+COPY --chown=nextjs:nodejs --from=builder /app/apps/${APP_NAME}/.next/standalone ./
+COPY --chown=nextjs:nodejs --from=builder /app/apps/${APP_NAME}/.next/static ./apps/${APP_NAME}/.next/static
+COPY --chown=nextjs:nodejs --from=builder /app/apps/${APP_NAME}/public ./public
+
+USER nextjs
 
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
 
-# shell form for ARG variable expansion
-CMD node apps/${APP_NAME}/server.js
+CMD ["node", "server.js"]
