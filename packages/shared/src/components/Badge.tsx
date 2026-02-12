@@ -30,7 +30,7 @@ const Badge = ({
   };
   return (
     <span
-      className={`${sizes[size]} ${colors[color]} ${className} inline-flex shrink-0 items-center justify-center whitespace-nowrap`}
+      className={`inline-flex shrink-0 items-center justify-center whitespace-nowrap ${sizes[size]} ${colors[color]} ${className ?? ""}`}
     >
       {children}
     </span>

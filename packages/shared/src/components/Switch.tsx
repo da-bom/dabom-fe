@@ -15,13 +15,14 @@ const Switch = ({
   return (
     <div
       className={cn(
-        "flex w-fit items-center gap-1 rounded-full border-[1px] px-4 py-1",
+        "flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-4 py-1",
         type === "primary" && "border-primary bg-primary-50",
         type === "secondary" && "border-primary-800",
         type === "gray" && "border-gray-800 bg-gray-100",
 
         radius === "full" ? "rounded-full" : "rounded-md",
       )}
+      onClick={onClick}
     >
       <div className="text-caption-d text-brand-dark">{children}</div>
       <Icon

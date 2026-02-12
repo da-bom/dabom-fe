@@ -2,7 +2,7 @@ import React from "react";
 
 interface TableProps {
   headers: string[];
-  rows: React.ReactNode[][];
+  rows: { id: React.Key; cells: React.ReactNode[] }[];
 }
 
 const Table = ({ headers, rows }: TableProps) => {
@@ -19,12 +19,12 @@ const Table = ({ headers, rows }: TableProps) => {
           </tr>
         </thead>
         <tbody className="bg-brand-white text-center">
-          {rows.map((row, rowIndex) => (
+          {rows.map((row) => (
             <tr
-              key={rowIndex}
+              key={row.id}
               className="text-body2-d h-11 border-t border-gray-100"
             >
-              {row.map((cell, cellIndex) => (
+              {row.cells.map((cell, cellIndex) => (
                 <td key={cellIndex} className="px-4 py-2">
                   {cell}
                 </td>
