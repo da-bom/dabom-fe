@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@repo/shared/src";
 import { Bomi, Logo } from "@repo/shared/src/assets";
+import { Icon } from '@repo/shared/src/components/Icon';
+
 
 export default function SignupPage() {
   const router = useRouter();
@@ -19,8 +21,8 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-background-base">
       <main className="pt-44.5 px-5">
-        <Bomi className="mx-auto animate-bounce" />
-        <Logo className="w-38 h-7 mx-auto" />
+        <Icon name="Bomi" width={200} height={200} className="mx-auto animate-bounce"/>
+        <Icon name="Logo" className="w-38 h-7 mx-auto"/>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
