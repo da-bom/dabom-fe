@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "../assets";
+import * as Icons from "../assets/icons";
 
 export type IconName = keyof typeof Icons;
 
