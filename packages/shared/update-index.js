@@ -1,20 +1,29 @@
 const fs = require("fs");
 const path = require("path");
 
-const iconDir = path.join(__dirname, "src/assets/icons");
+const srcDir = path.join(__dirname, "src");
+const indexFile = path.join(srcDir, "index.ts");
 
-try {
-  const files = fs
-    .readdirSync(iconDir)
-    .filter((f) => f.endsWith(".tsx") && f !== "index.tsx")
-    .map((f) => f.replace(".tsx", ""));
+const directories = ["components", "utils", "hooks", "assets/icons"];
 
-  const content = files
-    .map((f) => `export { default as ${f} } from './${f}';`)
-    .join("\n");
+let content = "";
 
-  fs.writeFileSync(path.join(iconDir, "index.ts"), content + "\n");
-  console.log("✅ index.ts has been updated safely!");
-} catch (err) {
-  console.error("❌ Failed to update index.ts:", err);
-}
+directories.forEach((dir) => {
+  const dirPath = path.join(srcDir, dir);
+  if (fs.existsSync(dirPath)) {
+    const files = fs.readdirSync(dirPath);
+    files.forEach((file) => {
+      if (
+        (file.endsWith(".tsx") || file.endsWith(".ts")) &&
+        file !== "index.ts"
+      ) {
+        const name = file.replace(/\.(tsx|ts)$/, "");
+
+        content += `export { default as ${name} } from './${dir}/${name}';\n`;
+      }
+    });
+  }
+});
+
+fs.writeFileSync(indexFile, content);
+console.log("✅ [Default 포함] src/index.ts 업데이트 완료!");
