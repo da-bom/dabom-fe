@@ -2,11 +2,14 @@
 
 import { FAMILY } from "src/data/family";
 import FamilyItem from "./FamilyItem";
-import { useState } from "react";
 
-const FamilyList = () => {
-  const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);
-
+const FamilyList = ({
+  selectedFam,
+  setSelectedFam,
+}: {
+  selectedFam: number | undefined;
+  setSelectedFam: (familyId: number | undefined) => void;
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2 py-2">

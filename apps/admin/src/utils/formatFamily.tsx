@@ -13,13 +13,15 @@ export const formatFamily = ({
     <span>{i.name}</span>,
     <div className="flex justify-center gap-1">
       <span className="text-gray-700">
-        {formatFileSize(i.monthlyUsedBytes)}
+        {formatFileSize(i.monthlyUsedBytes).split(" ")[0]}
         {" / "}
       </span>
       <input
         type="number"
         className="w-13 rounded border-[1px] border-gray-600 px-4 text-center outline-none"
         value={formatFileSize(i.monthlyLimitBytes).split(" ")[0]}
+        // TODO: 기능 구현 시 추가
+        onChange={() => {}}
       />
       <span>GB</span>
     </div>,

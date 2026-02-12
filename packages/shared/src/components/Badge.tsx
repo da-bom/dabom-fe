@@ -1,4 +1,3 @@
-import { cn } from "../utils/cn";
 import { ReactNode } from "react";
 
 type BadgeColor = "primary" | "white" | "gray" | "outline";
@@ -27,17 +26,11 @@ const Badge = ({
 
   const sizes: Record<BadgeSize, string> = {
     sm: "px-3 text-caption-d rounded-full",
-    lg: "px-4 py-1 text-caption-d rounded-full",
+    lg: "px-4 text-body2-d rounded-full",
   };
   return (
     <span
-      className={cn(
-        "inline-flex shrink-0 items-center justify-center whitespace-nowrap",
-
-        sizes[size],
-        colors[color],
-        className,
-      )}
+      className={`${sizes[size]} ${colors[color]} ${className} inline-flex shrink-0 items-center justify-center whitespace-nowrap`}
     >
       {children}
     </span>

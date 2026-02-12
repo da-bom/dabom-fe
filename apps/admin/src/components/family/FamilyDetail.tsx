@@ -5,9 +5,16 @@ import dayjs from "dayjs";
 import { FAMILY_DETAIL } from "src/data/familyDetail";
 import Table from "../Table";
 import { formatFamily } from "src/utils/formatFamily";
-import { CustomerDetail } from "src/types/FamilyType";
 
-const FamilyDetail = () => {
+const FamilyDetail = ({
+  selectedFam,
+  setSelectedFam,
+}: {
+  selectedFam: number | undefined;
+  setSelectedFam: (familyId: number | undefined) => void;
+}) => {
+  // TODO: selectedFam값으로 API 재요청
+
   const rate = (FAMILY_DETAIL.usedBytes / FAMILY_DETAIL.totalQuotaBytes) * 100;
 
   return (
@@ -51,7 +58,7 @@ const FamilyDetail = () => {
       </SubBox>
 
       <div className="flex justify-end">
-        <Button color="dark" size="lg">
+        <Button color="dark" size="md">
           변경사항 저장
         </Button>
       </div>
