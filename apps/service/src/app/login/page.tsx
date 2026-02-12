@@ -12,7 +12,6 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ phone, password });
     router.push("/");
   };
 

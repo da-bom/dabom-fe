@@ -2,15 +2,19 @@
 
 import { FAMILY } from "src/data/family";
 import FamilyItem from "./FamilyItem";
-import { useState } from "react";
+import { Icon } from "@repo/shared/src";
 
-const FamilyList = () => {
-  const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);
-
+const FamilyList = ({
+  selectedFam,
+  setSelectedFam,
+}: {
+  selectedFam: number | undefined;
+  setSelectedFam: (familyId: number | undefined) => void;
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2 py-2">
-        <div className="h-6 w-6 bg-gray-500" />
+        <Icon name="Table" />
         <span className="text-h2-d">검색된 가족 ({FAMILY.length})</span>
       </div>
       <div className="border-[1px] border-gray-100" />

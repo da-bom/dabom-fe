@@ -3,8 +3,9 @@ import type { SVGProps } from "react";
 const SvgLogoAdmin = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={161}
-    height={17}
+    viewBox="0 0 161 17"
+    width={props.width || 161}
+    height={props.height || 17}
     fill="none"
     {...props}
   >

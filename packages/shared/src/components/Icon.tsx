@@ -1,5 +1,5 @@
 import React from "react";
-import * as Icons from "../assets";
+import * as Icons from "../assets/icons/index";
 
 export type IconName = keyof typeof Icons;
 
@@ -12,8 +12,8 @@ interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
 
 export const Icon = ({
   name,
-  width = "auto",
-  height = 50,
+  width,
+  height,
   fill,
   style,
   ...props
@@ -29,11 +29,8 @@ export const Icon = ({
 
   return (
     <SVGComponent
-      width={width}
-      height={height}
-      fill={fill || "currentColor"}
-      {...(width && { width })}
-      {...(height && { height })}
+      {...(width && width !== "auto" && { width })}
+      {...(height && height !== "auto" && { height })}
       {...(fill && { fill })}
       style={{
         ...(fill ? { color: fill } : {}),
