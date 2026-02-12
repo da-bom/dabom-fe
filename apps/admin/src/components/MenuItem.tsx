@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Icon, cn } from "@shared";
 
-import { IconName } from "@shared/components/Icon";
+import { IconName } from "@shared/types/icon";
 
 const MenuItem = ({
   name,

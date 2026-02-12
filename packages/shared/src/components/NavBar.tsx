@@ -5,8 +5,9 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { IconName } from "../types/icon";
 import cn from "../utils/cn";
-import Icon, { IconName } from "./Icon";
+import Icon from "./Icon";
 
 interface NavItem {
   label: string;

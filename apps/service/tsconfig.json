@@ -5,7 +5,7 @@
     "paths": {
       "@service/components/*": ["./src/components/*"],
       "@shared": ["../../packages/shared/src/index.ts"],
-      "@shared/*": ["../../packages/shared/src/*"]
+      "@globalstyles": ["../../packages/shared/src/styles/globals.css"]
     },
     "plugins": [
       {
@@ -20,8 +20,7 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx",
-    "../../packages/shared/src/**/*",
-    "../../packages/shared/src/components/InputField.tsx"
+    "../../packages/shared/src/**/*"
   ],
   "exclude": ["node_modules"]
 }

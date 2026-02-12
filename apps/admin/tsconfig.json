@@ -5,7 +5,8 @@
     "paths": {
       "@admin/components/*": ["./src/components/*"],
       "@shared": ["../../packages/shared/src/index.ts"],
-      "@shared/*": ["../../packages/shared/src/*"]
+      "@shared/types/*": ["../../packages/shared/src/types/*"],
+      "@globalstyles": ["../../packages/shared/src/styles/globals.css"]
     },
     "plugins": [
       {

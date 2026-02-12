@@ -1,8 +1,7 @@
 import React from "react";
 
 import * as Icons from "../assets/icons/index";
-
-export type IconName = keyof typeof Icons;
+import { IconName } from "../types/icon";
 
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
