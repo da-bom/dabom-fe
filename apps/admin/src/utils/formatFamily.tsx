@@ -9,7 +9,16 @@ export const formatFamily = ({
   customer: CustomerDetail[];
 }): ReactNode[][] => {
   return customer.map((i) => [
-    <Switch key={i.customerId}>{i.role}</Switch>,
+    <Switch
+      key={i.customerId}
+      type={i.role === "OWNER" ? "primary" : "secondary"}
+      radius="full"
+      onClick={() => {
+        // TODO: OWNER <> MEMBER 값이 바뀌도록
+      }}
+    >
+      {i.role}
+    </Switch>,
     <span>{i.name}</span>,
     <div className="flex justify-center gap-1">
       <span className="text-gray-700">
