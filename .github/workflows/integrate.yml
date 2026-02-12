@@ -1,0 +1,379 @@
+# ============================================================================
+# Frontend Integration Workflow (Turborepo + pnpm)
+# ============================================================================
+# 역할:
+#   - pnpm 의존성 설치 및 캐싱
+#   - Prettier 포맷팅 체크
+#   - TypeScript 타입 체크 + ESLint 정적 분석
+#   - (선택) 테스트 수행 및 커버리지 생성
+#   - SonarQube 코드 품질/커버리지/보안 분석
+#   - 프로덕션 빌드 검증
+#
+# Job 구조 (ENABLE_TEST=true):
+#   lint ──┬──> analyze ──> build
+#   test ──┘
+#
+# Job 구조 (ENABLE_TEST=false):
+#   lint ──> analyze ──> build
+#
+# GitHub Secrets:
+#   - SONAR_TOKEN        : SonarQube Token
+#   - SONAR_HOST_URL     : SonarQube Server URL (e.g., https://sonar.example.com)
+#
+# GitHub Variables:
+#   - SONAR_PROJECT      : SonarQube Project Key
+# ============================================================================
+
+name: Integrate Frontend
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - develop
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '9'
+  # ENABLE_TEST: GitHub Repository Variables에서 'true'로 설정하면 테스트/커버리지 활성화 (v1 이후 도입 예정)
+
+jobs:
+  # ==========================================================================
+  # Lint Job - 코드 스타일 및 정적 분석
+  # ==========================================================================
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Prettier Check
+        run: pnpm exec prettier --check "{apps,packages}/**/*.{ts,tsx,css}"
+
+      - name: Run TypeScript Check
+        run: pnpm typecheck
+
+      - name: Run ESLint
+        run: pnpm lint
+
+  # ==========================================================================
+  # Test Job - 테스트 및 커버리지
+  # ==========================================================================
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    if: ${{ vars.ENABLE_TEST == 'true' || github.event.inputs.enable_test == 'true' }}
+
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for test files
+        id: check-tests
+        run: |
+          if find apps packages -name '*.test.ts' -o -name '*.test.tsx' -o -name '*.spec.ts' -o -name '*.spec.tsx' 2>/dev/null | grep -q .; then
+            echo "has_tests=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_tests=false" >> "$GITHUB_OUTPUT"
+            echo "No test files found, skipping tests"
+          fi
+
+      - name: Run Test with Coverage (lcov)
+        if: steps.check-tests.outputs.has_tests == 'true'
+        run: pnpm exec vitest run --coverage
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: coverage/
+          if-no-files-found: ignore
+
+  # ==========================================================================
+  # Analyze Job - SonarQube 분석
+  # ==========================================================================
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    if: |
+      always() &&
+      needs.lint.result == 'success' &&
+      (needs.test.result == 'success' || needs.test.result == 'skipped')
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # SonarQube 분석을 위해 전체 히스토리 필요
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Download test results
+        if: needs.test.result == 'success'
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: test-results
+          path: coverage/
+
+      - name: SonarQube Scan (with coverage)
+        if: needs.test.result == 'success'
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT }}
+            -Dsonar.sources=apps,packages
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx
+            -Dsonar.typescript.tsconfigPath=tsconfig.json
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+      - name: SonarQube Scan (without coverage)
+        if: needs.test.result == 'skipped'
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT }}
+            -Dsonar.sources=apps,packages
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx
+            -Dsonar.typescript.tsconfigPath=tsconfig.json
+
+      - name: SonarQube Quality Gate + PR Comment (Community)
+        if: github.event_name == 'pull_request'
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          set -e
+
+          REPORT_FILE=".scannerwork/report-task.txt"
+
+          if [ ! -f "$REPORT_FILE" ]; then
+            echo "report-task.txt not found"
+            exit 1
+          fi
+
+          # ------------------------------------------------------------------
+          # Basic info from report-task.txt
+          # ------------------------------------------------------------------
+          CE_TASK_ID=$(grep '^ceTaskId=' $REPORT_FILE | cut -d'=' -f2)
+          PROJECT_KEY=$(grep '^projectKey=' $REPORT_FILE | cut -d'=' -f2)
+          DASHBOARD_URL=$(grep '^dashboardUrl=' $REPORT_FILE | cut -d'=' -f2-)
+
+          echo "ProjectKey: $PROJECT_KEY"
+          echo "Branch: $BRANCH"
+
+          # ------------------------------------------------------------------
+          # Wait for CE task
+          # ------------------------------------------------------------------
+          for i in {1..30}; do
+            STATUS_JSON=$(curl -s -u "$SONAR_TOKEN:" \
+              "$SONAR_HOST_URL/api/ce/task?id=$CE_TASK_ID")
+
+            TASK_STATUS=$(echo "$STATUS_JSON" | jq -r '.task.status')
+
+            if [ "$TASK_STATUS" = "SUCCESS" ]; then
+              break
+            fi
+
+            echo "Waiting for SonarQube task... ($i)"
+            sleep 5
+          done
+
+          ANALYSIS_ID=$(echo "$STATUS_JSON" | jq -r '.task.analysisId')
+
+          # ------------------------------------------------------------------
+          # Quality Gate
+          # ------------------------------------------------------------------
+          QG_JSON=$(curl -s -u "$SONAR_TOKEN:" \
+            "$SONAR_HOST_URL/api/qualitygates/project_status?analysisId=$ANALYSIS_ID")
+
+          QG_STATUS=$(echo "$QG_JSON" | jq -r '.projectStatus.status')
+
+          # ------------------------------------------------------------------
+          # Branch-level Issues (SAFE)
+          # ------------------------------------------------------------------
+          ISSUES_JSON=$(curl -s -u "$SONAR_TOKEN:" \
+            "$SONAR_HOST_URL/api/issues/search?projectKeys=$PROJECT_KEY&branch=$BRANCH&resolved=false")
+
+          BUGS=$(echo "$ISSUES_JSON" | jq '[ (.issues // [])[] | select(.type=="BUG") ] | length')
+          VULNS=$(echo "$ISSUES_JSON" | jq '[ (.issues // [])[] | select(.type=="VULNERABILITY") ] | length')
+          SMELLS=$(echo "$ISSUES_JSON" | jq '[ (.issues // [])[] | select(.type=="CODE_SMELL") ] | length')
+
+          # ------------------------------------------------------------------
+          # Branch-level Measures (SAFE)
+          # ------------------------------------------------------------------
+          MEASURES_JSON=$(curl -s -u "$SONAR_TOKEN:" \
+            "$SONAR_HOST_URL/api/measures/component?component=$PROJECT_KEY&branch=$BRANCH&metricKeys=coverage,duplicated_lines_density")
+
+          COVERAGE=$(echo "$MEASURES_JSON" | jq -r '.component.measures // [] | map(select(.metric=="coverage")) | .[0].value // "0"')
+          DUPLICATION=$(echo "$MEASURES_JSON" | jq -r '.component.measures // [] | map(select(.metric=="duplicated_lines_density")) | .[0].value // "0"')
+
+          # ------------------------------------------------------------------
+          # Result formatting
+          # ------------------------------------------------------------------
+          if [ "$QG_STATUS" = "OK" ]; then
+            ICON="✅"
+            RESULT="PASSED"
+          else
+            ICON="❌"
+            RESULT="FAILED"
+          fi
+
+          BODY=$(cat <<EOF
+          ## SonarQube Quality Summary (Community)
+
+          ${ICON} **Quality Gate ${RESULT}**
+
+          **Branch:** \`${BRANCH}\`
+          **Compared to:** default branch
+
+          ### Issues
+          - 🐞 Bugs: ${BUGS}
+          - 🔐 Vulnerabilities: ${VULNS}
+          - 📎 Code Smells: ${SMELLS}
+
+          ### Measures
+          - Coverage: ${COVERAGE}%
+          - Duplication: ${DUPLICATION}%
+
+          🔗 Dashboard: ${DASHBOARD_URL}&branch=${BRANCH}
+
+          _Generated automatically by GitHub Actions._
+          EOF
+          )
+
+          # ------------------------------------------------------------------
+          # PR comment
+          # ------------------------------------------------------------------
+          gh api repos/$REPO/issues/$PR_NUMBER/comments \
+            -f body="$BODY"
+
+          # ------------------------------------------------------------------
+          # Fail workflow if Quality Gate failed
+          # ------------------------------------------------------------------
+          if [ "$QG_STATUS" != "OK" ]; then
+            echo "Quality Gate FAILED"
+            exit 1
+          fi
+
+  # ==========================================================================
+  # Build Job - 프로덕션 빌드 및 Artifact 업로드
+  # ==========================================================================
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [analyze]
+
+    permissions:
+      actions: write
+      contents: write
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ${{ vars.NEXT_PUBLIC_API_BASE_URL }}
+
+      - name: Upload Service Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-dist-${{ github.sha }}
+          path: apps/service/.next/
+          retention-days: 7
+
+      - name: Upload Admin Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-dist-${{ github.sha }}
+          path: apps/admin/.next/
+          retention-days: 7
+
+      - name: Integration Summary
+        run: |
+          echo "## Integration Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch** : ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit** : ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Node.js**: ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **pnpm**  : ${{ env.PNPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Trigger Coolify Deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: |
+          echo "Triggering Coolify deployment..."
+          curl -X GET "${{ secrets.COOLIFY_WEBHOOK }}"
