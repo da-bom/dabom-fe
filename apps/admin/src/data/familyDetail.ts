@@ -1,3 +1,5 @@
+import { CustomerDetail } from "src/types/FamilyType";
+
 export const FAMILY_DETAIL = {
   familyId: 100,
   familyName: "김씨 가족",
@@ -31,11 +33,11 @@ export const FAMILY_DETAIL = {
       monthlyLimitBytes: 2147483648,
       monthlyUsedBytes: 2147483648,
     },
-  ],
+  ] as CustomerDetail[],
   totalQuotaBytes: 107374182400,
   usedBytes: 53687091200,
   usedPercent: 50.0,
   currentMonth: "2024-01",
   createdAt: "2024-01-01T00:00:00Z",
   updatedAt: "2024-01-01T00:00:00Z",
-};
+} as const;

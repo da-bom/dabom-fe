@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@repo/shared/src";
 import { usePathname } from "next/navigation";
 import { MENU } from "src/constants/MENU";
 
@@ -18,7 +19,10 @@ const Header = () => {
           {currentMenu?.description}
         </span>
       </div>
-      <span className="text-body1-d">{name}</span>
+      <div className="flex items-center gap-2">
+        <Icon name="Smile" />
+        <span className="text-body1-d">{name}</span>
+      </div>
     </header>
   );
 };
