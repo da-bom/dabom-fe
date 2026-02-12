@@ -32,6 +32,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@repo/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
@@ -44,9 +47,6 @@ importers:
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
-      shared:
-        specifier: workspace:*
-        version: link:../../packages/shared
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.18
@@ -78,6 +78,9 @@ importers:
 
   apps/service:
     dependencies:
+      '@repo/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -87,9 +90,6 @@ importers:
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
-      shared:
-        specifier: workspace:*
-        version: link:../../packages/shared
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.18
