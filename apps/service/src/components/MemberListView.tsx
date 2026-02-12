@@ -7,30 +7,35 @@ interface Props {
 
 export const MemberListView = ({ members }: Props) => {
   return (
-    <ul className="space-y-6">
+    <ul className="space-y-8.5">
       {members.map((member) => (
-        <li key={member.id} className="animate-in slide-in-from-bottom-2 fade-in flex items-center gap-4 duration-500">
-          <div
-            className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold transition-colors ${
-              member.isMe ? 'bg-pink-100 text-pink-600' : 'bg-gray-100 text-gray-400'
-            }`}
-          >
-            {member.name[0]}
+        <li
+          key={member.id}
+          className="flex items-center justify-between"
+        >
+          <div className="flex items-center gap-4">
+            <div
+              className="flex h-7.5 w-7.5 rounded-full bg-gray-200"
+            >
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-medium text-gray-800">{member.name}</span>
+              {member.isMe && (
+                <span className="rounded-full bg-pink-500 px-3 py-0.25 text-xs text-white">
+                  나
+                </span>
+              )}
+            </div>
           </div>
 
-          <div className="flex-1">
-            <div className="mb-1 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-gray-800">{member.name}</span>
-                {member.isMe && (
-                  <span className="rounded-full bg-pink-500 px-2 py-0.5 text-[10px] font-bold text-white">나</span>
-                )}
-              </div>
-              <div className="text-sm">
-                <span className="tabular-nums text-lg font-bold text-gray-900">{member.usageGB}GB</span>
-                <span className="text-gray-400">/{member.limitGB}GB</span>
-              </div>
-            </div>
+          <div className="text-right">
+            <span className="text-lg text-gray-900">
+              {member.usageGB}GB
+            </span>
+            <span className="text-lg font-medium text-gray-900">
+              /{member.limitGB}GB
+            </span>
           </div>
         </li>
       ))}
