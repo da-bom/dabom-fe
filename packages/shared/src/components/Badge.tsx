@@ -1,35 +1,41 @@
 import { cn } from "../utils/cn";
 import { ReactNode } from "react";
 
-type BadgeVariant = "primary" | "white" | "gray" | "outline";
+type BadgeColor = "primary" | "white" | "gray" | "outline";
 type BadgeSize = "sm" | "lg";
 
 interface BadgeProps {
   children: ReactNode;
   className?: string;
-  variant?: BadgeVariant;
+  color?: BadgeColor;
   size?: BadgeSize;
 }
 
-const Badge = ({ children, className, variant = "primary", size = "sm" }: BadgeProps) => {
-  const variants: Record<BadgeVariant, string> = {
-    primary: "bg-primary text-brand-white border-transparent",
-    white: "bg-brand-white text-primary border-transparent",
-    gray: "bg-grayscale-200 text-brand-dark border-transparent",
-    outline: "bg-brand-white text-brand-dark border-2 border-primary",
+const Badge = ({
+  children,
+  className,
+  color = "primary",
+  size = "sm",
+}: BadgeProps) => {
+  const colors: Record<BadgeColor, string> = {
+    primary: "bg-primary text-brand-white",
+    white: "bg-brand-white text-primary",
+    gray: "bg-gray-200",
+    outline:
+      "bg-brand-white text-brand-dark border-2 border-primary text-primary",
   };
 
   const sizes: Record<BadgeSize, string> = {
-    sm: "px-2.5 py-0.5 text-caption-d rounded-full h-[18px]",
-    lg: "px-4 py-1 text-caption-d rounded-full h-[32px]",
+    sm: "px-3 text-caption-d rounded-full",
+    lg: "px-4 py-1 text-caption-d rounded-full",
   };
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center shrink-0 whitespace-nowrap",
+        "inline-flex shrink-0 items-center justify-center whitespace-nowrap",
 
         sizes[size],
-        variants[variant],
+        colors[color],
         className,
       )}
     >

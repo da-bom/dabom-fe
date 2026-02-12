@@ -1,9 +1,10 @@
+export { default as Logo } from "./icons/Logo";
+export { default as LogoAdmin } from "./icons/LogoAdmin";
 export { default as Back } from "./icons/Back";
 export { default as Bell } from "./icons/Bell";
 export { default as BellColor } from "./icons/BellColor";
 export { default as Home } from "./icons/Home";
 export { default as HomeColor } from "./icons/HomeColor";
-export { default as Logo } from "./icons/Logo";
 export { default as My } from "./icons/My";
 export { default as MyColor } from "./icons/MyColor";
 export { default as Noti } from "./icons/Noti";

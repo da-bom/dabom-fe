@@ -32,8 +32,11 @@ export const Icon = ({
       width={width}
       height={height}
       fill={fill || "currentColor"}
+      {...(width && { width })}
+      {...(height && { height })}
+      {...(fill && { fill })}
       style={{
-        color: fill,
+        ...(fill ? { color: fill } : {}),
         flexShrink: 0,
         ...style,
       }}

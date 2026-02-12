@@ -7,9 +7,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const SIZE_STYLES = {
-  lg: "w-82 h-14 rounded-lg",
-  md: "w-55 h-14 rounded-lg",
-  "md-short": "w-31 h-14 rounded-lg",
+  lg: "w-82 h-14 rounded-2xl",
+  md: "w-55 h-14 rounded-2xl",
+  "md-short": "w-31 h-14 rounded-2xl",
   sm: "w-14 h-8 rounded-md",
 };
 
@@ -18,20 +18,13 @@ const COLOR_STYLES = {
   light: "bg-background-sub text-brand-black",
 };
 
-const Button = ({
-  children,
-  size,
-  color,
-  className,
-  ...props
-}: ButtonProps) => {
+const Button = ({ children, size, color, ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
-        "border-gray-200 border-[1px]",
+        "border-[1px] border-gray-200",
         SIZE_STYLES[size],
         COLOR_STYLES[color],
-        className, 
       )}
       {...props}
     >

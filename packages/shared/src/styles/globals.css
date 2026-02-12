@@ -11,6 +11,7 @@
   --font-sans: "Pretendard", sans-serif;
 
   /* 색상 */
+  --color-primary-50: #fff5fa;
   --color-primary-100: #ffeaf5;
   --color-primary-200: #ffe0ef;
   --color-primary-300: #febedf;
@@ -36,12 +37,8 @@
   --color-background-sub: #f7f7f7;
   --color-background-base: #f0f1f3;
 
-  /* radius*/
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-xl: 32px;
-  --radius-full: 999px;
+  /* shadow */
+  --shadow-default: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* typography */
@@ -70,12 +67,12 @@
 @utility text-body2-d {
   font-size: 1rem;
   line-height: 150%;
-  font-weight: 600;
+  font-weight: 500;
 }
 @utility text-caption-d {
   font-size: 0.8125rem;
   line-height: 140%;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Mobile */
@@ -128,9 +125,14 @@
 
   /* Desktop */
   @media (min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1920px;
     grid-template-columns: repeat(12, 1fr);
     gap: 24px;
     padding-inline: 32px;
   }
+}
+
+body {
+  background-color: var(--color-background-base);
+  color: var(--color-brand-black);
 }

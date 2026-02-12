@@ -1,63 +1,63 @@
 "use client";
 
-import React, { useState, forwardRef } from "react";
-import { cn } from "../utils/cn";
+import { useState } from "react";
 import { Icon } from "./Icon";
 
 type InputType = "text" | "password" | "tel" | "id";
 
-interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
-  label?: string;
-  type?: InputType;
+interface InputFieldProps {
+  label: string;
+  type: InputType;
+  placeholder?: string;
+  // TODO: 퍼블리싱 완료 후 타입 수정
+  value?: any;
+  onChange?: (e: any) => void;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, type = "text", className, placeholder, ...props }, ref) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+const Input = ({
+  placeholder,
+  type,
+}: {
+  placeholder: string;
+  type: InputType;
+}) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
-    const getInputType = () => {
-      if (type === "password") return isPasswordVisible ? "text" : "password";
-      return type === "id" ? "text" : type;
-    };
+  const inputType = type === "password" && isVisible ? "text" : type;
+  return (
+    <div className="bg-brand-white flex h-12 w-82 items-center rounded-lg border-[1px] border-gray-200 px-4">
+      <input
+        type={inputType}
+        className="w-full outline-none"
+        placeholder={placeholder}
+      />
+      {type === "password" && (
+        <button
+          type="button"
+          onClick={() => {
+            setIsVisible((prev) => !prev);
+          }}
+        >
+          <Icon name={isVisible ? "EyeOn" : "EyeOff"} />
+        </button>
+      )}
+    </div>
+  );
+};
 
-    return (
-      <div className="flex w-full flex-col gap-2">
-        {label && (
-          <label className="ml-1 text-body2-m font-bold text-gray-900">
-            {label}
-          </label>
-        )}
+const InputField = ({
+  label,
+  type,
+  placeholder = "입력하세요",
+  value,
+  onChange,
+}: InputFieldProps) => {
+  return (
+    <div className="flex w-full flex-col gap-2">
+      <label className="body1-m">{label}</label>
+      <Input placeholder={placeholder} type={type} />
+    </div>
+  );
+};
 
-        <div className="flex items-center w-full h-[45px] px-5 rounded-[14px] bg-white shadow-sm ring-1 ring-inset ring-gray-100 focus-within:ring-2 focus-within:ring-primary transition-all">
-          <input
-            ref={ref}
-            type={getInputType()}
-            className={cn(
-              "flex-1 bg-transparent outline-none text-body1-m text-gray-900 placeholder:text-gray-400",
-              className,
-            )}
-            placeholder={placeholder}
-            {...props}
-          />
-
-          {type === "password" && (
-            <button
-              type="button"
-              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-              className="ml-2 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors"
-            >
-              <Icon
-                name={isPasswordVisible ? "EyeOn" : "EyeOff"}
-                width={24}
-              />
-            </button>
-          )}
-        </div>
-      </div>
-    );
-  },
-);
-
-Input.displayName = "Input";
-export default Input;
+export default InputField;
