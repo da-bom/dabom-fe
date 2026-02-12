@@ -15,7 +15,7 @@ interface NextConfigWithTurbopack extends NextConfig {
 }
 
 const nextConfigBase: NextConfigWithTurbopack = {
-  transpilePackages: ["@repo/shared"],
+  transpilePackages: ["@shared"],
   experimental: {
     turbopack: {
       rules: {

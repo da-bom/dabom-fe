@@ -10,3 +10,4 @@ export { default as Switch } from "./components/Switch";
 
 //utils
 export * from "./utils/cn";
+export * from "./utils/formatSize";

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@repo/shared/src";
-import { Bomi, Logo } from "@repo/shared/src/assets/icons";
+import { Button } from "@shared/src";
+import { Bomi, Logo } from "@shared/src/assets/icons";
 
 export default function SignupPage() {
   const router = useRouter();

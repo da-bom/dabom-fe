@@ -1,5 +1,5 @@
-import { Button, Icon } from "@repo/shared/src";
-import InputField from "@repo/shared/src/components/InputField";
+import { Button, Icon } from "@shared/src";
+import InputField from "@shared/src/components/InputField";
 
 const Login = () => {
   return (

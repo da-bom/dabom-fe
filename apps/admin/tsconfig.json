@@ -1,9 +1,10 @@
 {
-  "extends": "@repo/shared/src/configs/tsconfig.base.json",
+  "extends": "@shared/src/configs/tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@admin/components/*": ["./src/components/*"]
+      "@admin/components/*": ["./src/components/*"],
+      "@shared": ["../../packages/shared/src/index.ts"]
     },
     "plugins": [
       {

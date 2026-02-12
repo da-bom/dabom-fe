@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@repo/shared/src";
-import InputField from "@repo/shared/src/components/InputField";
+import { Button } from "@shared/src";
+import InputField from "@shared/src/components/InputField";
 
 export default function LoginPage() {
   const router = useRouter();

@@ -2,7 +2,7 @@
 
 import { FAMILY } from "src/data/family";
 import FamilyItem from "./FamilyItem";
-import { Icon } from "@repo/shared/src";
+import { Icon } from "@shared/src";
 
 const FamilyList = ({
   selectedFam,

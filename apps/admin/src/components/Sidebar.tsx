@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@repo/shared/src";
+import { Icon } from "@shared/src";
 import { MENU } from "src/constants/MENU";
 import MenuItem from "./MenuItem";
 import { usePathname } from "next/navigation";

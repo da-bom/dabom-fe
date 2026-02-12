@@ -1,4 +1,4 @@
-import { cn, Icon, IconName } from "@repo/shared/src";
+import { cn, Icon, IconName } from "@shared/src";
 import Link from "next/link";
 
 const MenuItem = ({

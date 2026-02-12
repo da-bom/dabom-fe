@@ -1,4 +1,4 @@
-import nextConfigBase from "@repo/shared/src/configs/next.config.base";
+import nextConfigBase from "@shared/src/configs/next.config.base";
 
 const nextConfig = {
   ...nextConfigBase,

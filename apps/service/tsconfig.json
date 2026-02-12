@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/shared/src/configs/tsconfig.base.json",
+  "extends": "@shared/src/configs/tsconfig.base.json",
   "compilerOptions": {
     "plugins": [
       {
