@@ -14,3 +14,5 @@ export { default as Noti } from './Noti';
 export { default as NotiColor } from './NotiColor';
 export { default as Policy } from './Policy';
 export { default as PolicyColor } from './PolicyColor';
+export { default as Right } from './Right';
+export { default as Warning } from './Warning';
