@@ -10,7 +10,14 @@ interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   fill?: string;
 }
 
-export const Icon = ({ name, width = "auto", height = 50, fill, style, ...props }: IconProps) => {
+export const Icon = ({
+  name,
+  width = "auto",
+  height = 50,
+  fill,
+  style,
+  ...props
+}: IconProps) => {
   const RawIcon = Icons[name] as any;
 
   if (!RawIcon) {

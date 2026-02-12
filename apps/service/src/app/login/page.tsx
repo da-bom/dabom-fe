@@ -18,11 +18,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background-base">
-      <Header isBackVisible={true} className="bg-background-base" />
-
-      <main className="px-5 pt-10">
+      <main className="px-5 pt-53.25">
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-10">
             <Input
               label="전화번호"
               type="tel"
@@ -38,10 +36,12 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
 
-          <div className="mt-10">
-            <Button type="submit">로그인</Button>
+            <div className="flex justify-center mt-53.25">
+              <Button type="submit" size="lg" color="dark">
+                로그인
+              </Button>
+            </div>
           </div>
         </form>
       </main>
