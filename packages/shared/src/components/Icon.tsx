@@ -5,12 +5,19 @@ export type IconName = keyof typeof Icons;
 
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
-  width?: number | string;
-  height?: number | string;
+  width?: number | "auto";
+  height?: number | "auto";
   fill?: string;
 }
 
-export const Icon = ({ name, width, height, fill, style, ...props }: IconProps) => {
+export const Icon = ({
+  name,
+  width = "auto",
+  height = 50,
+  fill,
+  style,
+  ...props
+}: IconProps) => {
   const RawIcon = Icons[name] as any;
 
   if (!RawIcon) {
@@ -22,6 +29,9 @@ export const Icon = ({ name, width, height, fill, style, ...props }: IconProps) 
 
   return (
     <SVGComponent
+      width={width}
+      height={height}
+      fill={fill || "currentColor"}
       {...(width && { width })}
       {...(height && { height })}
       {...(fill && { fill })}

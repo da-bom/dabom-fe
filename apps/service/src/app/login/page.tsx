@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Header, Button } from "@repo/shared/src";
+import { Button } from "@repo/shared/src";
 import InputField from "@repo/shared/src/components/InputField";
 
 export default function LoginPage() {
@@ -18,11 +18,9 @@ export default function LoginPage() {
 
   return (
     <div className="bg-background-base min-h-screen">
-      <Header isBackVisible={true} className="bg-background-base" />
-
-      <main className="px-5 pt-10">
+      <main className="px-5 pt-53.25">
         <form onSubmit={handleLogin} className="flex flex-col gap-8">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-10">
             <InputField
               label="전화번호"
               type="tel"
@@ -38,12 +36,12 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
 
-          <div className="mt-10">
-            <Button size="lg" color="dark">
-              로그인
-            </Button>
+            <div className="mt-53.25 flex justify-center">
+              <Button type="submit" size="lg" color="dark">
+                로그인
+              </Button>
+            </div>
           </div>
         </form>
       </main>

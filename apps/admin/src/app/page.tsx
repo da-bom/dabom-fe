@@ -3,8 +3,8 @@ import InputField from "@repo/shared/src/components/InputField";
 
 const Login = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="flex flex-col items-center gap-20 px-20 py-14 bg-brand-white w-fit rounded-3xl shadow-default">
+    <div className="flex h-screen items-center justify-center">
+      <div className="bg-brand-white shadow-default flex w-fit flex-col items-center gap-20 rounded-3xl px-20 py-14">
         <Icon name="Logo" className="w-34" />
         <div className="flex flex-col gap-7">
           <InputField label="아이디" type="id" />
