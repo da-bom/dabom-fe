@@ -14,7 +14,7 @@ const FamilyPage = () => {
         <SubBox className="h-11 w-38">type</SubBox>
         <SubBox className="w-full">search</SubBox>
         <button
-          className="bg-brand-black flex w-20 cursor-pointer items-center"
+          className="flex w-20 cursor-pointer items-center"
           // TODO: params 제외한 요청 다시 보내는 로직 추가
           onClick={() => setSelectedFam(undefined)}
         >
