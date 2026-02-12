@@ -4,6 +4,8 @@ import { formatFileSize } from "@repo/shared/src/utils/fileSize";
 import dayjs from "dayjs";
 import { FAMILY_DETAIL } from "src/data/familyDetail";
 import Table from "../Table";
+import { formatFamily } from "src/utils/formatFamily";
+import { CustomerDetail } from "src/types/FamilyType";
 
 const FamilyDetail = () => {
   const rate = (FAMILY_DETAIL.usedBytes / FAMILY_DETAIL.totalQuotaBytes) * 100;
@@ -40,7 +42,12 @@ const FamilyDetail = () => {
 
       <SubBox className="flex flex-col gap-4 p-4">
         <span className="text-body1-d">구성원 권한 및 한도 설정</span>
-        <Table data={FAMILY_DETAIL} />
+        <Table
+          headers={["권한", "이름", "사용량/한도"]}
+          rows={formatFamily({
+            customer: FAMILY_DETAIL.customers,
+          })}
+        />
       </SubBox>
 
       <div className="flex justify-end">

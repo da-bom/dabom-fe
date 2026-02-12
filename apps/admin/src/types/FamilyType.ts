@@ -10,3 +10,11 @@ export interface Family {
   customers: Customer[];
   createdAt: string;
 }
+
+export interface CustomerDetail {
+  customerId: number;
+  name: string;
+  role: "OWNER" | "MEMBER";
+  monthlyLimitBytes: number;
+  monthlyUsedBytes: number;
+}
