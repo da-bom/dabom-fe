@@ -1,8 +1,10 @@
 "use client";
 
-import { Icon } from "@shared";
 import { usePathname } from "next/navigation";
+
+import { Icon } from "@shared";
 import { MENU } from "src/constants/MENU";
+
 import MenuItem from "./MenuItem";
 
 const Sidebar = () => {

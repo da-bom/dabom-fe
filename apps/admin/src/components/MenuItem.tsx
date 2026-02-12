@@ -1,6 +1,8 @@
-import { cn, Icon } from "@shared";
-import { IconName } from "@shared/src/components/Icon";
 import Link from "next/link";
+
+import { Icon, cn } from "@shared";
+
+import { IconName } from "@shared/components/Icon";
 
 const MenuItem = ({
   name,

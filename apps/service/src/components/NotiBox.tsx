@@ -1,4 +1,4 @@
-import { cn, Badge } from "@shared/src";
+import { Badge, cn } from "@shared";
 
 interface NotiBoxProps {
   title: string;

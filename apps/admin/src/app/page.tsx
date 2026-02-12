@@ -1,4 +1,4 @@
-import { Button, Icon, InputField } from "@shared/src";
+import { Button, Icon, InputField } from "@shared";
 
 const Login = () => {
   return (
