@@ -1,10 +1,10 @@
 import { Badge, Button, Icon } from "@repo/shared/src";
 import SubBox from "@repo/shared/src/components/SubBox";
-import { formatFileSize } from "@repo/shared/src/utils/fileSize";
 import dayjs from "dayjs";
 import { FAMILY_DETAIL } from "src/data/familyDetail";
 import Table from "../Table";
 import { formatFamily } from "src/utils/formatFamily";
+import { formatSize } from "@repo/shared/src/utils/fileSize";
 
 const FamilyDetail = ({
   selectedFam,
@@ -29,8 +29,8 @@ const FamilyDetail = ({
 
       <SubBox className="flex flex-col gap-4 p-4">
         <p className="text-body1-d flex justify-between">
-          <span>총 사용량: {formatFileSize(FAMILY_DETAIL.usedBytes)}</span>
-          <span>한도: {formatFileSize(FAMILY_DETAIL.totalQuotaBytes)}</span>
+          <span>총 사용량: {formatSize(FAMILY_DETAIL.usedBytes).total}</span>
+          <span>한도: {formatSize(FAMILY_DETAIL.totalQuotaBytes).total}</span>
         </p>
         <div className="h-9 w-full rounded-full bg-gray-200">
           <div
