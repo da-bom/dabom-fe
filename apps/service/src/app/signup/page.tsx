@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Bomi, Logo, Button } from "@shared/src";
 import Link from "next/link";
-import { Button } from "@shared/src";
-import { Bomi, Logo } from "@shared/src/assets/icons";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function SignupPage() {
   const router = useRouter();

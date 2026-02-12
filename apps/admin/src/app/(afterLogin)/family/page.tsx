@@ -2,9 +2,7 @@
 
 import FamilyDetail from "@admin/components/family/FamilyDetail";
 import FamilyList from "@admin/components/family/FamilyList";
-import { Icon } from "@shared/src";
-import MainBox from "@shared/src/components/MainBox";
-import SubBox from "@shared/src/components/SubBox";
+import { MainBox, SubBox, Icon } from "@shared";
 import { useState } from "react";
 
 const FamilyPage = () => {

@@ -1,9 +1,8 @@
-import SubBox from "@shared/src/components/SubBox";
+import { Badge, SubBox, formatSize, Icon, Button } from "@shared";
 import dayjs from "dayjs";
 import { FAMILY_DETAIL } from "src/data/familyDetail";
-import Table from "../Table";
 import { formatFamily } from "src/utils/formatFamily";
-import { Badge, formatSize, Icon, Button } from "@shared/src";
+import Table from "../Table";
 
 const FamilyDetail = ({
   selectedFam,

@@ -1,8 +1,8 @@
 "use client";
 
+import { Icon } from "@shared";
 import { FAMILY } from "src/data/family";
 import FamilyItem from "./FamilyItem";
-import { Icon } from "@shared/src";
 
 const FamilyList = ({
   selectedFam,
