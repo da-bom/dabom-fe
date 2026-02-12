@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { ApiFamilyDetail, DashboardViewModel, ViewMember } from '../types/dataUsage';
-import { CONFIG } from '../app/home/contants';
+import { CONFIG } from '../app/home/contents';
 import { formatGB } from '../app/home/utils';
 
 export const useFamilyDashboard = (
@@ -33,6 +33,7 @@ export const useFamilyDashboard = (
     });
 
     let chartGradient = '#F3F4F6 0deg 360deg';
+
     const totalCalculatedUsage = members.reduce((acc, cur) => acc + cur.usageGB, 0);
 
     if (members.length > 0 && totalCalculatedUsage > 0) {
@@ -49,9 +50,9 @@ export const useFamilyDashboard = (
       totalUsageGB,
       totalLimitGB,
       usagePercent: rawData.usedPercent,
-      displayDate,
+      displayDate, // 이제 변경된 날짜가 리턴됩니다!
       members,
       chartGradient,
     };
-  }, [rawData, currentUserId, currentDate]);
+  }, [rawData, currentUserId, currentDate]); // 👈 의존성 배열에 currentDate 추가 필수!
 };
