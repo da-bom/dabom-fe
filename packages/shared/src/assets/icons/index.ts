@@ -23,5 +23,4 @@ export { default as Reset } from './Reset';
 export { default as Right } from './Right';
 export { default as Smile } from './Smile';
 export { default as Table } from './Table';
-export { default as Warning copy } from './Warning copy';
 export { default as Warning } from './Warning';
