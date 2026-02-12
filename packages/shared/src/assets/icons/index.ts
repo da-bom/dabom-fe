@@ -11,6 +11,7 @@ export { default as Home } from './Home';
 export { default as HomeColor } from './HomeColor';
 export { default as Logo } from './Logo';
 export { default as LogoAdmin } from './LogoAdmin';
+export { default as Logout } from './Logout';
 export { default as My } from './My';
 export { default as MyColor } from './MyColor';
 export { default as Noti } from './Noti';

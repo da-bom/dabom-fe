@@ -2,6 +2,7 @@
 
 import FamilyDetail from "@admin/components/family/FamilyDetail";
 import FamilyList from "@admin/components/family/FamilyList";
+import { Icon } from "@repo/shared/src";
 import MainBox from "@repo/shared/src/components/MainBox";
 import SubBox from "@repo/shared/src/components/SubBox";
 import { useState } from "react";
@@ -10,15 +11,16 @@ const FamilyPage = () => {
   const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);
   return (
     <div className="flex h-screen w-full flex-col gap-5 overflow-hidden">
-      <MainBox className="flex w-full justify-between gap-8 p-5">
+      <MainBox className="flex w-full justify-between gap-5 p-5">
         <SubBox className="h-11 w-38">type</SubBox>
         <SubBox className="w-full">search</SubBox>
         <button
-          className="flex w-20 cursor-pointer items-center"
+          className="flex w-22 cursor-pointer items-center gap-1"
           // TODO: params 제외한 요청 다시 보내는 로직 추가
           onClick={() => setSelectedFam(undefined)}
         >
-          초기화
+          <Icon name="Reset" />
+          <span>초기화</span>
         </button>
       </MainBox>
       <div className="flex h-full gap-5">

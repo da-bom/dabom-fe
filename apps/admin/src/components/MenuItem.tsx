@@ -1,25 +1,29 @@
-import { cn, Icon } from "@repo/shared/src";
+import { cn, Icon, IconName } from "@repo/shared/src";
 import Link from "next/link";
 
 const MenuItem = ({
   name,
   isSelected,
   href,
+  icon,
 }: {
   name: string;
   isSelected: boolean;
   href: string;
+  icon: string;
 }) => {
   return (
     <Link
       href={href}
       className={cn(
-        "flex w-full rounded-md px-2 py-1",
+        "flex w-full items-center gap-2 rounded-md px-2 py-1",
         isSelected && "bg-primary-50",
       )}
     >
-      <Icon name="Family" />
-      <div className={isSelected ? "text-primary" : ""}>{name}</div>
+      <Icon name={`${icon}${isSelected ? "Color" : ""}` as IconName} />
+      <div className={isSelected ? "text-primary" : "text-gray-700"}>
+        {name}
+      </div>
     </Link>
   );
 };

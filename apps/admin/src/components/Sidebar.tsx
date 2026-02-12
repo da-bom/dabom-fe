@@ -22,13 +22,14 @@ const Sidebar = () => {
                 isSelected={pathname === item.path}
                 name={item.label}
                 href={item.path}
+                icon={item.icon}
               />
             );
           })}
         </div>
       </div>
       <div className="flex px-5 text-gray-400">
-        <div className="h-5 w-5 bg-gray-400" />
+        <Icon name="Logout" />
         <span>로그아웃</span>
       </div>
     </div>

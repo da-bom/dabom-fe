@@ -3,8 +3,6 @@ import * as Icons from "../assets/icons/index";
 
 export type IconName = keyof typeof Icons;
 
-console.log("현재 인식된 아이콘 리스트:", Object.keys(Icons));
-
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
   width?: number | "auto";
@@ -33,7 +31,7 @@ export const Icon = ({
     <SVGComponent
       {...(width && width !== "auto" && { width })}
       {...(height && height !== "auto" && { height })}
-      fill={fill || "currentColor"}
+      {...(fill && { fill })}
       style={{
         ...(fill ? { color: fill } : {}),
         flexShrink: 0,

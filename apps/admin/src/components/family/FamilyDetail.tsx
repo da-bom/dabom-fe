@@ -1,4 +1,4 @@
-import { Badge, Button } from "@repo/shared/src";
+import { Badge, Button, Icon } from "@repo/shared/src";
 import SubBox from "@repo/shared/src/components/SubBox";
 import { formatFileSize } from "@repo/shared/src/utils/fileSize";
 import dayjs from "dayjs";
@@ -48,7 +48,10 @@ const FamilyDetail = ({
       </SubBox>
 
       <SubBox className="flex flex-col gap-4 p-4">
-        <span className="text-body1-d">구성원 권한 및 한도 설정</span>
+        <div className="flex items-center gap-2">
+          <Icon name="Person" />
+          <span className="text-body1-d">구성원 권한 및 한도 설정</span>
+        </div>
         <Table
           headers={["권한", "이름", "사용량/한도"]}
           rows={formatFamily({
