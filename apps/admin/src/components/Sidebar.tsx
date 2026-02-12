@@ -21,6 +21,7 @@ const Sidebar = () => {
                 key={item.id}
                 isSelected={pathname === item.path}
                 name={item.label}
+                href={item.path}
               />
             );
           })}

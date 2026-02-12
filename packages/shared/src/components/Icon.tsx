@@ -1,7 +1,9 @@
 import React from "react";
-import * as Icons from "../assets";
+import * as Icons from "../assets/icons/index";
 
 export type IconName = keyof typeof Icons;
+
+console.log("현재 인식된 아이콘 리스트:", Object.keys(Icons));
 
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
