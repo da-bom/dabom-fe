@@ -18,7 +18,7 @@ const COLOR_STYLES = {
   light: "bg-background-sub text-brand-black",
 };
 
-const Button = ({ children, size, color }: ButtonProps) => {
+const Button = ({ children, size, color, ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
@@ -26,6 +26,7 @@ const Button = ({ children, size, color }: ButtonProps) => {
         SIZE_STYLES[size],
         COLOR_STYLES[color],
       )}
+      {...props}
     >
       {children}
     </button>

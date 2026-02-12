@@ -5,7 +5,7 @@ import FamilyItem from "./FamilyItem";
 import { useState } from "react";
 
 const FamilyList = () => {
-  const [selectdFam, setSelectedFam] = useState<number | undefined>(undefined);
+  const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);
 
   return (
     <div className="flex flex-col gap-2">
@@ -21,7 +21,7 @@ const FamilyList = () => {
               key={fam.familyId}
               id={fam.familyId}
               customers={fam.customers}
-              isSelected={fam.familyId === selectdFam}
+              isSelected={fam.familyId === selectedFam}
               setSelectedFam={setSelectedFam}
             />
           );

@@ -15,10 +15,10 @@ const Sidebar = () => {
         <div className="w-38 border-[1px] border-gray-100" />
 
         <div className="flex w-full flex-col gap-5 px-2">
-          {MENU.map((item, index) => {
+          {MENU.map((item) => {
             return (
               <MenuItem
-                key={index}
+                key={item.id}
                 isSelected={pathname === item.path}
                 name={item.label}
               />

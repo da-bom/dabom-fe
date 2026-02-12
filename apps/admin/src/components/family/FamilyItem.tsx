@@ -29,7 +29,7 @@ const FamilyItem = ({
           <Badge color={isSelected ? "white" : "gray"} size="sm">
             FAM-{id}
           </Badge>
-          <span className="text-body1-d">{customers[0].name}</span>
+          <span className="text-body1-d">{customers[0]?.name}</span>
         </div>
         <span className="text-caption-d text-gray-500">
           {customers.length}명
