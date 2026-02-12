@@ -1,5 +1,6 @@
 'use client';
 
+import { Icon } from '@repo/shared/src';
 import React from 'react';
 
 interface MonthNavigatorProps {
@@ -9,30 +10,48 @@ interface MonthNavigatorProps {
   className?: string;
 }
 
-export const MonthNavigator = ({ 
-  currentDateText, 
-  onPrev, 
+export const MonthNavigator = ({
+  currentDateText,
+  onPrev,
   onNext,
-  className = ''
+  className = '',
 }: MonthNavigatorProps) => {
   return (
-    <div className={`flex select-none items-center justify-center gap-8 py-2 ${className}`}>
-      <button 
+    <div
+      className={`flex select-none items-center justify-center gap-[47px] py-2 ${className}`}
+    >
+      <button
         onClick={onPrev}
-        className="p-2 text-gray-400 transition-colors hover:text-black active:scale-95"
+        className="flex items-center justify-center p-2 text-brand-dark transition-colors hover:opacity-70 active:scale-95"
         aria-label="이전 달로 이동"
       >
+        <div className="rotate-180 transform">
+          <Icon
+            name="Right"
+            width={7}
+            height={12}
+            className="fill-brand-dark"
+          />
+        </div>
       </button>
-      
-      <span className="tabular-nums text-lg font-bold text-gray-800">
+
+      <span className="w-[100px] text-center text-base font-medium leading-[150%] tabular-nums text-brand-dark">
         {currentDateText}
       </span>
-      
-      <button 
+
+      <button
         onClick={onNext}
-        className="p-2 text-gray-400 transition-colors hover:text-black active:scale-95"
+        className="flex items-center justify-center p-2 text-brand-dark transition-colors hover:opacity-70 active:scale-95"
         aria-label="다음 달로 이동"
       >
+        <div>
+          <Icon
+            name="Right"
+            width={7}
+            height={12}
+            className="fill-brand-dark"
+          />
+        </div>
       </button>
     </div>
   );
