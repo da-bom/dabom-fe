@@ -3,6 +3,7 @@ import SubBox from "@repo/shared/src/components/SubBox";
 import { formatFileSize } from "@repo/shared/src/utils/fileSize";
 import dayjs from "dayjs";
 import { FAMILY_DETAIL } from "src/data/familyDetail";
+import Table from "../Table";
 
 const FamilyDetail = () => {
   const rate = (FAMILY_DETAIL.usedBytes / FAMILY_DETAIL.totalQuotaBytes) * 100;
@@ -36,9 +37,12 @@ const FamilyDetail = () => {
           <span className="text-h2-d text-primary">{rate}%</span>
         </p>
       </SubBox>
-      <SubBox className="p-4">
+
+      <SubBox className="flex flex-col gap-4 p-4">
         <span className="text-body1-d">구성원 권한 및 한도 설정</span>
+        <Table data={FAMILY_DETAIL} />
       </SubBox>
+
       <div className="flex justify-end">
         <Button color="dark" size="lg">
           변경사항 저장
