@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Icon } from "./Icon";
+import { EyeOff, EyeOn } from "../assets/icons";
 
 type InputType = "text" | "password" | "tel" | "id";
 
@@ -9,7 +9,6 @@ interface InputFieldProps {
   label: string;
   type: InputType;
   placeholder?: string;
-  // TODO: 퍼블리싱 완료 후 타입 수정
   value?: any;
   onChange?: (e: any) => void;
 }
@@ -25,7 +24,7 @@ const Input = ({
 
   const inputType = type === "password" && isVisible ? "text" : type;
   return (
-    <div className="bg-brand-white flex h-12 w-82 items-center rounded-lg border-[1px] border-gray-200 px-4">
+    <div className="bg-brand-white flex h-12 w-82 items-center rounded-lg border-[3px] border-gray-200 px-4">
       <input
         type={inputType}
         className="w-full outline-none"
@@ -33,13 +32,16 @@ const Input = ({
       />
       {type === "password" && (
         <button
-          type="button"
-          onClick={() => {
-            setIsVisible((prev) => !prev);
-          }}
-        >
-          <Icon name={isVisible ? "EyeOn" : "EyeOff"} />
-        </button>
+    type="button"
+    onClick={() => setIsVisible((prev) => !prev)}
+    className="flex items-center justify-center"
+  >
+    {isVisible ? (
+      <EyeOn width={24} height={24} className="text-gray-500" />
+    ) : (
+      <EyeOff width={24} height={24} className="text-gray-500" />
+    )}
+  </button>
       )}
     </div>
   );
