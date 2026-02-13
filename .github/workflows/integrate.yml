@@ -325,6 +325,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: [analyze]
+    if: always() && needs.analyze.result == 'success'
 
     steps:
       - name: Checkout source
