@@ -31,7 +31,7 @@ const FilterBar = ({
   setSelectedFilter: (selectedFIlter: FilterType) => void;
 }) => {
   return (
-    <SubBox className="w-fit rounded-2xl p-2">
+    <SubBox className="text-body1-d w-fit rounded-2xl p-2">
       <FilterButton
         isSelected={selectedFilter === "ALL"}
         onClick={() => setSelectedFilter("ALL")}
