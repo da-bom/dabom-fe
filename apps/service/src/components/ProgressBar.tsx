@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { cn } from '@shared';
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import React from "react";
 
-type ProgressBarSize = 'md'; // 나중에 더 추가할 예정
+import { cn } from "@shared";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+
+type ProgressBarSize = "md"; // 나중에 더 추가할 예정
 
 interface ProgressBarProps {
   value: number;
@@ -13,19 +14,19 @@ interface ProgressBarProps {
 }
 
 const SIZE_CONFIG = {
-  md: { height: 'h-4', barSize: 12 },
+  md: { height: "h-4", barSize: 12 },
 };
 
 export const ProgressBar = ({
   value,
-  size = 'md',
+  size = "md",
   className,
 }: ProgressBarProps) => {
-  const data = [{ name: 'Progress', current: value }];
+  const data = [{ name: "Progress", current: value }];
   const { height, barSize } = SIZE_CONFIG[size];
 
   return (
-    <div className={cn('w-full', height, className)}>
+    <div className={cn("w-full", height, className)}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           layout="vertical"
@@ -43,7 +44,7 @@ export const ProgressBar = ({
             isAnimationActive={true}
             animationDuration={1000}
             animationEasing="ease-out"
-            background={{ fill: 'var(--color-gray-100)', radius: 10 }}
+            background={{ fill: "var(--color-gray-100)", radius: 10 }}
           />
         </BarChart>
       </ResponsiveContainer>

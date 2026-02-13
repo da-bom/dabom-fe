@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import SubBox from '@repo/shared/src/components/SubBox';
-import { ViewMember } from '../types/dataUsage';
+import React from "react";
+
+import SubBox from "@repo/shared/src/components/SubBox";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+
+import { ViewMember } from "../types/dataUsage";
 
 interface Props {
   members: ViewMember[];
@@ -14,8 +16,8 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
   const isEmpty = totalUsageGB === 0;
 
   const chartData = isEmpty
-    ? [{ id: 'empty', name: 'Empty', usageGB: 1, color: '#F3F4F6' }] // 임시로 지정 API 연동할때 바꿀 에쩡
-    : members; 
+    ? [{ id: "empty", name: "Empty", usageGB: 1, color: "#F3F4F6" }] // 임시로 지정 API 연동할때 바꿀 에쩡
+    : members;
 
   return (
     <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center duration-500">
@@ -45,11 +47,11 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
             {!isEmpty && (
               <Tooltip
                 contentStyle={{
-                  borderRadius: '12px',
-                  border: 'none',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
+                  borderRadius: "12px",
+                  border: "none",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  fontSize: "12px",
+                  fontWeight: "bold",
                 }}
                 wrapperStyle={{ zIndex: 100 }}
                 cursor={false}
@@ -67,9 +69,7 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
                 className="h-3 w-3 rounded-full shadow-sm ring-1 ring-white"
                 style={{ backgroundColor: member.color }}
               />
-              <span className="text-sm caption-m">
-                {member.name}
-              </span>
+              <span className="text-sm caption-m">{member.name}</span>
             </div>
           ))}
         </div>

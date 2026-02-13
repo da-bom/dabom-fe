@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { Icon } from '@repo/shared/src';
-import React from 'react';
+import React from "react";
+
+import { Icon } from "@repo/shared/src";
 
 interface MonthNavigatorProps {
   currentDateText: string;

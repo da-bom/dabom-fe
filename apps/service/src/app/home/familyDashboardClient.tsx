@@ -1,19 +1,23 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Icon, MainBox } from '@shared';
-import { ProgressBar } from '@service/components/ProgressBar';
-import { MonthNavigator } from '@service/components/MonthNavigator';
-import { MemberListView } from '@service/components/MemberListView';
-import { MemberChartView } from '@service/components/MemberChartView';
-import { FAMILY_DETAIL } from '../../../../../packages/shared/src/data/familyDetail';
-import { CONFIG } from './contents';
+import React, { useState } from "react";
+
+import { useRouter } from "next/navigation";
+
+import { Icon, MainBox } from "@shared";
+
+import { MemberChartView } from "@service/components/MemberChartView";
+import { MemberListView } from "@service/components/MemberListView";
+import { MonthNavigator } from "@service/components/MonthNavigator";
+import { ProgressBar } from "@service/components/ProgressBar";
+
+import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
+import { CONFIG } from "./contents";
 
 interface Props {
   initialYear: number;
   initialMonth: number;
-  initialViewMode: 'list' | 'chart';
+  initialViewMode: "list" | "chart";
 }
 
 export default function FamilyDashboardClient({
@@ -24,9 +28,10 @@ export default function FamilyDashboardClient({
   const router = useRouter();
   const [year, setYear] = useState(initialYear);
   const [month, setMonth] = useState(initialMonth);
-  const [viewMode, setViewMode] = useState<'list' | 'chart'>(initialViewMode);
+  const [viewMode, setViewMode] = useState<"list" | "chart">(initialViewMode);
 
-  const bytesToGB = (bytes: number) => Number((bytes / (1024 * 1024 * 1024)).toFixed(1));
+  const bytesToGB = (bytes: number) =>
+    Number((bytes / (1024 * 1024 * 1024)).toFixed(1));
 
   const totalUsageGB = bytesToGB(FAMILY_DETAIL.usedBytes);
   const totalLimitGB = bytesToGB(FAMILY_DETAIL.totalQuotaBytes);
@@ -45,18 +50,22 @@ export default function FamilyDashboardClient({
       usageGB: bytesToGB(customer.monthlyUsedBytes),
       limitGB: bytesToGB(customer.monthlyLimitBytes),
       isMe,
-      alertMessage: isWarning ? '데이터를 많이 사용했어요' : null,
+      alertMessage: isWarning ? "데이터를 많이 사용했어요" : null,
       color: isMe ? CONFIG.COLORS.ME : CONFIG.COLORS.OTHERS[otherColorIndex],
     };
   });
 
   const displayDate = `${year}년 ${month}월`;
 
-  const updateUrl = (nextYear: number, nextMonth: number, nextView: 'list' | 'chart') => {
+  const updateUrl = (
+    nextYear: number,
+    nextMonth: number,
+    nextView: "list" | "chart",
+  ) => {
     const params = new URLSearchParams();
-    params.set('year', nextYear.toString());
-    params.set('month', nextMonth.toString());
-    params.set('view', nextView);
+    params.set("year", nextYear.toString());
+    params.set("month", nextMonth.toString());
+    params.set("view", nextView);
     router.push(`?${params.toString()}`);
   };
 
@@ -89,7 +98,7 @@ export default function FamilyDashboardClient({
   };
 
   const toggleViewMode = () => {
-    const newMode = viewMode === 'list' ? 'chart' : 'list';
+    const newMode = viewMode === "list" ? "chart" : "list";
     setViewMode(newMode);
     updateUrl(year, month, newMode);
   };
@@ -101,8 +110,12 @@ export default function FamilyDashboardClient({
           <div className="flex flex-col gap-3.5 pt-2">
             <h2 className="text-body1-m text-brand-dark">현재 데이터 사용량</h2>
             <div className="flex items-baseline gap-2">
-              <span className="text-main-m text-4xl text-brand-dark sm:text-5xl">{totalUsageGB}GB</span>
-              <span className="text-body2-m text-gray-400">/ {totalLimitGB}GB</span>
+              <span className="text-main-m text-4xl text-brand-dark sm:text-5xl">
+                {totalUsageGB}GB
+              </span>
+              <span className="text-body2-m text-gray-400">
+                / {totalLimitGB}GB
+              </span>
             </div>
           </div>
 
@@ -117,14 +130,18 @@ export default function FamilyDashboardClient({
       </MainBox>
 
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
-        <MonthNavigator currentDateText={displayDate} onPrev={handlePrevMonth} onNext={handleNextMonth} />
+        <MonthNavigator
+          currentDateText={displayDate}
+          onPrev={handlePrevMonth}
+          onNext={handleNextMonth}
+        />
 
         <button
           onClick={toggleViewMode}
-          aria-pressed={viewMode === 'chart'}
+          aria-pressed={viewMode === "chart"}
           className="text-caption-m text-gray-500 underline underline-offset-4"
         >
-          {viewMode === 'list' ? '📊 차트 보기' : '📋 리스트 보기'}
+          {viewMode === "list" ? "📊 차트 보기" : "📋 리스트 보기"}
         </button>
       </div>
 
@@ -135,7 +152,7 @@ export default function FamilyDashboardClient({
           </div>
         ) : (
           <>
-            {viewMode === 'list' ? (
+            {viewMode === "list" ? (
               <MemberListView members={members} />
             ) : (
               <MemberChartView members={members} totalUsageGB={totalUsageGB} />

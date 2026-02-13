@@ -1,6 +1,8 @@
-import React from 'react';
-import { ViewMember } from '../types/dataUsage';
-import { Icon } from '@shared';
+import React from "react";
+
+import { Icon } from "@shared";
+
+import { ViewMember } from "../types/dataUsage";
 
 interface MemberItemProps {
   member: ViewMember;

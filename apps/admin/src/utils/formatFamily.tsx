@@ -1,4 +1,5 @@
 import { Switch, formatSize } from "@shared";
+
 import { CustomerDetail } from "@shared/types/familyType";
 
 export const formatFamily = ({ customer }: { customer: CustomerDetail[] }) => {

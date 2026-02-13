@@ -1,6 +1,7 @@
-'use client';
-import React from 'react';
-import FamilyDashboardClient from './familyDashboardClient';
+"use client";
+import React from "react";
+
+import FamilyDashboardClient from "./familyDashboardClient";
 
 interface PageProps {
   searchParams: Promise<{
@@ -15,7 +16,7 @@ export default async function FamilyDashboardPage({ searchParams }: PageProps) {
 
   const year = Number(params?.year) || 2024;
   const month = Number(params?.month) || 1;
-  const viewMode = (params?.view as 'list' | 'chart') || 'list';
+  const viewMode = (params?.view as "list" | "chart") || "list";
 
   return (
     <FamilyDashboardClient
