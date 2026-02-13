@@ -1,4 +1,4 @@
-import { SubBox, cn } from "@shared";
+import { MainBox, cn } from "@shared";
 import { FilterType } from "src/types/FilterType";
 
 const FilterButton = ({
@@ -14,7 +14,7 @@ const FilterButton = ({
     <button
       className={cn(
         "h-10 w-30 cursor-pointer rounded-lg",
-        isSelected ? "text-primary bg-brand-white" : "text-gray-600",
+        isSelected ? "text-primary bg-background-sub" : "text-gray-600",
       )}
       onClick={onClick}
     >
@@ -31,7 +31,7 @@ const FilterBar = ({
   setSelectedFilter: (selectedFIlter: FilterType) => void;
 }) => {
   return (
-    <SubBox className="text-body1-d w-fit rounded-2xl p-2">
+    <MainBox className="text-body1-d w-fit rounded-2xl p-4">
       <FilterButton
         isSelected={selectedFilter === "ALL"}
         onClick={() => setSelectedFilter("ALL")}
@@ -50,7 +50,7 @@ const FilterBar = ({
       >
         비활성화
       </FilterButton>
-    </SubBox>
+    </MainBox>
   );
 };
 

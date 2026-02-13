@@ -13,7 +13,7 @@ import FilterBar from "@admin/components/policy/FilterBar";
 const PolicyPage = () => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("ALL");
   return (
-    <div className="flex h-screen flex-col gap-4">
+    <div className="flex h-screen flex-col gap-5">
       <FilterBar
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
