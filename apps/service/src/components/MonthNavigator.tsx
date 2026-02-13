@@ -1,31 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { Icon } from "@repo/shared/src";
 
-export const MonthNavigator = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+interface MonthNavigatorProps {
+  currentDateText: string;
+  onPrev: () => void;
+  onNext: () => void;
+}
 
+export const MonthNavigator = ({
+  currentDateText,
+  onPrev,
+  onNext,
+}: MonthNavigatorProps) => {
   const handlePrev = () => {
-    setCurrentDate((prev) => {
-      const newDate = new Date(prev);
-      newDate.setMonth(prev.getMonth() - 1);
-      return newDate;
-    });
+    onPrev();
   };
 
   const handleNext = () => {
-    setCurrentDate((prev) => {
-      const newDate = new Date(prev);
-      newDate.setMonth(prev.getMonth() + 1);
-      return newDate;
-    });
+    onNext();
   };
-
-  const currentDateText = `${currentDate.getFullYear()}.${String(
-    currentDate.getMonth() + 1,
-  ).padStart(2, "0")}`;
 
   return (
     <div className="flex select-none items-center justify-center gap-10 py-2">

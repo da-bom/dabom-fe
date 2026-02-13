@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { useRouter } from "next/navigation";
 
 import { Icon, MainBox } from "@shared";
@@ -24,8 +23,9 @@ export default function FamilyDashboardClient({
   initialYear,
   initialMonth,
   initialViewMode,
-}: Props) {
+}: Readonly<Props>) {
   const router = useRouter();
+
   const [year, setYear] = useState(initialYear);
   const [month, setMonth] = useState(initialMonth);
   const [viewMode, setViewMode] = useState<"list" | "chart">(initialViewMode);
@@ -110,7 +110,7 @@ export default function FamilyDashboardClient({
           <div className="flex flex-col gap-3.5 pt-2">
             <h2 className="text-body1-m text-brand-dark">현재 데이터 사용량</h2>
             <div className="flex items-baseline gap-2">
-              <span className="text-main-m text-4xl text-brand-dark sm:text-5xl">
+              <span className="text-main-m text-brand-dark text-4xl sm:text-5xl">
                 {totalUsageGB}GB
               </span>
               <span className="text-body2-m text-gray-400">
@@ -130,7 +130,12 @@ export default function FamilyDashboardClient({
       </MainBox>
 
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
-        <MonthNavigator />
+        <MonthNavigator
+          currentDateText={displayDate}
+          onPrev={handlePrevMonth}
+          onNext={handleNextMonth}
+        />
+
         <button
           onClick={toggleViewMode}
           aria-pressed={viewMode === "chart"}
