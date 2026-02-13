@@ -14,8 +14,8 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
   const isEmpty = totalUsageGB === 0;
 
   const chartData = isEmpty
-    ? [{ id: 'empty', name: 'Empty', usageGB: 1, color: '#F3F4F6' }]
-    : members;
+    ? [{ id: 'empty', name: 'Empty', usageGB: 1, color: '#F3F4F6' }] // 임시로 지정 API 연동할때 바꿀 에쩡
+    : members; 
 
   return (
     <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center duration-500">
@@ -59,7 +59,7 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
         </ResponsiveContainer>
       </div>
 
-      <SubBox className="mt-2 w-full border-dashed p-4">
+      <SubBox className="mt-2 w-full p-4 border-none bg-white">
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
           {members.map((member) => (
             <div key={member.id} className="flex items-center gap-2">
