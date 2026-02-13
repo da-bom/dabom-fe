@@ -11,7 +11,7 @@ interface PageProps {
   }>;
 }
 
-export default async function FamilyDashboardPage({ searchParams }: PageProps) {
+export default async function FamilyDashboardPage({ searchParams }: Readonly<PageProps>) {
   const params = await searchParams;
 
   const year = Number(params?.year) || 2024;
