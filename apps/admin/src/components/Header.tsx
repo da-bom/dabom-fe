@@ -1,7 +1,8 @@
 "use client";
 
-import { Icon } from "@repo/shared/src";
 import { usePathname } from "next/navigation";
+
+import { Icon } from "@shared";
 import { MENU } from "src/constants/MENU";
 
 const Header = () => {

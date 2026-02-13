@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
-import { cn } from "../utils/cn";
-import { Icon } from "./Icon";
+import cn from "../utils/cn";
+import Icon from "./Icon";
 
 interface HeaderProps {
   isBackVisible?: boolean;

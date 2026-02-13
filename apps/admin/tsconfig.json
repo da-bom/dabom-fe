@@ -1,9 +1,12 @@
 {
-  "extends": "@repo/shared/src/configs/tsconfig.base.json",
+  "extends": "../../packages/shared/src/configs/tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@admin/components/*": ["./src/components/*"]
+      "@admin/components/*": ["./src/components/*"],
+      "@shared": ["../../packages/shared/src/index.ts"],
+      "@shared/types/*": ["../../packages/shared/src/types/*"],
+      "@globalstyles": ["../../packages/shared/src/styles/globals.css"]
     },
     "plugins": [
       {

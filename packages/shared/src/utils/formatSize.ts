@@ -1,4 +1,4 @@
-export const formatSize = (bytes: number) => {
+const formatSize = (bytes: number) => {
   if (bytes === 0) {
     return {
       value: 0,
@@ -18,3 +18,5 @@ export const formatSize = (bytes: number) => {
     total: total + " " + sizes[i],
   };
 };
+
+export default formatSize;

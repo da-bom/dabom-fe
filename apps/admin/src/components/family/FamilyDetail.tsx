@@ -1,10 +1,9 @@
-import { Badge, Button, Icon } from "@repo/shared/src";
-import SubBox from "@repo/shared/src/components/SubBox";
+import { Badge, Button, Icon, SubBox, formatSize } from "@shared";
 import dayjs from "dayjs";
 import { FAMILY_DETAIL } from "src/data/familyDetail";
-import Table from "../Table";
 import { formatFamily } from "src/utils/formatFamily";
-import { formatSize } from "@repo/shared/src/utils/fileSize";
+
+import Table from "../Table";
 
 const FamilyDetail = ({
   selectedFam,
