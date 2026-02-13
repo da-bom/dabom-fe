@@ -11,7 +11,11 @@ interface HeaderProps {
   className?: string;
 }
 
-const Header = ({ isBackVisible = true, className, onBackClick }: HeaderProps) => {
+const Header = ({
+  isBackVisible = true,
+  className,
+  onBackClick,
+}: HeaderProps) => {
   const router = useRouter();
 
   const handleBack = () => {
