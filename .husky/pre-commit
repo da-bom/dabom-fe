@@ -1,0 +1,12 @@
+#!/bin/sh
+
+BRANCH_NAME=$(git branch --show-current)
+
+# main/develop 브랜치 직접 커밋 차단
+if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "master" ] || [ "$BRANCH_NAME" = "develop" ]; then
+  echo "❌ $BRANCH_NAME 브랜치에서는 직접 커밋할 수 없습니다."
+  echo "👉 feat/DABOM-XX 형식의 브랜치에서 작업하세요."
+  exit 1
+fi
+
+pnpm exec lint-staged

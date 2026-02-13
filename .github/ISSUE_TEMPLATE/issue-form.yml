@@ -1,7 +1,11 @@
+
 name: "이슈 생성"
 description: "Repo에 이슈를 생성합니다."
 title: "이슈 이름을 작성해주세요"
 labels: [Feat]
+name: '이슈 생성'
+description: 'Repo에 이슈를 생성합니다.'
+title: '[DABOM-xxx] 작업에 대한 요약'
 
 body:
   - type: input
@@ -9,7 +13,10 @@ body:
     attributes:
       label: "🎟️ 상위 작업 (Ticket Number)"
       description: "상위 작업의 Ticket Number를 기입해주세요"
-      placeholder: "UPLUS-00"
+      placeholder: "DABOM-00"
+      label: '🎟️ 지라 티켓 (Ticket Number)'
+      description: 'Jira Ticket Number를 기입해주세요 (예: DABOM-56, DABOM-123)'
+      value: 'DABOM-xxx'
     validations:
       required: true
 
@@ -17,7 +24,8 @@ body:
     id: branch
     attributes:
       label: "🌳 브랜치명 (Branch)"
-      description: "영어로 브랜치명을 작성해주세요"
+      description: '영어로 브랜치명을 작성해주세요 (예: feat/DABOM-56, fix/DABOM-123)'
+      value: '{type}/DABOM-xxx'
     validations:
       required: true
 
@@ -34,7 +42,12 @@ body:
     attributes:
       label: "✅ TO-DO LIST"
       description: "해당 이슈에 대해 구체적인 할 일을 작성해주세요"
+      label: '📝 상세 내용 (Description)'
+      description: '이슈에 대한 설명과 할 일(TODO)을 함께 작성해주세요'
       value: |
+        이슈에 대한 설명
+
+        ### ✅ TO-DO LIST
         - [ ] Task1
         - [ ] Task2
     validations:
