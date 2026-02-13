@@ -74,14 +74,14 @@ export default function FamilyDashboardClient({
         <MainBox className="overflow-visible border-none pb-5.75 pl-5.25 pr-5.25 pt-5.25">
           <div className="relative flex justify-between">
             <div className="flex flex-col gap-3.5 pt-2">
-              <h2 className="text-sm font-medium text-brand-dark">
+              <h2 className="text-sm text-body1-m text-brand-dark">
                 현재 데이터 사용량
               </h2>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-extrabold text-brand-dark sm:text-5xl">
+                <span className="text-4xl text-main-m text-brand-dark sm:text-5xl">
                   {viewModel.totalUsageGB}GB
                 </span>
-                <span className="font-medium text-gray-400">
+                <span className="text-body2-m text-gray-400">
                   / {viewModel.totalLimitGB}GB
                 </span>
               </div>

@@ -67,7 +67,7 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
                 className="h-3 w-3 rounded-full shadow-sm ring-1 ring-white"
                 style={{ backgroundColor: member.color }}
               />
-              <span className="text-sm font-medium text-brand-dark">
+              <span className="text-sm caption-m">
                 {member.name}
               </span>
             </div>
