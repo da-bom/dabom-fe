@@ -2,16 +2,14 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import MainBox from '@repo/shared/src/components/MainBox';
-import { Header } from '@repo/shared/src';
-import { FAMILY_DETAIL } from '../../../../../packages/shared/src/data/familyDetail';
-import { Icon } from '@shared';
+import { Header, Icon, MainBox } from '@shared';
 import { ProgressBar } from '@service/components/ProgressBar';
 import { MonthNavigator } from '@service/components/MonthNavigator';
 import { MemberListView } from '@service/components/MemberListView';
 import { MemberChartView } from '@service/components/MemberChartView';
-import { useFamilyDashboard } from '../hook/useFamilyDashboard';
 import { CONFIG } from './contents';
+import { useFamilyDashboard } from '../hook/useFamilyDashboard';
+import { FAMILY_DETAIL } from '../../../../../packages/shared/src/data/familyDetail';
 
 interface Props {
   initialYear: number;
@@ -71,7 +69,6 @@ export default function FamilyDashboardClient({
 
   return (
     <main className="min-h-screen bg-background-base">
-      <Header />
 
       <div className="mx-auto grid max-w-2xl gap-6 px-5 pt-15.25">
         <MainBox className="overflow-visible border-none pb-5.75 pl-5.25 pr-5.25 pt-5.25">
