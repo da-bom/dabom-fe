@@ -37,6 +37,8 @@
   --color-background-sub: #f7f7f7;
   --color-background-base: #f0f1f3;
 
+  --color-negative: #FF383C;
+
   /* shadow */
   --shadow-default: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }

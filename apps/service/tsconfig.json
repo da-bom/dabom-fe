@@ -21,6 +21,6 @@
     "**/*.ts",
     "**/*.tsx",
     "../../packages/shared/src/**/*"
-  ],
+, "home", "src/app/home"  ],
   "exclude": ["node_modules"]
 }
