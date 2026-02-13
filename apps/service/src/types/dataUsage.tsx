@@ -1,15 +1,9 @@
-export interface ApiCustomer {
-  customerId: number;
-  name: string;
-  role: string;
-  monthlyLimitBytes: number;
-  monthlyUsedBytes: number;
-}
+import { CustomerDetail } from "../../../../packages/shared/src/types/familyType";
 
 export interface ApiFamilyDetail {
   familyId: number;
   familyName: string;
-  customers: ApiCustomer[];
+  customers: CustomerDetail[];
   totalQuotaBytes: number;
   usedBytes: number;
   usedPercent: number;
