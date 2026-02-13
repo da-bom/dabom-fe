@@ -130,12 +130,7 @@ export default function FamilyDashboardClient({
       </MainBox>
 
       <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
-        <MonthNavigator
-          currentDateText={displayDate}
-          onPrev={handlePrevMonth}
-          onNext={handleNextMonth}
-        />
-
+        <MonthNavigator />
         <button
           onClick={toggleViewMode}
           aria-pressed={viewMode === "chart"}
