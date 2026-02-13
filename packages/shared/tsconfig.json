@@ -10,11 +10,5 @@
     "declaration": true,
     "declarationMap": true
   },
-  "include": [
-    "src",
-    "../../apps/service/next.config.ts",
-    "src/components/InputField.tsx",
-    "../../apps/service/home",
-    "../../apps/service/src/app/home"
-  ]
+  "include": ["src", "../../apps/service/next.config.ts", "src/components/InputField.tsx"]
 }
