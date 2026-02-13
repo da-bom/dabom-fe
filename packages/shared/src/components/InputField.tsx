@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
 import Icon from "./Icon";
 
 type InputType = "text" | "password" | "tel" | "id";
