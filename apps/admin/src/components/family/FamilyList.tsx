@@ -1,9 +1,9 @@
 "use client";
 
 import { Icon } from "@shared";
-import { FAMILY } from "src/data/family";
 
 import FamilyItem from "./FamilyItem";
+import { FAMILY } from "../../../../../packages/shared/src/data/family";
 
 const FamilyList = ({
   selectedFam,

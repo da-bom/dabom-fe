@@ -1,5 +1,5 @@
 import { Badge, cn } from "@shared";
-import { Customer } from "src/types/FamilyType";
+import { Customer } from "@shared/types/familyType";
 
 const FamilyItem = ({
   id,
