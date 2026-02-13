@@ -1,6 +1,12 @@
 {
-  "extends": "@repo/shared/src/configs/tsconfig.base.json",
+  "extends": "../../packages/shared/src/configs/tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@service/components/*": ["./src/components/*"],
+      "@shared": ["../../packages/shared/src/index.ts"],
+      "@globalstyles": ["../../packages/shared/src/styles/globals.css"]
+    },
     "plugins": [
       {
         "name": "next"

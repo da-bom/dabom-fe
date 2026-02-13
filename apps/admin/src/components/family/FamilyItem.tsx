@@ -1,4 +1,4 @@
-import { Badge, cn } from "@repo/shared/src";
+import { Badge, cn } from "@shared";
 import { Customer } from "src/types/FamilyType";
 
 const FamilyItem = ({

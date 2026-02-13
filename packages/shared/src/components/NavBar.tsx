@@ -1,10 +1,13 @@
 "use client";
 
 import { useMemo } from "react";
-import { usePathname } from "next/navigation";
+
 import Link from "next/link";
-import { cn } from "../utils/cn";
-import { Icon, IconName } from "./Icon";
+import { usePathname } from "next/navigation";
+
+import { IconName } from "../types/icon";
+import cn from "../utils/cn";
+import Icon from "./Icon";
 
 interface NavItem {
   label: string;
@@ -19,8 +22,18 @@ const NavBar = () => {
   const navItems: NavItem[] = useMemo(
     () => [
       { label: "홈", href: "/", icon: "Home", activeIcon: "HomeColor" },
-      { label: "정책", href: "/policy", icon: "Policy", activeIcon: "PolicyColor" },
-      { label: "알림", href: "/notification", icon: "Noti", activeIcon: "NotiColor" },
+      {
+        label: "정책",
+        href: "/policy",
+        icon: "Policy",
+        activeIcon: "PolicyColor",
+      },
+      {
+        label: "알림",
+        href: "/notification",
+        icon: "Noti",
+        activeIcon: "NotiColor",
+      },
       { label: "MY", href: "/mypage", icon: "My", activeIcon: "MyColor" },
     ],
     [],
@@ -30,7 +43,10 @@ const NavBar = () => {
     <nav className="fixed bottom-0 z-50 w-full bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.1)] transition-all">
       <ul className="flex h-[60px] w-full items-center justify-around pb-[env(safe-area-inset-bottom)]">
         {navItems.map((item) => {
-          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          const isActive =
+            item.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(item.href);
 
           const IconComponent = isActive ? item.activeIcon : item.icon;
 

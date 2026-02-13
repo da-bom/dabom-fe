@@ -1,6 +1,7 @@
-import "@repo/shared/src/styles/globals.css";
-import Sidebar from "@admin/components/Sidebar";
+import "@globalstyles";
+
 import Header from "@admin/components/Header";
+import Sidebar from "@admin/components/Sidebar";
 
 export default function RootLayout({
   children,

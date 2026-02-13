@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
+import { Icon, MainBox, SubBox } from "@shared";
+
 import FamilyDetail from "@admin/components/family/FamilyDetail";
 import FamilyList from "@admin/components/family/FamilyList";
-import { Icon } from "@repo/shared/src";
-import MainBox from "@repo/shared/src/components/MainBox";
-import SubBox from "@repo/shared/src/components/SubBox";
-import { useState } from "react";
 
 const FamilyPage = () => {
   const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);

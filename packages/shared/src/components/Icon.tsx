@@ -1,7 +1,7 @@
 import React from "react";
-import * as Icons from "../assets/icons/index";
 
-export type IconName = keyof typeof Icons;
+import * as Icons from "../assets/icons/index";
+import { IconName } from "../types/icon";
 
 interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   name: IconName;
@@ -10,14 +10,7 @@ interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "name"> {
   fill?: string;
 }
 
-export const Icon = ({
-  name,
-  width,
-  height,
-  fill,
-  style,
-  ...props
-}: IconProps) => {
+const Icon = ({ name, width, height, fill, style, ...props }: IconProps) => {
   const RawIcon = Icons[name] as any;
 
   if (!RawIcon) {
@@ -41,3 +34,5 @@ export const Icon = ({
     />
   );
 };
+
+export default Icon;

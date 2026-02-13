@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "icons": "git diff --name-only --cached --diff-filter=A | grep 'packages/shared/src/assets/svgs/.*\\.svg$' | sed 's|packages/shared/||' | xargs -r npx @svgr/cli --out-dir src/assets/icons --typescript --no-prettier && node update-index.js"
+    "build:index": "node update-index.js",
+    "generate": "git diff --name-only --cached --diff-filter=A | grep 'packages/shared/src/assets/svgs/.*\\.svg$' | sed 's|packages/shared/||' | xargs -r npx @svgr/cli --out-dir src/assets/icons --typescript --no-prettier && npm run build:index"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
