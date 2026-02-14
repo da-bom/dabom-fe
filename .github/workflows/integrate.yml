@@ -191,7 +191,7 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ vars.SONAR_PROJECT }}
             -Dsonar.sources=apps,packages
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx,**/*.css
             -Dsonar.typescript.tsconfigPath=tsconfig.json
             ${{ needs.test.result == 'success' && '-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info' || '' }}
 
