@@ -24,8 +24,9 @@ export default function MemberCard({
   return (
     <li className="w-full">
       <div className="flex w-full border-2 rounded-lg border-gray-200 bg-brand-white">
-        <div className="mx-auto my-4 flex w-[calc(100%-32px)] items-center justify-between">
-          <div className="flex flex-col gap-[3px]">
+        <div className="my-4 flex w-full items-center justify-between px-4">
+          
+          <div className="flex flex-col gap-1">
             <span className="text-body1-m text-brand-black">{name}</span>
             <span className="text-caption-m text-gray-800">{phoneNumber}</span>
           </div>
