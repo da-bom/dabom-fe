@@ -1,5 +1,7 @@
-import MemberCard from "@service/components/MemberCard";
 import { formatSize } from "@shared";
+
+import MemberCard from "@service/components/MemberCard";
+
 import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
 
 export default function PolicyManagementPage() {
@@ -20,7 +22,8 @@ export default function PolicyManagementPage() {
             const formattedUsed = formatSize(rawUsed);
             const formattedLimit = formatSize(rawLimit);
 
-            const percent = rawLimit === 0 ? 0 : Math.min((rawUsed / rawLimit) * 100, 100);
+            const percent =
+              rawLimit === 0 ? 0 : Math.min((rawUsed / rawLimit) * 100, 100);
             const isDanger = percent >= 90;
 
             return (

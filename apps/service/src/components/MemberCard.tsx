@@ -18,7 +18,6 @@ export default function MemberCard({
   usagePercent,
   isDanger,
 }: MemberCardProps) {
-  
   const usedColor = isDanger ? "text-negative" : "text-gray-800";
   const totalColor = "text-gray-800";
 
@@ -30,13 +29,13 @@ export default function MemberCard({
             <span className="text-body1-m text-brand-black">{name}</span>
             <span className="text-caption-m text-gray-800">{phoneNumber}</span>
           </div>
-          
+
           <div className="flex flex-col items-end gap-1 w-[80px]">
             <div className="text-caption-m text-right w-full truncate">
               <span className={usedColor}>{usedAmount} </span>
               <span className={totalColor}>/ {totalAmount}</span>
             </div>
-            
+
             <div className="h-[3.15px] w-full bg-gray-100 rounded-sm overflow-hidden">
               <div
                 className="h-full bg-primary transition-all duration-300 rounded-sm"
