@@ -42,6 +42,10 @@ export default function MemberCard({
                 className="h-full bg-primary transition-all duration-300 rounded-sm"
                 style={{ width: `${usagePercent}%` }}
                 role="progressbar"
+                
+                aria-valuenow={usagePercent}
+                aria-valuemin={0}
+                aria-valuemax={100}
               />
             </div>
           </div>
