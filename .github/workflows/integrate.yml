@@ -190,7 +190,6 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=${{ vars.SONAR_PROJECT }}
-            -Dsonar.branch.name=develop
             -Dsonar.sources=apps,packages
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx
             -Dsonar.typescript.tsconfigPath=tsconfig.json
