@@ -10,7 +10,7 @@ const Header = () => {
 
   const name = "Admin";
 
-  const currentMenu = MENU.find((item) => item.path === pathname);
+  const currentMenu = MENU.find((item) => pathname.startsWith(item.path));
 
   return (
     <header className="mx-1 flex items-center justify-between">

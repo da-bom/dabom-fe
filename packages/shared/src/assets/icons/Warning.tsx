@@ -3,18 +3,20 @@ import type { SVGProps } from "react";
 
 const SvgWarning = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={28}
-    height={28}
+    width="100%"
+    height="100%"
+    viewBox="0 0 16 16"
     fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
-      fill="#000"
       fillRule="evenodd"
-      d="M12.5 17.167h2.333V19.5H12.5zm0-9.334h2.333v7H12.5zM13.655 2C7.215 2 2 7.227 2 13.667s5.215 11.666 11.655 11.666c6.452 0 11.678-5.226 11.678-11.666S20.107 2 13.655 2m.012 21a9.33 9.33 0 0 1-9.334-9.333 9.33 9.33 0 0 1 9.334-9.334A9.33 9.33 0 0 1 23 13.667 9.33 9.33 0 0 1 13.667 23"
       clipRule="evenodd"
+      d="M8 0C3.584 0 0 3.584 0 8C0 12.416 3.584 16 8 16C12.416 16 16 12.416 16 8C16 3.584 12.416 0 8 0ZM8.8 12H7.2V10.4H8.8V12ZM8.8 8.8H7.2V4H8.8V8.8Z"
+      fill="currentColor"
     />
   </svg>
 );
 export default SvgWarning;
+

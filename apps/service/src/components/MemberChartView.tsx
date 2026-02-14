@@ -61,7 +61,7 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
         </ResponsiveContainer>
       </div>
 
-      <SubBox className="mt-2 w-full p-4 border-none bg-white">
+      <SubBox className="mt-2 w-full border-none bg-white p-4">
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
           {members.map((member) => (
             <div key={member.id} className="flex items-center gap-2">
@@ -69,7 +69,7 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
                 className="h-3 w-3 rounded-full shadow-sm ring-1 ring-white"
                 style={{ backgroundColor: member.color }}
               />
-              <span className="text-sm caption-m">{member.name}</span>
+              <span className="caption-m text-sm">{member.name}</span>
             </div>
           ))}
         </div>

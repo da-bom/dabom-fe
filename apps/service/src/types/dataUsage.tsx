@@ -1,4 +1,4 @@
-import { CustomerDetail } from "../../../../packages/shared/src/types/familyType";
+import { CustomerDetail } from "@shared/type/familyType";
 
 export interface ApiFamilyDetail {
   familyId: number;
