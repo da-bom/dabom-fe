@@ -1,4 +1,5 @@
 import { Badge, cn } from "@shared";
+
 import { Customer } from "@shared/types/familyType";
 
 interface FamilyItemProps {
@@ -13,7 +14,7 @@ const FamilyItem = ({
   customers,
   isSelected,
   setSelectedFam,
-}: Readonly<FamilyItemProps>) => { 
+}: Readonly<FamilyItemProps>) => {
   return (
     <button
       type="button"

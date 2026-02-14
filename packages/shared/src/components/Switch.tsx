@@ -8,15 +8,10 @@ interface SwitchProps {
   onClick: () => void;
 }
 
-const Switch = ({
-  children,
-  type,
-  radius,
-  onClick,
-}: Readonly<SwitchProps>) => { 
+const Switch = ({ children, type, radius, onClick }: Readonly<SwitchProps>) => {
   return (
     <button
-      type="button" 
+      type="button"
       className={cn(
         "flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-4 py-1",
         type === "primary" && "border-primary bg-primary-50",
