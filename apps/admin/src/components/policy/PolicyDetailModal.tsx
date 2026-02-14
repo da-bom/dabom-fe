@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 
 import { Button, DropDown, Icon, RadioGroup, Switch, TextField } from "@shared";
-import POLICY_DETAIL from "src/data/policyDetail";
+
+import POLICY_DETAIL from "../../../../../packages/shared/src/data/policyDetail";
 
 const PolicyDetailModal = () => {
   const router = useRouter();

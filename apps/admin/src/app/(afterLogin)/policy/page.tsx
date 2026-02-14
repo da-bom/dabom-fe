@@ -3,12 +3,13 @@
 import { useState } from "react";
 
 import { MainBox } from "@shared";
-import { POLICY } from "src/data/policy";
 import { FilterType } from "src/types/FilterType";
 import { formatPolicy } from "src/utils/formatPolicy";
 
 import Table from "@admin/components/Table";
 import FilterBar from "@admin/components/policy/FilterBar";
+
+import { POLICY } from "../../../../../../packages/shared/src/data/policy";
 
 const PolicyPage = () => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("ALL");

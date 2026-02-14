@@ -1,8 +1,8 @@
 import { Badge, Button, Icon, SubBox, formatSize } from "@shared";
 import dayjs from "dayjs";
-import { FAMILY_DETAIL } from "src/data/familyDetail";
 import { formatFamily } from "src/utils/formatFamily";
 
+import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
 import Table from "../Table";
 
 const FamilyDetail = ({

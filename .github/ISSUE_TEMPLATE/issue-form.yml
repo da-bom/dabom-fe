@@ -1,40 +1,53 @@
-name: '이슈 생성'
-description: 'Repo에 이슈를 생성합니다.'
-title: '이슈 이름을 작성해주세요'
-labels: [Feat]
+name: "📌 Issue"
+description: "이슈 템플릿"
+title: "[TYPE] DABOM-xxx "
+labels: []
 
 body:
   - type: input
     id: parentKey
     attributes:
-      label: '🎟️ 상위 작업 (Ticket Number)'
-      description: '상위 작업의 Ticket Number를 기입해주세요'
-      placeholder: 'UPLUS-00'
+      label: "🎟️ 상위 작업 (Ticket Number)"
+      description: "상위 작업의 Ticket Number를 기입해주세요"
+      placeholder: "DABOM-00"
+    validations:
+      required: true
+
+  - type: input
+    id: jiraKey
+    attributes:
+      label: "🎟️ 지라 티켓 (Ticket Number)"
+      description: "Jira Ticket Number를 기입해주세요 (예: DABOM-56, DABOM-123)"
+      value: "DABOM-xxx"
     validations:
       required: true
 
   - type: input
     id: branch
     attributes:
-      label: '🌳 브랜치명 (Branch)'
-      description: '영어로 브랜치명을 작성해주세요'
+      label: "🌳 브랜치명 (Branch)"
+      description: "영어로 브랜치명을 작성해주세요 (예: feat/DABOM-56, fix/DABOM-123)"
+      value: "{type}/DABOM-xxx"
     validations:
       required: true
 
   - type: textarea
     id: description
     attributes:
-      label: '📝 상세 내용 (Description)'
-      description: '이슈에 대해서 간략히 설명해주세요'
+      label: "📝 상세 내용 (Description)"
+      description: "이슈에 대해서 간략히 설명해주세요"
     validations:
       required: true
 
   - type: textarea
     id: tasks
     attributes:
-      label: '✅ TO-DO LIST'
-      description: '해당 이슈에 대해 구체적인 할 일을 작성해주세요'
+      label: "✅ TO-DO LIST"
+      description: "해당 이슈에 대해 구체적인 할 일을 작성해주세요"
       value: |
+        이슈에 대한 설명
+
+        ### ✅ TO-DO LIST
         - [ ] Task1
         - [ ] Task2
     validations:
@@ -43,7 +56,7 @@ body:
   - type: textarea
     id: extra
     attributes:
-      label: '📌 기타 사항'
+      label: "📌 기타 사항"
       description: |
         참고사항, 논의 필요 사항, 스크린샷 링크,
       placeholder: |

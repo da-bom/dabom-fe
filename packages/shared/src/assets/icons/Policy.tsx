@@ -1,5 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
+
 const SvgPolicy = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="23"

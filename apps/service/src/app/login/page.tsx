@@ -19,7 +19,10 @@ export default function LoginPage() {
   return (
     <div className="bg-background-base min-h-screen">
       <main className="px-5 pt-53.25">
-        <form onSubmit={handleLogin} className="flex flex-col gap-8">
+        <form
+          onSubmit={handleLogin}
+          className="flex flex-col items-center gap-8"
+        >
           <div className="flex flex-col gap-10">
             <InputField
               label="전화번호"

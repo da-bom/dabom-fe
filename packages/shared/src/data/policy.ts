@@ -1,4 +1,4 @@
-import { PolicyType } from "src/types/policyType";
+import { PolicyType } from "../types/policyType";
 
 export const POLICY = {
   policies: [

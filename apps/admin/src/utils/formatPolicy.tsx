@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 import { Button, cn } from "@shared";
-import { PolicyType } from "src/types/policyType";
+
+import { PolicyType } from "@shared/types/policyType";
 
 export const formatPolicy = ({ policies }: { policies: PolicyType[] }) => {
   return policies.map((p) => {

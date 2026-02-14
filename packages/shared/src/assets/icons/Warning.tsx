@@ -19,3 +19,4 @@ const SvgWarning = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 export default SvgWarning;
+

@@ -1,4 +1,19 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgPerson = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}><path stroke="#101010" strokeWidth={2.25} d="M10 13.375c1.361 0 3.469.35 5.208 1.047.869.348 1.574.755 2.045 1.19.463.427.622.803.622 1.138v1.125H2.125V16.75c0-.335.16-.711.622-1.139.47-.434 1.176-.841 2.045-1.19 1.739-.696 3.847-1.046 5.208-1.046Zm0-11.25A3.374 3.374 0 0 1 13.375 5.5 3.374 3.374 0 0 1 10 8.875 3.374 3.374 0 0 1 6.625 5.5 3.374 3.374 0 0 1 10 2.125Z" /></svg>;
+
+const SvgPerson = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={20}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="#101010"
+      strokeWidth={2.25}
+      d="M10 13.375c1.361 0 3.469.35 5.208 1.047.869.348 1.574.755 2.045 1.19.463.427.622.803.622 1.138v1.125H2.125V16.75c0-.335.16-.711.622-1.139.47-.434 1.176-.841 2.045-1.19 1.739-.696 3.847-1.046 5.208-1.046Zm0-11.25A3.374 3.374 0 0 1 13.375 5.5 3.374 3.374 0 0 1 10 8.875 3.374 3.374 0 0 1 6.625 5.5 3.374 3.374 0 0 1 10 2.125Z"
+    />
+  </svg>
+);
 export default SvgPerson;

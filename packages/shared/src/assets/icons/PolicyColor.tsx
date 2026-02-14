@@ -1,5 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
+
 const SvgPolicyColor = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="23"
