@@ -1,5 +1,7 @@
 import { formatSize } from "@shared";
+
 import MemberCard from "@service/components/MemberCard";
+
 import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
 
 const DANGER_USAGE_THRESHOLD = 90;
@@ -24,7 +26,7 @@ export default function PolicyManagementPage() {
 
             const percent =
               rawLimit === 0 ? 0 : Math.min((rawUsed / rawLimit) * 100, 100);
-            
+
             const isDanger = percent >= DANGER_USAGE_THRESHOLD;
 
             return (

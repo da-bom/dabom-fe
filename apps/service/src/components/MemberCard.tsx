@@ -25,7 +25,6 @@ export default function MemberCard({
     <li className="w-full">
       <div className="flex w-full border-2 rounded-lg border-gray-200 bg-brand-white">
         <div className="my-4 flex w-full items-center justify-between px-4">
-          
           <div className="flex flex-col gap-1">
             <span className="text-body1-m text-brand-black">{name}</span>
             <span className="text-caption-m text-gray-800">{phoneNumber}</span>
@@ -42,7 +41,6 @@ export default function MemberCard({
                 className="h-full bg-primary transition-all duration-300 rounded-sm"
                 style={{ width: `${usagePercent}%` }}
                 role="progressbar"
-                
                 aria-valuenow={usagePercent}
                 aria-valuemin={0}
                 aria-valuemax={100}
