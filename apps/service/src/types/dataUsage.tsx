@@ -10,7 +10,7 @@ export interface ApiFamilyDetail {
   currentMonth: string;
 }
 
-export interface ViewMember {
+export interface CustomorDetail {
   id: number;
   name: string;
   role: string;
@@ -26,6 +26,6 @@ export interface DashboardViewModel {
   totalLimitGB: number;
   usagePercent: number;
   displayDate: string;
-  members: ViewMember[];
+  members: CustomorDetail[];
   chartGradient: string;
 }

@@ -1,15 +1,15 @@
 import { Icon } from "@shared";
+import { CustomorDetail } from "src/types/dataUsage";
 
-import { ViewMember } from "../types/dataUsage";
-
-interface MemberItemProps {
-  member: ViewMember;
+interface CustomorItemProps {
+  customor: CustomorDetail;
 }
 
 const WARNING_THRESHOLD = 0.6;
 
-const MemberItem = ({ member }: MemberItemProps) => {
-  const usageRatio = member.limitGB > 0 ? member.usageGB / member.limitGB : 0;
+const CustomorItem = ({ customor }: CustomorItemProps) => {
+  const usageRatio =
+    customor.limitGB > 0 ? customor.usageGB / customor.limitGB : 0;
   const showWarning = usageRatio >= WARNING_THRESHOLD;
 
   return (
@@ -17,8 +17,8 @@ const MemberItem = ({ member }: MemberItemProps) => {
       <div className="h-8 w-8 rounded-full bg-gray-200" />
 
       <div className="flex items-center gap-2 pt-1">
-        <span className="text-body2-d">{member.name}</span>
-        {member.isMe && (
+        <span className="text-body2-d">{customor.name}</span>
+        {customor.isMe && (
           <span className="bg-primary text-caption-d rounded-full px-3 py-0.5 text-[13px] text-white">
             나
           </span>
@@ -27,8 +27,8 @@ const MemberItem = ({ member }: MemberItemProps) => {
 
       <div className="flex flex-col items-end gap-1 pt-1">
         <div className="text-body2-d">
-          <span>{member.usageGB}GB</span>
-          <span>/{member.limitGB}GB</span>
+          <span>{customor.usageGB}GB</span>
+          <span>/{customor.limitGB}GB</span>
         </div>
 
         {showWarning && (
@@ -49,4 +49,4 @@ const MemberItem = ({ member }: MemberItemProps) => {
   );
 };
 
-export default MemberItem;
+export default CustomorItem;

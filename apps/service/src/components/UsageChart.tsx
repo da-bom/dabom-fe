@@ -2,21 +2,20 @@
 
 import SubBox from "@repo/shared/src/components/SubBox";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-
-import { ViewMember } from "../types/dataUsage";
+import { CustomorDetail } from "src/types/dataUsage";
 
 interface Props {
-  members: ViewMember[];
+  customors: CustomorDetail[];
   totalUsageGB: number;
 }
 
-const MemberChartView = ({ members, totalUsageGB }: Props) => {
+const UsageChart = ({ customors, totalUsageGB }: Props) => {
   const isEmpty = totalUsageGB === 0;
 
   const chartData = isEmpty
     ? // TODO: 임시로 지정 API 연동할때 바꿀 에쩡
       [{ id: "empty", name: "Empty", usageGB: 1, color: "#F3F4F6" }]
-    : members;
+    : customors;
 
   return (
     <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center duration-500">
@@ -37,7 +36,7 @@ const MemberChartView = ({ members, totalUsageGB }: Props) => {
             >
               {chartData.map((entry, index) => (
                 <Cell
-                  key={`cell-${(entry as ViewMember).id || index}`}
+                  key={`cell-${(entry as CustomorDetail).id || index}`}
                   fill={entry.color}
                 />
               ))}
@@ -62,13 +61,13 @@ const MemberChartView = ({ members, totalUsageGB }: Props) => {
 
       <SubBox className="mt-2 w-full border-none bg-white p-4">
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-          {members.map((member) => (
-            <div key={member.id} className="flex items-center gap-2">
+          {customors.map((customor) => (
+            <div key={customor.id} className="flex items-center gap-2">
               <div
                 className="h-3 w-3 rounded-full shadow-sm ring-1 ring-white"
-                style={{ backgroundColor: member.color }}
+                style={{ backgroundColor: customor.color }}
               />
-              <span className="caption-m text-sm">{member.name}</span>
+              <span className="caption-m text-sm">{customor.name}</span>
             </div>
           ))}
         </div>
@@ -77,4 +76,4 @@ const MemberChartView = ({ members, totalUsageGB }: Props) => {
   );
 };
 
-export default MemberChartView;
+export default UsageChart;

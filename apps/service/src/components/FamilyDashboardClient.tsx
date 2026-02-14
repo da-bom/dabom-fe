@@ -8,12 +8,12 @@ import { Icon, MainBox } from "@shared";
 
 import { FAMILY_DETAIL } from "@shared/data/familyDetail";
 
-import MemberChartView from "@service/components/MemberChartView";
-import MemberListView from "@service/components/MemberListView";
+import CustomorList from "@service/components/CustomorList";
 import MonthNavigator from "@service/components/MonthNavigator";
 import ProgressBar from "@service/components/ProgressBar";
 
 import { CONFIG } from "../app/(afterLogin)/home/contents";
+import UsageChart from "./UsageChart";
 
 const FamilyDashboardClient = () => {
   const router = useRouter();
@@ -46,7 +46,7 @@ const FamilyDashboardClient = () => {
   const totalLimitGB = bytesToGB(FAMILY_DETAIL.totalQuotaBytes);
   const usagePercent = FAMILY_DETAIL.usedPercent;
 
-  const members = FAMILY_DETAIL.customers.map((customer, index) => {
+  const customors = FAMILY_DETAIL.customers.map((customer, index) => {
     const isMe = index === 0;
     const usageRatio = customer.monthlyUsedBytes / customer.monthlyLimitBytes;
     const isWarning = usageRatio >= CONFIG.WARNING_THRESHOLD;
@@ -147,19 +147,16 @@ const FamilyDashboardClient = () => {
 
       <MainBox className="flex min-h-[400px] w-full flex-col border-none bg-white p-4 shadow-sm">
         <div className="h-full w-full">
-          {members.length === 0 ? (
+          {customors.length === 0 ? (
             <div className="flex flex-1 items-center justify-center text-gray-400">
               <p>등록된 가족 구성원이 없어요.</p>
             </div>
           ) : (
             <>
               {viewMode === "list" ? (
-                <MemberListView members={members} />
+                <CustomorList customors={customors} />
               ) : (
-                <MemberChartView
-                  members={members}
-                  totalUsageGB={totalUsageGB}
-                />
+                <UsageChart customors={customors} totalUsageGB={totalUsageGB} />
               )}
             </>
           )}
