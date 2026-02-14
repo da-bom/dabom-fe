@@ -31,8 +31,20 @@ const PolicyDetailModal = () => {
           <div className="border-[1px] border-gray-100" />
 
           <div className="flex flex-col gap-5">
-            <DropDown />
-            <DropDown />
+            <DropDown
+              options={["AMDIN", "OWNER", "MEMBER"]}
+              selectedOption={POLICY_DETAIL.requireRole}
+              setSelectedOption={() => {}}
+            />
+            <DropDown
+              options={[
+                "추가 사용량에 따라 요금 부과",
+                "느린 속도 무제한",
+                "데이터 사용 차단",
+              ]}
+              selectedOption={POLICY_DETAIL.default_rules.rule}
+              setSelectedOption={() => {}}
+            />
           </div>
           <div className="flex items-center">
             <span>상태</span>

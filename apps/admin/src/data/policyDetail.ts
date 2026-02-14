@@ -5,7 +5,7 @@ const POLICY_DETAIL = {
     "주어진 데이터를 모두 사용한 경우 초과된 사용량에 대해 처리한다.",
   type: "MANUAL_BLOCK",
   default_rules: {
-    rule: "QOS",
+    rule: "느린 속도 무제한",
   },
   requireRole: "ADMIN",
   isActive: true,
