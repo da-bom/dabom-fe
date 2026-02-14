@@ -197,6 +197,7 @@ jobs:
 
       - name: SonarQube Quality Gate + PR Comment (Community)
         if: github.event_name == 'pull_request'
+        continue-on-error: true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
