@@ -1,19 +1,22 @@
 import cn from "../utils/cn";
 import Icon from "./Icon";
 
+interface SwitchProps {
+  children: React.ReactNode;
+  type: "primary" | "secondary" | "gray";
+  radius: "full" | "half";
+  onClick: () => void;
+}
+
 const Switch = ({
   children,
   type,
   radius,
   onClick,
-}: {
-  children: React.ReactNode;
-  type: "primary" | "secondary" | "gray";
-  radius: "full" | "half";
-  onClick: () => void;
-}) => {
+}: Readonly<SwitchProps>) => { 
   return (
-    <div
+    <button
+      type="button" 
       className={cn(
         "flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-4 py-1",
         type === "primary" && "border-primary bg-primary-50",
@@ -29,7 +32,7 @@ const Switch = ({
         name="Change"
         className={type === "gray" ? "text-gray-800" : "text-primary"}
       />
-    </div>
+    </button>
   );
 };
 
