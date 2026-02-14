@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 
 import { Icon, MainBox } from "@shared";
 
+import { FAMILY_DETAIL } from "@shared/data/familyDetail";
+
 import { MemberChartView } from "@service/components/MemberChartView";
 import { MemberListView } from "@service/components/MemberListView";
 import { MonthNavigator } from "@service/components/MonthNavigator";
 import { ProgressBar } from "@service/components/ProgressBar";
 
-import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
 import { CONFIG } from "./contents";
 
 interface Props {
@@ -106,7 +107,7 @@ export default function FamilyDashboardClient({
 
   return (
     <div className="mt-15.25 flex w-full flex-col gap-6 px-5 pb-20">
-      <MainBox className="w-full overflow-visible border-none pb-5.75 pl-5.25 pr-5.25 pt-5.25">
+      <MainBox className="w-full overflow-visible border-none pt-5.25 pr-5.25 pb-5.75 pl-5.25">
         <div className="relative flex justify-between">
           <div className="flex flex-col gap-3.5 pt-2">
             <h2 className="text-body1-m text-brand-dark">현재 데이터 사용량</h2>
@@ -120,7 +121,7 @@ export default function FamilyDashboardClient({
             </div>
           </div>
 
-          <div className="z-10 -mr-2 -mt-16 flex-shrink-0">
+          <div className="z-10 -mt-16 -mr-2 flex-shrink-0">
             <Icon name="Bomi" width={140} height={140} />
           </div>
         </div>
