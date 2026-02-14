@@ -1,4 +1,5 @@
-import { Badge, cn } from "@shared";
+import React from "react";
+import { cn } from "@shared";
 
 interface NotiBoxProps {
   title: string;
@@ -16,19 +17,24 @@ export const NotiBox = ({
   return (
     <div
       className={cn(
-        "h-[80px] w-full",
-        "flex flex-col justify-center px-5",
-        "bg-brand-white rounded-lg border shadow-sm transition-all",
-
-        !isRead ? "border-primary-400" : "border-grayscale-200",
-        className,
+        "flex w-full flex-col justify-center px-4 h-[80px]",
+        "bg-brand-white rounded-[14px] border-2 transition-all",
+        
+        !isRead ? "border-primary" : "border-gray-200",
+        className
       )}
     >
       <div className="flex items-center gap-2">
-        {!isRead && <Badge color="primary">NEW</Badge>}
-        <h3 className="text-body1-m truncate">{title}</h3>
+        {!isRead && (
+          <span className="flex h-[18px] w-[54px] items-center justify-center rounded-full bg-primary text-[13px] font-medium text-brand-white leading-[140%]">
+            NEW
+          </span>
+        )}
+        <h3 className="text-body1-m font-medium text-brand-black truncate">
+          {title}
+        </h3>
       </div>
-      <p className="text-body2-m text-grayscale-600 line-clamp-1">
+      <p className="text-body2-m text-gray-700 mt-1 line-clamp-1">
         {description}
       </p>
     </div>
