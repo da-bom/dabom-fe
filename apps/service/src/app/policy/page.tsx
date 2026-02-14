@@ -1,7 +1,5 @@
 import { formatSize } from "@shared";
-
 import MemberCard from "@service/components/MemberCard";
-
 import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
 
 export default function PolicyManagementPage() {
@@ -9,7 +7,7 @@ export default function PolicyManagementPage() {
 
   return (
     <section className="flex w-full bg-background-base">
-      <div className="mx-auto mb-4 mt-4 w-[calc(100%-32px)]">
+      <div className="mb-4 mt-4 w-full px-4">
         <h2 className="mb-4 text-body1-m text-brand-black">
           변경을 원하는 구성원을 선택하세요.
         </h2>
