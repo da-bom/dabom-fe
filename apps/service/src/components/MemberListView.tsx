@@ -1,13 +1,11 @@
-import React from "react";
-
 import { ViewMember } from "../types/dataUsage";
-import { MemberItem } from "./MemberItem";
+import MemberItem from "./MemberItem";
 
 interface MemberListViewProps {
   members: ViewMember[];
 }
 
-export const MemberListView = ({ members }: MemberListViewProps) => {
+const MemberListView = ({ members }: MemberListViewProps) => {
   return (
     <ul className="flex flex-col gap-8">
       {members.map((member) => (
@@ -16,3 +14,5 @@ export const MemberListView = ({ members }: MemberListViewProps) => {
     </ul>
   );
 };
+
+export default MemberListView;

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Icon } from "@shared";
 
 import { ViewMember } from "../types/dataUsage";
@@ -10,7 +8,7 @@ interface MemberItemProps {
 
 const WARNING_THRESHOLD = 0.6;
 
-export const MemberItem = ({ member }: MemberItemProps) => {
+const MemberItem = ({ member }: MemberItemProps) => {
   const usageRatio = member.limitGB > 0 ? member.usageGB / member.limitGB : 0;
   const showWarning = usageRatio >= WARNING_THRESHOLD;
 
@@ -50,3 +48,5 @@ export const MemberItem = ({ member }: MemberItemProps) => {
     </li>
   );
 };
+
+export default MemberItem;

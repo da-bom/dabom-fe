@@ -7,7 +7,7 @@ interface NotiBoxProps {
   className?: string;
 }
 
-export const NotiBox = ({
+const NotiBox = ({
   title,
   description,
   isRead = true,
@@ -34,3 +34,5 @@ export const NotiBox = ({
     </div>
   );
 };
+
+export default NotiBox;

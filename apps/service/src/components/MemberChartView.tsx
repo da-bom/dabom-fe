@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import SubBox from "@repo/shared/src/components/SubBox";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -12,11 +10,12 @@ interface Props {
   totalUsageGB: number;
 }
 
-export const MemberChartView = ({ members, totalUsageGB }: Props) => {
+const MemberChartView = ({ members, totalUsageGB }: Props) => {
   const isEmpty = totalUsageGB === 0;
 
   const chartData = isEmpty
-    ? [{ id: "empty", name: "Empty", usageGB: 1, color: "#F3F4F6" }] // 임시로 지정 API 연동할때 바꿀 에쩡
+    ? // TODO: 임시로 지정 API 연동할때 바꿀 에쩡
+      [{ id: "empty", name: "Empty", usageGB: 1, color: "#F3F4F6" }]
     : members;
 
   return (
@@ -77,3 +76,5 @@ export const MemberChartView = ({ members, totalUsageGB }: Props) => {
     </div>
   );
 };
+
+export default MemberChartView;
