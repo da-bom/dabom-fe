@@ -1,15 +1,13 @@
 import { Icon } from "@shared";
-import { CustomorDetail } from "src/types/dataUsage";
-
-interface CustomorItemProps {
-  customor: CustomorDetail;
-}
+import { CustomerListType } from "src/types/dataUsage";
 
 const WARNING_THRESHOLD = 0.6;
 
-const CustomorItem = ({ customor }: CustomorItemProps) => {
+const CustomerItem = ({ customer }: { customer: CustomerListType }) => {
   const usageRatio =
-    customor.limitGB > 0 ? customor.usageGB / customor.limitGB : 0;
+    customer.monthlyLimitBytes > 0
+      ? customer.monthlyUsedBytes / customer.monthlyLimitBytes
+      : 0;
   const showWarning = usageRatio >= WARNING_THRESHOLD;
 
   return (
@@ -17,8 +15,8 @@ const CustomorItem = ({ customor }: CustomorItemProps) => {
       <div className="h-8 w-8 rounded-full bg-gray-200" />
 
       <div className="flex items-center gap-2 pt-1">
-        <span className="text-body2-d">{customor.name}</span>
-        {customor.isMe && (
+        <span className="text-body2-d">{customer.name}</span>
+        {customer.isMe && (
           <span className="bg-primary text-caption-d rounded-full px-3 py-0.5 text-[13px] text-white">
             나
           </span>
@@ -27,8 +25,8 @@ const CustomorItem = ({ customor }: CustomorItemProps) => {
 
       <div className="flex flex-col items-end gap-1 pt-1">
         <div className="text-body2-d">
-          <span>{customor.usageGB}GB</span>
-          <span>/{customor.limitGB}GB</span>
+          <span>{customer.monthlyUsedBytes}GB</span>
+          <span>/{customer.monthlyLimitBytes}GB</span>
         </div>
 
         {showWarning && (
@@ -49,4 +47,4 @@ const CustomorItem = ({ customor }: CustomorItemProps) => {
   );
 };
 
-export default CustomorItem;
+export default CustomerItem;

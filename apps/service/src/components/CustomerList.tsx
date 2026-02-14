@@ -1,15 +1,15 @@
 import { CustomerListType } from "src/types/dataUsage";
 
-import CustomorItem from "./CustomorItem";
+import CustomerItem from "./CustomerItem";
 
-const CustomorList = ({ customers }: { customers: CustomerListType[] }) => {
+const CustomerList = ({ customers }: { customers: CustomerListType[] }) => {
   return (
     <ul className="flex flex-col gap-8">
       {customers.map((customer) => (
-        <CustomorItem key={customer.customerId} customor={customer} />
+        <CustomerItem key={customer.customerId} customer={customer} />
       ))}
     </ul>
   );
 };
 
-export default CustomorList;
+export default CustomerList;

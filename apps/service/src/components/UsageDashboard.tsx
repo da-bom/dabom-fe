@@ -4,41 +4,33 @@ import { useEffect, useState } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import bytesToGB from "@repo/shared/src/utils/bytestoGB";
 import { Icon, MainBox } from "@shared";
-import CUSTOMER_LIST from "src/data/customorList";
+import CUSTOMER_LIST from "src/data/customerList";
 
-import CustomorList from "@service/components/CustomerList";
 import MonthNavigator from "@service/components/MonthNavigator";
 import ProgressBar from "@service/components/ProgressBar";
 
+import CustomerList from "./CustomerList";
 import UsageChart from "./UsageChart";
 
-const FamilyDashboardClient = () => {
+const UsageDashboard = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const queryYear = Number(searchParams.get("year")) || 2026;
-  const queryMonth = Number(searchParams.get("month")) || 1;
-  const queryView = (searchParams.get("view") as "list" | "chart") || "list";
-
-  const [year, setYear] = useState(queryYear);
-  const [month, setMonth] = useState(queryMonth);
-  const [viewMode, setViewMode] = useState<"list" | "chart">(queryView);
+  const year = Number(searchParams.get("year")) || 2026;
+  const month = Number(searchParams.get("month")) || 1;
+  const viewMode = (searchParams.get("view") as "list" | "chart") || "list";
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    setYear(queryYear);
-    setMonth(queryMonth);
-    setViewMode(queryView);
-  }, [queryYear, queryMonth, queryView]);
+  if (!isMounted) return null;
 
-  const bytesToGB = (bytes: number) =>
-    Number((bytes / (1024 * 1024 * 1024)).toFixed(1));
+  console.log("render", year, month, viewMode);
 
   const totalUsedBytes = CUSTOMER_LIST.customers.reduce(
     (acc, curr) => acc + curr.monthlyUsedBytes,
@@ -90,67 +82,65 @@ const FamilyDashboardClient = () => {
     updateUrl(year, month, newMode);
   };
 
-  if (!isMounted) return null;
-
   return (
-    <div className="flex w-full flex-col gap-6 px-5 pb-24">
-      <MainBox className="relative w-full overflow-visible border-none p-5 shadow-sm">
+    <div className="flex w-full flex-col gap-8 px-5 pt-15">
+      <MainBox className="w-full p-5">
         <div className="flex flex-col gap-2">
-          <span className="text-body1-m text-gray-600">현재 데이터 사용량</span>
+          <span className="text-body1-m text-brand-dark">
+            현재 데이터 사용량
+          </span>
           <div className="flex items-baseline gap-2">
             <span className="text-main-m text-4xl font-bold">
               {totalUsageGB}GB
             </span>
-            <span className="text-body2-m text-gray-400">
+            <span className="text-body2-m text-gray-600">
               / {totalLimitGB}GB
             </span>
           </div>
         </div>
-        <Icon
-          className="absolute top-0 right-0 z-10 -mt-12 -mr-2"
-          name="Bomi"
-        />
+        <Icon className="-mt-35 -mr-2 ml-auto block" name="Bomi" />
         <div className="mt-6">
           <ProgressBar value={usagePercent} className="h-4" />
         </div>
       </MainBox>
 
-      <div className="flex w-full items-center justify-between">
+      <div className="flex flex-col">
         <MonthNavigator
           currentDateText={displayDate}
           onPrev={handlePrevMonth}
           onNext={handleNextMonth}
         />
+        {/* TODO: 디자인 수정 */}
         <button
           onClick={toggleViewMode}
-          className="text-caption-m text-gray-500 underline underline-offset-4"
+          className="text-caption-m cursor-pointer text-gray-500 underline underline-offset-4"
         >
           {viewMode === "list" ? "📊 차트 보기" : "📋 리스트 보기"}
         </button>
       </div>
 
-      <MainBox className="flex min-h-[400px] w-full flex-col border-none bg-white p-4 shadow-sm">
-        <div className="h-full w-full">
-          {CUSTOMER_LIST.customers.length === 0 ? (
-            <div className="flex flex-1 items-center justify-center text-gray-400">
-              <p>등록된 가족 구성원이 없어요.</p>
-            </div>
-          ) : (
-            <>
-              {viewMode === "list" ? (
-                <CustomorList customers={CUSTOMER_LIST.customers} />
-              ) : (
+      <MainBox className="w-full p-5">
+        {CUSTOMER_LIST.customers.length === 0 ? (
+          <div className="flex flex-1 items-center justify-center text-gray-400">
+            <p>등록된 가족 구성원이 없어요.</p>
+          </div>
+        ) : (
+          <>
+            {viewMode === "list" ? (
+              <CustomerList customers={CUSTOMER_LIST.customers} />
+            ) : (
+              <div className="aspect-square w-full max-w-[280px]">
                 <UsageChart
                   customers={CUSTOMER_LIST.customers}
                   totalUsageGB={totalUsageGB}
                 />
-              )}
-            </>
-          )}
-        </div>
+              </div>
+            )}
+          </>
+        )}
       </MainBox>
     </div>
   );
 };
 
-export default FamilyDashboardClient;
+export default UsageDashboard;

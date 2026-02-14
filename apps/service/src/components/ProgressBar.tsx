@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@shared";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+
+// import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 type ProgressBarSize = "md"; // 나중에 더 추가할 예정
 
@@ -21,7 +22,7 @@ const ProgressBar = ({ value, size = "md", className }: ProgressBarProps) => {
 
   return (
     <div className={cn("w-full", height, className)}>
-      <ResponsiveContainer width="100%" height="100%">
+      {/* <ResponsiveContainer width="100%" height="100%">
         <BarChart
           layout="vertical"
           data={data}
@@ -41,7 +42,7 @@ const ProgressBar = ({ value, size = "md", className }: ProgressBarProps) => {
             background={{ fill: "var(--color-gray-100)", radius: 10 }}
           />
         </BarChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer> */}
     </div>
   );
 };

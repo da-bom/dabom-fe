@@ -1,4 +1,4 @@
-const CUSTOMOR_LIST = {
+const CUSTOMER_LIST = {
   familyId: 100,
   familyName: "김씨 가족",
   year: 2024,
@@ -39,4 +39,4 @@ const CUSTOMOR_LIST = {
   ],
 };
 
-export default CUSTOMOR_LIST;
+export default CUSTOMER_LIST;

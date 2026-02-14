@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 
-import FamilyDashboardClient from "@service/components/FamilyDashboardClient";
+import UsageDashboard from "@service/components/UsageDashboard";
 
-const FamilyDashboardPage = () => {
+const UsageDashboardPage = () => {
   return (
     <Suspense>
-      <FamilyDashboardClient />
+      <UsageDashboard />
     </Suspense>
   );
 };
 
-export default FamilyDashboardPage;
+export default UsageDashboardPage;
