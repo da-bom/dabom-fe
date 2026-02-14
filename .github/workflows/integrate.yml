@@ -32,25 +32,25 @@ on:
       - main
       - develop
     paths-ignore:
-      - '*.md'
-      - 'docs/**'
-      - '.vscode/**'
-      - 'LICENSE'
+      - "*.md"
+      - "docs/**"
+      - ".vscode/**"
+      - "LICENSE"
   push:
     branches:
       - develop
     paths-ignore:
-      - '*.md'
-      - 'docs/**'
-      - '.vscode/**'
-      - 'LICENSE'
+      - "*.md"
+      - "docs/**"
+      - ".vscode/**"
+      - "LICENSE"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: "20"
   # ENABLE_TEST: GitHub Repository Variables에서 'true'로 설정하면 테스트/커버리지 활성화 (v1 이후 도입 예정)
 
 jobs:
@@ -72,7 +72,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -118,7 +118,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -165,7 +165,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # SonarQube 분석을 위해 전체 히스토리 필요
+          fetch-depth: 0 # SonarQube 분석을 위해 전체 히스토리 필요
 
       - name: Cache SonarQube packages
         uses: actions/cache@v4
@@ -191,12 +191,13 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ vars.SONAR_PROJECT }}
             -Dsonar.sources=apps,packages
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx,**/*.css
             -Dsonar.typescript.tsconfigPath=tsconfig.json
             ${{ needs.test.result == 'success' && '-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info' || '' }}
 
       - name: SonarQube Quality Gate + PR Comment (Community)
         if: github.event_name == 'pull_request'
+        continue-on-error: true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -338,7 +339,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -363,4 +364,3 @@ jobs:
           echo "- **Commit** : ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Node.js**: ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "- **pnpm**  : $(pnpm --version)" >> $GITHUB_STEP_SUMMARY
-

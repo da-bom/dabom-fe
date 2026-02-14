@@ -1,4 +1,4 @@
-import { CustomerDetail } from "src/types/FamilyType";
+import { CustomerDetail } from "../types/familyType";
 
 export const FAMILY_DETAIL = {
   familyId: 100,
