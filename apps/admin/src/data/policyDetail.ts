@@ -1,14 +1,13 @@
 const POLICY_DETAIL = {
   policyId: 10,
-  name: "야간 차단 기본",
-  description: "정책 상세 정보.....",
-  type: "TIME_BLOCK",
+  name: "데이터 소진 시 처리",
+  description:
+    "주어진 데이터를 모두 사용한 경우 초과된 사용량에 대해 처리한다.",
+  type: "MANUAL_BLOCK",
   default_rules: {
-    start: "22:00",
-    end: "07:00",
-    timezone: "Asia/Seoul",
+    rule: "QOS",
   },
-  requireRole: "OWNER",
+  requireRole: "ADMIN",
   isActive: true,
   isSystem: false,
   createdAt: "2024-01-01T00:00:00Z",
