@@ -16,7 +16,7 @@ export const MemberItem = ({ member }: MemberItemProps) => {
 
   return (
     <li className="grid grid-cols-[auto_1fr_auto] items-start gap-4">
-      <div className="bg-gray-200 h-8 w-8 rounded-full" />
+      <div className="h-8 w-8 rounded-full bg-gray-200" />
 
       <div className="flex items-center gap-2 pt-1">
         <span className="text-body2-d">{member.name}</span>
