@@ -19,7 +19,7 @@ directories.forEach((dir) => {
       ) {
         const name = file.replace(/\.(tsx|ts)$/, "");
 
-        content += `export { default as ${name} } from './${dir}/${name}';\n`;
+        content += `export { default as ${name} } from "./${dir}/${name}";\n`;
       }
     });
   }

@@ -1,8 +1,10 @@
-export { default as Back } from "./Back";
 export { default as Bell } from "./Bell";
 export { default as BellColor } from "./BellColor";
 export { default as Bomi } from "./Bomi";
 export { default as Change } from "./Change";
+export { default as Check } from "./Check";
+export { default as Chevron } from "./Chevron";
+export { default as Deactive } from "./Deactive";
 export { default as EyeOff } from "./EyeOff";
 export { default as EyeOn } from "./EyeOn";
 export { default as Family } from "./Family";

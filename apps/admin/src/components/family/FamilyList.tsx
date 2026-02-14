@@ -2,7 +2,8 @@
 
 import { Icon } from "@shared";
 
-import { FAMILY } from "../../../../../packages/shared/src/data/family";
+import { FAMILY } from "@shared/data/family";
+
 import FamilyItem from "./FamilyItem";
 
 const FamilyList = ({

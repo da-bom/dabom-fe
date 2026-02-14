@@ -41,7 +41,7 @@ const Header = ({
             aria-label="Go back"
             className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100 active:bg-gray-200"
           >
-            <Icon name="Back" width={9.5} height={16} />
+            <Icon name="Chevron" width={9.5} height={16} />
           </button>
         )}
       </div>
