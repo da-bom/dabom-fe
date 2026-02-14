@@ -8,7 +8,7 @@ const POLICY_DETAIL = {
     rule: "느린 속도 무제한",
   },
   requireRole: "ADMIN",
-  isActive: true,
+  isActive: false,
   isSystem: false,
   createdAt: "2024-01-01T00:00:00Z",
   updatedAt: "2024-01-01T00:00:00Z",

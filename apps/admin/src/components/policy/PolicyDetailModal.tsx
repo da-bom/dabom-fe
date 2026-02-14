@@ -57,30 +57,36 @@ const PolicyDetailModal = () => {
               description="정책 활성화 시 즉시 모든 유저에게 적용됩니다."
             >
               <div className="flex items-center gap-4">
-                <Switch type="primary" radius="half" onClick={() => {}}>
-                  활성화
+                <Switch
+                  type={POLICY_DETAIL.isActive ? "primary" : "gray"}
+                  radius="half"
+                  onClick={() => {}}
+                >
+                  {POLICY_DETAIL.isActive ? "활성화" : "비활성화"}
                 </Switch>
               </div>
             </TextField>
 
-            <div className="ml-16">
-              <RadioGroup
-                options={[
-                  { label: "정책 수정 이후에만 적용하기", value: "after" },
-                  {
-                    label: "기존 값 덮어쓰기",
-                    value: "overwrite",
-                    subLabel: "유저가 설정했던 값이 모두 덮어씌워집니다.",
-                    isWarning: true,
-                  },
-                ]}
-                name="policy"
-                selectedValue=""
-                onChange={() => {
-                  // TODO: 변경하기 ...
-                }}
-              />
-            </div>
+            {POLICY_DETAIL.isActive && (
+              <div className="ml-16">
+                <RadioGroup
+                  options={[
+                    { label: "정책 수정 이후에만 적용하기", value: "after" },
+                    {
+                      label: "기존 값 덮어쓰기",
+                      value: "overwrite",
+                      subLabel: "유저가 설정했던 값이 모두 덮어씌워집니다.",
+                      isWarning: true,
+                    },
+                  ]}
+                  name="policy"
+                  selectedValue=""
+                  onChange={() => {
+                    // TODO: 변경하기 ...
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -97,10 +103,21 @@ const PolicyDetailModal = () => {
   );
 };
 
-// 작은 서브 컴포넌트들 (파일 분리 권장)
 const Badge = ({ active }: { active: boolean }) => (
-  <div className={`text-body1-d ${active ? "text-primary" : "text-gray-400"}`}>
-    {active ? "● 활성화" : "○ 비활성화"}
+  <div
+    className={`text-body1-d flex items-center gap-1 ${active ? "text-primary" : "text-gray-600"}`}
+  >
+    {active ? (
+      <>
+        <Icon name="Check" />
+        <span>활성화</span>
+      </>
+    ) : (
+      <>
+        <Icon name="Deactive" />
+        <span>비활성화</span>
+      </>
+    )}
   </div>
 );
 
