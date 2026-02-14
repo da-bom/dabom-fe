@@ -5,14 +5,12 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Icon, MainBox } from "@shared";
+import CUSTOMER_LIST from "src/data/customorList";
 
-import { FAMILY_DETAIL } from "@shared/data/familyDetail";
-
-import CustomorList from "@service/components/CustomorList";
+import CustomorList from "@service/components/CustomerList";
 import MonthNavigator from "@service/components/MonthNavigator";
 import ProgressBar from "@service/components/ProgressBar";
 
-import { CONFIG } from "../app/(afterLogin)/home/contents";
 import UsageChart from "./UsageChart";
 
 const FamilyDashboardClient = () => {
@@ -42,27 +40,16 @@ const FamilyDashboardClient = () => {
   const bytesToGB = (bytes: number) =>
     Number((bytes / (1024 * 1024 * 1024)).toFixed(1));
 
-  const totalUsageGB = bytesToGB(FAMILY_DETAIL.usedBytes);
-  const totalLimitGB = bytesToGB(FAMILY_DETAIL.totalQuotaBytes);
-  const usagePercent = FAMILY_DETAIL.usedPercent;
-
-  const customors = FAMILY_DETAIL.customers.map((customer, index) => {
-    const isMe = index === 0;
-    const usageRatio = customer.monthlyUsedBytes / customer.monthlyLimitBytes;
-    const isWarning = usageRatio >= CONFIG.WARNING_THRESHOLD;
-    const otherColorIndex = (index - 1) % CONFIG.COLORS.OTHERS.length;
-
-    return {
-      id: customer.customerId,
-      name: customer.name,
-      role: customer.role,
-      usageGB: bytesToGB(customer.monthlyUsedBytes),
-      limitGB: bytesToGB(customer.monthlyLimitBytes),
-      isMe,
-      alertMessage: isWarning ? "데이터를 많이 사용했어요" : null,
-      color: isMe ? CONFIG.COLORS.ME : CONFIG.COLORS.OTHERS[otherColorIndex],
-    };
-  });
+  const totalUsedBytes = CUSTOMER_LIST.customers.reduce(
+    (acc, curr) => acc + curr.monthlyUsedBytes,
+    0,
+  );
+  const totalUsageGB = bytesToGB(totalUsedBytes);
+  const totalLimitGB = bytesToGB(CUSTOMER_LIST.totalQuotaBytes);
+  const usagePercent = Math.min(
+    Math.round((totalUsedBytes / CUSTOMER_LIST.totalQuotaBytes) * 100),
+    100,
+  );
 
   const displayDate = `${year}년 ${month}월`;
 
@@ -75,7 +62,6 @@ const FamilyDashboardClient = () => {
     params.set("year", nextYear.toString());
     params.set("month", nextMonth.toString());
     params.set("view", nextView);
-
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -120,12 +106,10 @@ const FamilyDashboardClient = () => {
             </span>
           </div>
         </div>
-
         <Icon
           className="absolute top-0 right-0 z-10 -mt-12 -mr-2"
           name="Bomi"
         />
-
         <div className="mt-6">
           <ProgressBar value={usagePercent} className="h-4" />
         </div>
@@ -147,16 +131,19 @@ const FamilyDashboardClient = () => {
 
       <MainBox className="flex min-h-[400px] w-full flex-col border-none bg-white p-4 shadow-sm">
         <div className="h-full w-full">
-          {customors.length === 0 ? (
+          {CUSTOMER_LIST.customers.length === 0 ? (
             <div className="flex flex-1 items-center justify-center text-gray-400">
               <p>등록된 가족 구성원이 없어요.</p>
             </div>
           ) : (
             <>
               {viewMode === "list" ? (
-                <CustomorList customors={customors} />
+                <CustomorList customers={CUSTOMER_LIST.customers} />
               ) : (
-                <UsageChart customors={customors} totalUsageGB={totalUsageGB} />
+                <UsageChart
+                  customers={CUSTOMER_LIST.customers}
+                  totalUsageGB={totalUsageGB}
+                />
               )}
             </>
           )}
