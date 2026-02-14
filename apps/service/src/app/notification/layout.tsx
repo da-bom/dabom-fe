@@ -1,6 +1,6 @@
-import { Header, NavBar } from "@shared";
 import React from "react";
 
+import { Header, NavBar } from "@shared";
 
 export default function MainLayout({
   children,

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { cn } from "@shared";
 
 interface NotiBoxProps {
@@ -19,9 +20,9 @@ export const NotiBox = ({
       className={cn(
         "flex w-full flex-col justify-center px-4 h-[80px]",
         "bg-brand-white rounded-[14px] border-2 transition-all",
-        
+
         !isRead ? "border-primary" : "border-gray-200",
-        className
+        className,
       )}
     >
       <div className="flex items-center gap-2">

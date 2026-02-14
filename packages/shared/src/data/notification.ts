@@ -13,7 +13,7 @@ const RAW_NOTIFICATIONS: NotificationItem[] = Array.from({ length: 50 }).map(
     description: "아껴쓰걸아.",
     isRead: index > 4,
     createdAt: new Date(Date.now() - index * 1000 * 60 * 60).toISOString(),
-  })
+  }),
 );
 
 export const fetchNotifications = async (page: number, limit: number = 10) => {
@@ -21,7 +21,7 @@ export const fetchNotifications = async (page: number, limit: number = 10) => {
 
   const start = (page - 1) * limit;
   const end = start + limit;
-  
+
   const data = RAW_NOTIFICATIONS.slice(start, end);
 
   return {
