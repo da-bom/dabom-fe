@@ -1,9 +1,11 @@
 import React from "react";
 
+// 퍼블리싱 단계의 UI 컴포넌트
 interface MemberCardProps {
   name: string;
   phoneNumber: string;
-  usageText: string;
+  usedAmount: string;
+  totalAmount: string;
   usagePercent: number;
   isDanger: boolean;
 }
@@ -11,11 +13,14 @@ interface MemberCardProps {
 export default function MemberCard({
   name,
   phoneNumber,
-  usageText,
+  usedAmount,
+  totalAmount,
   usagePercent,
   isDanger,
 }: MemberCardProps) {
-  const statusColor = isDanger ? "text-negative" : "text-gray-800";
+  
+  const usedColor = isDanger ? "text-negative" : "text-gray-800";
+  const totalColor = "text-gray-800";
 
   return (
     <li className="w-full">
@@ -26,14 +31,15 @@ export default function MemberCard({
             <span className="text-caption-m text-gray-800">{phoneNumber}</span>
           </div>
           
-          <div className="flex flex-col items-end gap-1">
-            <span className={`text-caption-m ${statusColor}`}>
-              {usageText}
-            </span>
+          <div className="flex flex-col items-end gap-1 w-[80px]">
+            <div className="text-caption-m text-right w-full truncate">
+              <span className={usedColor}>{usedAmount} </span>
+              <span className={totalColor}>/ {totalAmount}</span>
+            </div>
             
-            <div className="h-[3.15px] w-[80px] bg-gray-100">
+            <div className="h-[3.15px] w-full bg-gray-100 rounded-sm overflow-hidden">
               <div
-                className="h-full bg-primary rounded-full"
+                className="h-full bg-primary transition-all duration-300 rounded-sm"
                 style={{ width: `${usagePercent}%` }}
                 role="progressbar"
               />
