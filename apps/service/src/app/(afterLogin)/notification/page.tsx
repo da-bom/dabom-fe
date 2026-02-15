@@ -26,7 +26,13 @@ export default function NotificationPage() {
     try {
       const response = await fetchNotifications(page);
 
-      setNotifications((prev) => [...prev, ...response.data]);
+      setNotifications((prev) => {
+        const existingIds = new Set(prev.map((item) => item.id));
+        const newItems = response.data.filter(
+          (item) => !existingIds.has(item.id),
+        );
+        return [...prev, ...newItems];
+      });
 
       setHasMore(response.hasMore);
 
@@ -80,14 +86,14 @@ export default function NotificationPage() {
             className="flex h-10 w-full items-center justify-center py-4"
           >
             {isLoading && (
-              <div className="border-t-primary h-6 w-6 animate-spin rounded-full border-2 border-gray-300" />
+              <div className="border-t-primary border-base h-6 w-6 animate-spin rounded-full border-2" />
             )}
           </div>
         )}
 
         {!hasMore && (
           // 알람 리스트의 개수가 많아 화면을 가득 채울 때 바텀의 도달점?을 일단 임의로 정했습니다. mt-8, mb-12
-          <p className="text-body2-m mt-8 mb-12 text-center text-gray-600">
+          <p className="text-body2-m text-subtle mt-8 mb-12 text-center">
             {NOTICE_MESSAGE}
           </p>
         )}
