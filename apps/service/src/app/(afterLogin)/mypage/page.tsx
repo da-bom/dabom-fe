@@ -29,8 +29,8 @@ const MyPage = () => {
         <Icon name="Chevron" className="rotate-180 text-gray-800" />
       </MainBox>
       <footer className="text-body2-m ml-2 flex flex-col gap-1 text-gray-800 underline">
-        <span>로그아웃</span>
-        <span>회원탈퇴</span>
+        <button>로그아웃</button>
+        <button>회원탈퇴</button>
       </footer>
     </div>
   );
