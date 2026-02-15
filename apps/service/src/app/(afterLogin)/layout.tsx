@@ -1,26 +1,23 @@
 import React from "react";
+
 import { Header, NavBar } from "@shared";
 
 export default function AfterLoginLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-background-base">
-      <div className="flex-none w-full z-50">
+    <div className="bg-background-base flex h-screen w-full flex-col overflow-hidden">
+      <div className="z-50 w-full flex-none">
         <Header />
       </div>
 
-      <main className="relative flex-1 w-full overflow-y-auto scrollbar-hide">
+      <main className="scrollbar-hide relative w-full flex-1 overflow-y-auto">
         {children}
-        
-        {modal}
       </main>
 
-      <div className="flex-none w-full z-50">
+      <div className="z-50 w-full flex-none">
         <NavBar />
       </div>
     </div>

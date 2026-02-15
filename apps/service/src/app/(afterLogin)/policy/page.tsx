@@ -1,8 +1,8 @@
 import { formatSize } from "@shared";
 
-import MemberCard from "@service/components/MemberCard";
 import { FAMILY_DETAIL } from "@shared/data/familyDetail";
 
+import MemberCard from "@service/components/MemberCard";
 
 const DANGER_USAGE_THRESHOLD = 90;
 
@@ -10,9 +10,9 @@ export default function PolicyManagementPage() {
   const { customers } = FAMILY_DETAIL;
 
   return (
-    <section className="flex w-full bg-background-base">
-      <div className="mb-4 mt-4 w-full px-4">
-        <h2 className="mb-4 text-body1-m text-brand-black">
+    <section className="bg-background-base flex w-full">
+      <div className="mt-4 mb-4 w-full px-4">
+        <h2 className="text-body1-m text-brand-black mb-4">
           변경을 원하는 구성원을 선택하세요.
         </h2>
 
