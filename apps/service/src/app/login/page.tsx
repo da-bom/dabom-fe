@@ -18,7 +18,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-background-base min-h-screen">
-      <main className="px-5 pt-53.25">
+      <main className="px-7.75 pt-53.25">
         <form
           onSubmit={handleLogin}
           className="flex flex-col items-center gap-8"
@@ -51,3 +51,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

@@ -21,7 +21,7 @@ const NavBar = () => {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: "홈", href: "/", icon: "Home", activeIcon: "HomeColor" },
+      { label: "홈", href: "/home", icon: "Home", activeIcon: "HomeColor" },
       {
         label: "정책",
         href: "/policy",

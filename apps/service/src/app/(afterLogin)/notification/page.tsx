@@ -7,7 +7,7 @@ import { NotiBox } from "@service/components/NotiBox";
 import {
   NotificationItem,
   fetchNotifications,
-} from "../../../../../packages/shared/src/data/notification";
+} from "../../../../../../packages/shared/src/data/notification";
 
 const NOTICE_MESSAGE = "30일이 지난 메세지는 자동 삭제됩니다.";
 

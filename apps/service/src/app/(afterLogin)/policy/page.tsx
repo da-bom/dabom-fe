@@ -1,8 +1,8 @@
 import { formatSize } from "@shared";
 
 import MemberCard from "@service/components/MemberCard";
+import { FAMILY_DETAIL } from "@shared/data/familyDetail";
 
-import { FAMILY_DETAIL } from "../../../../../packages/shared/src/data/familyDetail";
 
 const DANGER_USAGE_THRESHOLD = 90;
 

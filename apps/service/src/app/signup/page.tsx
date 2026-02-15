@@ -1,46 +1,45 @@
 "use client";
 
-import { useState } from "react";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import { Bomi, Button, Logo } from "@shared";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     router.push("/");
   };
 
   return (
-    <div className="bg-background-base min-h-screen">
-      <main className="px-5 pt-44.5">
-        <Bomi className="mx-auto animate-bounce" />
-        <Logo className="mx-auto h-7 w-38" />
+    <div className="bg-background-base min-h-screen w-full flex flex-col items-center">
+      <main className="w-full flex flex-col items-center">
+        
+        <div className="mt-56.25">
+          <Bomi className="w-[200px] h-[200px] mx-auto animate-bounce" />
+        </div>
 
-        <form onSubmit={handleLogin} className="flex flex-col gap-8">
-          <div className="flex flex-col gap-2">
-            <div className="mt-35 flex justify-center">
-              <Button type="submit" size="lg" color="dark">
-                회원가입
-              </Button>
-            </div>
+        <div className="mt-5.75">
+          <Logo className="mx-auto h-7 w-38" />
+        </div>
 
-            <section className="flex items-center justify-center gap-2 text-sm text-gray-600">
-              <span>이미 계정이 있다면?</span>
+        <form onSubmit={handleSignup} className="mt-35.5 w-82 flex flex-col gap-2">
+            <Button type="submit" size="lg" color="dark">
+              회원가입
+            </Button>
+
+          <section className="flex items-center justify-center gap-2 w-full h-4.25">
+            <span className="text-caption-m">
+              이미 계정이 있다면?
+            </span>
               <Link
                 href="/login"
-                className="font-medium text-black underline underline-offset-4 transition-colors hover:text-gray-800"
+                className="underline underline-offset-4"
               >
                 로그인
               </Link>
-            </section>
-          </div>
+          </section>
         </form>
       </main>
     </div>
