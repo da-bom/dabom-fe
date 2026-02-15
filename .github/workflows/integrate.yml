@@ -190,9 +190,6 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=${{ vars.SONAR_PROJECT }}
-            -Dsonar.sources=apps,packages
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.next/**,**/*.test.ts,**/*.test.tsx,**/*.css
-            -Dsonar.typescript.tsconfigPath=tsconfig.json
             ${{ needs.test.result == 'success' && '-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info' || '' }}
 
       - name: SonarQube Quality Gate + PR Comment (Community)
@@ -282,6 +279,12 @@ jobs:
             RESULT="FAILED"
           fi
 
+          if [ "$COVERAGE" = "0" ] && [ "${{ needs.test.result }}" != "success" ]; then
+            COVERAGE_DISPLAY="N/A (테스트 미활성)"
+          else
+            COVERAGE_DISPLAY="${COVERAGE}%"
+          fi
+
           BODY=$(cat <<EOF
           ## SonarQube Quality Summary (Community)
 
@@ -296,10 +299,10 @@ jobs:
           - 📎 Code Smells: ${SMELLS}
 
           ### Measures
-          - Coverage: ${COVERAGE}%
+          - Coverage: ${COVERAGE_DISPLAY}
           - Duplication: ${DUPLICATION}%
 
-          🔗 Dashboard: ${DASHBOARD_URL}&branch=${BRANCH}
+          🔗 Dashboard: ${DASHBOARD_URL}
 
           _Generated automatically by GitHub Actions._
           EOF
