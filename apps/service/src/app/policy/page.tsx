@@ -1,9 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { formatSize } from '@shared';
-import { FAMILY_DETAIL } from '@shared/data/familyDetail';
-import MemberCard from '@service/components/MemberCard';
+import React, { useState } from "react";
+
+import { formatSize } from "@shared";
+
+import { FAMILY_DETAIL } from "@shared/data/familyDetail";
+
+import MemberCard from "@service/components/MemberCard";
 
 interface CustomerState {
   id: string;
@@ -15,48 +18,55 @@ interface CustomerState {
 
 export default function PolicyManagementPage() {
   const { customers } = FAMILY_DETAIL;
-  
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  
-  const [memberStates, setMemberStates] = useState<Record<string, CustomerState>>(() => {
+
+  const [memberStates, setMemberStates] = useState<
+    Record<string, CustomerState>
+  >(() => {
     const initial: Record<string, CustomerState> = {};
-    customers.forEach(c => {
-      const initialLimitGB = Math.round(c.monthlyLimitBytes / (1024 * 1024 * 1024));
-      
+    customers.forEach((c) => {
+      const initialLimitGB = Math.round(
+        c.monthlyLimitBytes / (1024 * 1024 * 1024),
+      );
+
       initial[c.customerId.toString()] = {
         id: c.customerId.toString(),
         limitValue: initialLimitGB > 0 ? initialLimitGB : 50,
         isTimeEnabled: true,
-        timeStart: '23:00', 
-        timeEnd: '07:00',
+        timeStart: "23:00",
+        timeEnd: "07:00",
       };
     });
     return initial;
   });
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [editingTarget, setEditingTarget] = useState<{ id: string, type: 'start' | 'end' } | null>(null);
+  const [editingTarget, setEditingTarget] = useState<{
+    id: string;
+    type: "start" | "end";
+  } | null>(null);
 
   const handleSelectCard = (id: string) => {
-    setSelectedId(prev => prev === id ? null : id);
+    setSelectedId((prev) => (prev === id ? null : id));
   };
 
   const handleLimitChange = (id: string, newValue: number) => {
-    setMemberStates(prev => ({
+    setMemberStates((prev) => ({
       ...prev,
-      [id]: { ...prev[id], limitValue: newValue }
+      [id]: { ...prev[id], limitValue: newValue },
     }));
-    // TODO: 추후 여기에 API 호출 
+    // TODO: 추후 여기에 API 호출
   };
 
   const handleToggleTime = (id: string) => {
-    setMemberStates(prev => ({
+    setMemberStates((prev) => ({
       ...prev,
-      [id]: { ...prev[id], isTimeEnabled: !prev[id].isTimeEnabled }
+      [id]: { ...prev[id], isTimeEnabled: !prev[id].isTimeEnabled },
     }));
   };
 
-  const handleTimeClick = (id: string, type: 'start' | 'end') => {
+  const handleTimeClick = (id: string, type: "start" | "end") => {
     setEditingTarget({ id, type });
     setIsSheetOpen(true);
   };
@@ -64,12 +74,12 @@ export default function PolicyManagementPage() {
   const handleSaveTime = (newTime: string) => {
     if (editingTarget) {
       const { id, type } = editingTarget;
-      setMemberStates(prev => ({
+      setMemberStates((prev) => ({
         ...prev,
         [id]: {
           ...prev[id],
-          [type === 'start' ? 'timeStart' : 'timeEnd']: newTime
-        }
+          [type === "start" ? "timeStart" : "timeEnd"]: newTime,
+        },
       }));
     }
     setIsSheetOpen(false);
@@ -78,30 +88,30 @@ export default function PolicyManagementPage() {
 
   const handleCloseSheet = () => {
     if (editingTarget) {
-        const { id } = editingTarget;
-        setMemberStates(prev => ({
-            ...prev,
-            [id]: {
-                ...prev[id],
-                timeStart: null,
-                timeEnd: null
-            }
-        }));
+      const { id } = editingTarget;
+      setMemberStates((prev) => ({
+        ...prev,
+        [id]: {
+          ...prev[id],
+          timeStart: null,
+          timeEnd: null,
+        },
+      }));
     }
     setIsSheetOpen(false);
     setEditingTarget(null);
   };
 
-  const currentEditingTime = editingTarget 
-    ? (editingTarget.type === 'start' 
-        ? memberStates[editingTarget.id].timeStart 
-        : memberStates[editingTarget.id].timeEnd) 
-    : '00:00';
+  const currentEditingTime = editingTarget
+    ? editingTarget.type === "start"
+      ? memberStates[editingTarget.id].timeStart
+      : memberStates[editingTarget.id].timeEnd
+    : "00:00";
 
   return (
-    <section className="flex min-h-screen w-full justify-center bg-background-base">
+    <section className="bg-background-base flex min-h-screen w-full justify-center">
       <div className="mt-4 w-full px-4 pb-20">
-        <h2 className="mb-4 text-body1-m text-brand-black">
+        <h2 className="text-body1-m text-brand-black mb-4">
           변경을 원하는 구성원을 선택하세요.
         </h2>
 
@@ -109,11 +119,18 @@ export default function PolicyManagementPage() {
           {customers.map((customer) => {
             const id = customer.customerId.toString();
             const state = memberStates[id];
-            
+
             const formattedUsed = formatSize(customer.monthlyUsedBytes);
             const formattedLimit = formatSize(customer.monthlyLimitBytes);
-            const percent = customer.monthlyLimitBytes === 0 ? 0 : Math.min((customer.monthlyUsedBytes / customer.monthlyLimitBytes) * 100, 100);
-            
+            const percent =
+              customer.monthlyLimitBytes === 0
+                ? 0
+                : Math.min(
+                    (customer.monthlyUsedBytes / customer.monthlyLimitBytes) *
+                      100,
+                    100,
+                  );
+
             return (
               <MemberCard
                 key={id}
@@ -124,13 +141,11 @@ export default function PolicyManagementPage() {
                 totalAmount={formattedLimit.total}
                 usagePercent={percent}
                 isDanger={percent >= 90}
-                
                 isSelected={selectedId === id}
                 limitValue={state.limitValue}
                 isTimeEnabled={state.isTimeEnabled}
                 timeStart={state.timeStart}
                 timeEnd={state.timeEnd}
-                
                 onSelect={() => handleSelectCard(id)}
                 onLimitChange={(val) => handleLimitChange(id, val)}
                 onToggleTime={() => handleToggleTime(id)}

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 interface MemberCardProps {
   id: string;
@@ -18,7 +18,7 @@ interface MemberCardProps {
   isSelected: boolean;
   onSelect: () => void;
   onToggleTime: () => void;
-  onTimeClick: (type: 'start' | 'end') => void;
+  onTimeClick: (type: "start" | "end") => void;
 }
 
 export default function MemberCard({
@@ -39,14 +39,13 @@ export default function MemberCard({
   onToggleTime,
   onTimeClick,
 }: MemberCardProps) {
-  
   const percentage = (limitValue / 70) * 100;
 
   return (
     <li className="w-full list-none">
       <div
-        className={`flex w-full flex-col overflow-hidden rounded-2xl border-2 bg-brand-white transition-all duration-300 ease-in-out ${
-          isSelected ? 'border-primary shadow-default' : 'border-gray-200'
+        className={`bg-brand-white flex w-full flex-col overflow-hidden rounded-2xl border-2 transition-all duration-300 ease-in-out ${
+          isSelected ? "border-primary shadow-default" : "border-gray-200"
         }`}
       >
         <button
@@ -59,20 +58,24 @@ export default function MemberCard({
           <div className="flex w-full items-center justify-between">
             <div className="flex flex-col">
               <span className="text-body1-m text-brand-black">{name}</span>
-              <span className="text-caption-m text-gray-800">{phoneNumber}</span>
+              <span className="text-caption-m text-gray-800">
+                {phoneNumber}
+              </span>
             </div>
 
             <div className="flex flex-col items-end gap-1">
               <div className="text-caption-m leading-[140%]">
-                <span className={isDanger ? 'text-negative' : 'text-brand-black'}>
-                  {usedAmount}{' '}
+                <span
+                  className={isDanger ? "text-negative" : "text-brand-black"}
+                >
+                  {usedAmount}{" "}
                 </span>
                 <span className="text-gray-800">/ {totalAmount}</span>
               </div>
-              
+
               <div className="h-1 w-20 overflow-hidden rounded-full bg-gray-100">
                 <div
-                  className="h-full bg-primary transition-all duration-300"
+                  className="bg-primary h-full transition-all duration-300"
                   style={{ width: `${usagePercent}%` }}
                 />
               </div>
@@ -83,7 +86,7 @@ export default function MemberCard({
         <div
           id={`detail-${id}`}
           className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
-            isSelected ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+            isSelected ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >
           <div className="overflow-hidden">
@@ -93,23 +96,25 @@ export default function MemberCard({
               <div className="flex w-full flex-col gap-2">
                 <div className="flex w-full items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-sm bg-primary" />
+                    <div className="bg-primary h-3 w-3 rounded-sm" />
                     <span className="text-body1-m">데이터 사용 한도</span>
                   </div>
-                  <span className="text-body1-m font-bold text-primary-500">{limitValue}GB</span>
+                  <span className="text-body1-m text-primary-500 font-bold">
+                    {limitValue}GB
+                  </span>
                 </div>
 
                 <div className="grid h-8 w-full items-center">
                   <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
-                  <div 
-                    className="col-start-1 row-start-1 h-2 justify-self-start rounded-full bg-primary-500"
+                  <div
+                    className="bg-primary-500 col-start-1 row-start-1 h-2 justify-self-start rounded-full"
                     style={{ width: `${percentage}%` }}
                   />
-                  <div 
+                  <div
                     className="pointer-events-none col-start-1 row-start-1 flex w-full items-center"
                     style={{ marginLeft: `${percentage}%` }}
                   >
-                    <div className="h-4 w-4 -translate-x-1/2 rounded-full border-2 border-primary-500 bg-brand-white shadow-sm" />
+                    <div className="border-primary-500 bg-brand-white h-4 w-4 -translate-x-1/2 rounded-full border-2 shadow-sm" />
                   </div>
                   <input
                     type="range"
@@ -118,12 +123,12 @@ export default function MemberCard({
                     step="1"
                     value={limitValue}
                     onChange={(e) => onLimitChange(Number(e.target.value))}
-                    className="col-start-1 row-start-1 h-full w-full cursor-pointer opacity-0 touch-none"
+                    className="col-start-1 row-start-1 h-full w-full cursor-pointer touch-none opacity-0"
                     aria-label="데이터 한도 설정"
                   />
                 </div>
 
-                <div className="flex w-full justify-between text-caption-m text-gray-800">
+                <div className="text-caption-m flex w-full justify-between text-gray-800">
                   <span>0GB</span>
                   <span>70GB</span>
                 </div>
@@ -132,61 +137,62 @@ export default function MemberCard({
               <div className="flex w-full flex-col gap-4">
                 <div className="flex w-full items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-sm bg-primary" />
-                    <span className="text-body1-m text-brand-black">시간 제한</span>
+                    <div className="bg-primary h-3 w-3 rounded-sm" />
+                    <span className="text-body1-m text-brand-black">
+                      시간 제한
+                    </span>
                   </div>
-                  
+
                   <button
                     type="button"
                     onClick={onToggleTime}
                     role="switch"
                     aria-checked={isTimeEnabled}
                     className={`flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out ${
-                      isTimeEnabled ? 'bg-primary-500' : 'bg-gray-500'
+                      isTimeEnabled ? "bg-primary-500" : "bg-gray-500"
                     }`}
                   >
                     <div
-                      className={`h-3.5 w-3.5 rounded-full bg-brand-white shadow-default transition-transform duration-200 ease-in-out ${
-                        isTimeEnabled ? 'translate-x-3' : 'translate-x-0'
+                      className={`bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out ${
+                        isTimeEnabled ? "translate-x-3" : "translate-x-0"
                       }`}
                     />
                   </button>
                 </div>
 
                 {isTimeEnabled && timeStart && timeEnd ? (
-                  <div className="flex h-20 w-full flex-col items-center justify-center gap-2 rounded-lg bg-background-sub">
+                  <div className="bg-background-sub flex h-20 w-full flex-col items-center justify-center gap-2 rounded-lg">
                     <div className="flex items-center justify-center">
-                      <button 
+                      <button
                         type="button"
-                        onClick={() => onTimeClick('start')}
-                        className="flex h-6 w-15 items-center justify-center rounded border border-primary-200 bg-primary-50"
+                        onClick={() => onTimeClick("start")}
+                        className="border-primary-200 bg-primary-50 flex h-6 w-15 items-center justify-center rounded border"
                       >
                         <span className="text-body1-m">{timeStart}</span>
                       </button>
-                      <span className="mx-2 text-body1-m">부터</span>
-                      
-                      <button 
+                      <span className="text-body1-m mx-2">부터</span>
+
+                      <button
                         type="button"
-                        onClick={() => onTimeClick('end')}
-                        className="flex h-6 w-15 items-center justify-center rounded border border-primary-200 bg-primary-50"
+                        onClick={() => onTimeClick("end")}
+                        className="border-primary-200 bg-primary-50 flex h-6 w-15 items-center justify-center rounded border"
                       >
                         <span className="text-body1-m">{timeEnd}</span>
                       </button>
-                      <span className="ml-2 text-body1-m">까지</span>
+                      <span className="text-body1-m ml-2">까지</span>
                     </div>
                     <span className="text-caption-m text-gray-800">
                       터치하여 시간을 설정하세요.
                     </span>
                   </div>
                 ) : (
-                  <div className="flex h-12 w-full items-center justify-center rounded-lg bg-background-sub">
+                  <div className="bg-background-sub flex h-12 w-full items-center justify-center rounded-lg">
                     <span className="text-caption-m text-gray-800">
                       시간 제한이 설정되지 않았습니다.
                     </span>
                   </div>
                 )}
               </div>
-
             </div>
           </div>
         </div>
