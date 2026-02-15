@@ -2,6 +2,8 @@
 
 import React from "react";
 
+const MAX_LIMIT_GB = 70;
+
 interface MemberCardProps {
   id: string;
   name: string;
@@ -39,7 +41,7 @@ export default function MemberCard({
   onToggleTime,
   onTimeClick,
 }: MemberCardProps) {
-  const percentage = (limitValue / 70) * 100;
+  const percentage = (limitValue / MAX_LIMIT_GB) * 100;
 
   return (
     <li className="w-full list-none">
@@ -99,7 +101,7 @@ export default function MemberCard({
                     <div className="bg-primary h-3 w-3 rounded-sm" />
                     <span className="text-body1-m">데이터 사용 한도</span>
                   </div>
-                  <span className="text-body1-m text-primary-500 font-bold">
+                  <span className="text-body1-m text-primary font-bold">
                     {limitValue}GB
                   </span>
                 </div>
@@ -119,7 +121,7 @@ export default function MemberCard({
                   <input
                     type="range"
                     min="0"
-                    max="70"
+                    max={MAX_LIMIT_GB}
                     step="1"
                     value={limitValue}
                     onChange={(e) => onLimitChange(Number(e.target.value))}
@@ -130,7 +132,7 @@ export default function MemberCard({
 
                 <div className="text-caption-m flex w-full justify-between text-gray-800">
                   <span>0GB</span>
-                  <span>70GB</span>
+                  <span>{MAX_LIMIT_GB}GB</span>
                 </div>
               </div>
 
@@ -138,9 +140,7 @@ export default function MemberCard({
                 <div className="flex w-full items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="bg-primary h-3 w-3 rounded-sm" />
-                    <span className="text-body1-m text-brand-black">
-                      시간 제한
-                    </span>
+                    <span className="text-body1-m">시간 제한</span>
                   </div>
 
                   <button

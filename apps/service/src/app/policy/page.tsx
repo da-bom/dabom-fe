@@ -87,17 +87,6 @@ export default function PolicyManagementPage() {
   };
 
   const handleCloseSheet = () => {
-    if (editingTarget) {
-      const { id } = editingTarget;
-      setMemberStates((prev) => ({
-        ...prev,
-        [id]: {
-          ...prev[id],
-          timeStart: null,
-          timeEnd: null,
-        },
-      }));
-    }
     setIsSheetOpen(false);
     setEditingTarget(null);
   };
