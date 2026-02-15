@@ -2248,7 +2248,7 @@ packages:
     peerDependencies:
       typescript: ">=4.9.5"
     peerDependenciesMeta:
-      typescript:
+      supports-color:
         optional: true
 
   cross-spawn@7.0.6:
@@ -2400,7 +2400,7 @@ packages:
     peerDependencies:
       supports-color: "*"
     peerDependenciesMeta:
-      supports-color:
+      typescript:
         optional: true
 
   decimal.js-light@2.5.1:
