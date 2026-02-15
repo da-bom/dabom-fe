@@ -18,7 +18,7 @@ export const NotiBox = ({
   return (
     <div
       className={cn(
-        "flex w-full flex-col justify-center px-4 h-20 bg-brand-white rounded-lg border-2 transition-all",
+        "bg-brand-white flex h-20 w-full flex-col justify-center rounded-lg border-2 px-4 transition-all",
 
         !isRead ? "border-primary" : "border-gray-200",
         className,
@@ -30,11 +30,9 @@ export const NotiBox = ({
             NEW
           </Badge>
         )}
-        <h3 className="text-body1-m truncate">
-          {title}
-        </h3>
+        <h3 className="text-body1-m truncate">{title}</h3>
       </div>
-      <p className="text-body2-m text-gray-700 mt-1 line-clamp-1">
+      <p className="text-body2-m mt-1 line-clamp-1 text-gray-700">
         {description}
       </p>
     </div>
