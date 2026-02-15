@@ -56,7 +56,7 @@ const NavBar = () => {
               >
                 <Icon name={isActive ? item.activeIcon : item.icon} />
                 <span
-                  className={`text-caption-m ${isActive ? "text-pink-500" : "text-gray-400"}                  `}
+                  className={`text-caption-m ${isActive ? "text-pink-500" : "text-gray-400"} `}
                 >
                   {item.label}
                 </span>

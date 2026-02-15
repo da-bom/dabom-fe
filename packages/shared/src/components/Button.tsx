@@ -22,7 +22,7 @@ const Button = ({ children, size, color, ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
-        "border-[1px] border-gray-200 cursor-pointer",
+        "cursor-pointer border-[1px] border-gray-200",
         SIZE_STYLES[size],
         COLOR_STYLES[color],
       )}

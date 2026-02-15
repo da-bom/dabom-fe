@@ -44,7 +44,7 @@ const DropDown = ({
       </div>
 
       {isOpen && (
-        <ul className="absolute mt-2 w-full overflow-hidden rounded-xl border border-gray-200 bg-brand-white shadow-lg z-50">
+        <ul className="bg-brand-white absolute z-50 mt-2 w-full overflow-hidden rounded-xl border border-gray-200 shadow-lg">
           {options.map((option) => (
             <li
               key={option}
@@ -52,7 +52,7 @@ const DropDown = ({
                 setSelectedOption(option);
                 setIsOpen(false);
               }}
-              className="flex h-12 items-center px-4 text-body1-m text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors"
+              className="text-body1-m flex h-12 cursor-pointer items-center px-4 text-gray-700 transition-colors hover:bg-gray-100"
             >
               {option}
             </li>
