@@ -36,15 +36,15 @@ const RadioGroup = ({
             value={option.value}
             checked={selectedValue === option.value}
             onChange={() => onChange(option.value)}
-            className="mt-1 h-4 w-4 accent-primary cursor-pointer"
+            className="accent-primary mt-1 h-4 w-4 cursor-pointer"
           />
 
           <div className="flex flex-col gap-0.5">
             <span className="text-body2-d">{option.label}</span>
             {option.subLabel && (
-              <div className="flex gap-1 items-center">
+              <div className="flex items-center gap-1">
                 {option.isWarning && (
-                  <Icon name="Warning" className="text-primary-700 w-3 h-3" />
+                  <Icon name="Warning" className="text-primary-700 h-3 w-3" />
                 )}
                 <span
                   className={`text-caption-d ${option.isWarning ? "text-primary-700 font-medium" : "text-gray-500"}`}
