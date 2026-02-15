@@ -9,6 +9,8 @@ import {
   fetchNotifications,
 } from "../../../../../packages/shared/src/data/notification";
 
+const NOTICE_MESSAGE = "30일이 지난 메세지는 자동 삭제됩니다.";
+
 export default function NotificationPage() {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [page, setPage] = useState(1);
@@ -24,19 +26,14 @@ export default function NotificationPage() {
     try {
       const response = await fetchNotifications(page);
 
-      setNotifications((prev) => {
-        const existingIds = new Set(prev.map((item) => item.id));
-        const newItems = response.data.filter(
-          (item) => !existingIds.has(item.id),
-        );
-        return [...prev, ...newItems];
-      });
+      setNotifications((prev) => [...prev, ...response.data]);
 
       setHasMore(response.hasMore);
 
       if (response.hasMore) {
         setPage((prev) => prev + 1);
       }
+      // TODO: API 연결 후 추가 구현 예정
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -91,7 +88,7 @@ export default function NotificationPage() {
         {!hasMore && (
           // 알람 리스트의 개수가 많아 화면을 가득 채울 때 바텀의 도달점?을 일단 임의로 정했습니다. mt-8, mb-12
           <p className="mt-8 text-center text-body2-m text-gray-600 mb-12">
-            30일이 지난 메세지는 자동 삭제됩니다.
+            {NOTICE_MESSAGE}
           </p>
         )}
       </div>
