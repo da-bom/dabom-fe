@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { IconName } from "../types/icon";
-import cn from "../utils/cn";
 import Icon from "./Icon";
 
 interface NavItem {
@@ -48,8 +47,6 @@ const NavBar = () => {
               ? pathname === "/"
               : pathname.startsWith(item.href);
 
-          const IconComponent = isActive ? item.activeIcon : item.icon;
-
           return (
             <li key={item.href} className="flex-1">
               <Link
@@ -59,10 +56,7 @@ const NavBar = () => {
               >
                 <Icon name={isActive ? item.activeIcon : item.icon} />
                 <span
-                  className={cn(
-                    "text-caption-m font-medium",
-                    isActive ? "text-pink-500" : "text-gray-400",
-                  )}
+                  className={`text-caption-m ${isActive ? "text-pink-500" : "text-gray-400"} `}
                 >
                   {item.label}
                 </span>

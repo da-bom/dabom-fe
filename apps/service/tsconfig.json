@@ -24,7 +24,7 @@
     "**/*.tsx",
     "../../packages/shared/src/**/*",
     "home",
-    "src/app/home"
+    "src/app/(afterLogin)/home"
   ],
   "exclude": ["node_modules"]
 }
