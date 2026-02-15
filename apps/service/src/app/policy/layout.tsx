@@ -9,13 +9,13 @@ export default function MainLayout({
 }>) {
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden">
-      <div className="flex-none w-full z-50">
+      <div className="z-50 w-full flex-none">
         <Header />
       </div>
-      <main className="relative flex-1 w-full overflow-y-auto scrollbar-hide">
+      <main className="scrollbar-hide relative w-full flex-1 overflow-y-auto">
         {children}
       </main>
-      <div className="flex-none w-full z-50">
+      <div className="z-50 w-full flex-none">
         <NavBar />
       </div>
     </div>

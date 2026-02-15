@@ -28,11 +28,13 @@ export const formatPolicy = ({ policies }: { policies: PolicyType[] }) => {
             "비활성화"
           ),
         ),
-        <Link href={`/policy/${p.policyId}`}>
-          <Button color="light" size="sm">
-            수정
-          </Button>
-        </Link>,
+        cell(
+          <Link href={`/policy/${p.policyId}`}>
+            <Button color="light" size="sm">
+              수정
+            </Button>
+          </Link>,
+        ),
       ],
     };
   });
