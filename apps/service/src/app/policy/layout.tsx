@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Header, NavBar } from "@shared";
+import Header from "@service/components/Header";
+import NavBar from "@service/components/NavBar";
 
 export default function MainLayout({
   children,
