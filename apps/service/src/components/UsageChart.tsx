@@ -2,7 +2,6 @@
 
 import { Pie } from "react-chartjs-2";
 
-import SubBox from "@repo/shared/src/components/SubBox";
 import bytesToGB from "@repo/shared/src/utils/bytestoGB";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { CHART_COLOR } from "src/app/(afterLogin)/home/contents";
