@@ -76,16 +76,16 @@ http.interceptors.response.use(
               : "알 수 없는 오류가 발생했습니다.");
       }
 
-      return Promise.reject({
+      throw {
         ...data.error,
-        errorMessage: errorMessage,
-      });
+        errorMessage,
+      };
     }
 
-    return Promise.reject({
+    throw {
       code: "NETWORK_ERROR",
       errorMessage,
-    });
+    };
   },
 );
 
