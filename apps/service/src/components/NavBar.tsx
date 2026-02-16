@@ -5,9 +5,9 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import Icon from "@repo/shared/src/components/Icon";
-import { IconName } from "@repo/shared/src/types/icon";
-import cn from "@repo/shared/src/utils/cn";
+import { Icon } from "@shared";
+
+import { IconName } from "@shared/type/icon";
 
 interface NavItem {
   label: string;
@@ -48,8 +48,6 @@ const NavBar = () => {
               ? pathname === "/"
               : pathname.startsWith(item.href);
 
-          const IconComponent = isActive ? item.activeIcon : item.icon;
-
           return (
             <li key={item.href} className="flex-1">
               <Link
@@ -59,10 +57,7 @@ const NavBar = () => {
               >
                 <Icon name={isActive ? item.activeIcon : item.icon} />
                 <span
-                  className={cn(
-                    "text-caption-m font-medium",
-                    isActive ? "text-pink-500" : "text-gray-400",
-                  )}
+                  className={`text-caption-m ${isActive ? "text-pink-500" : "text-gray-400"} `}
                 >
                   {item.label}
                 </span>

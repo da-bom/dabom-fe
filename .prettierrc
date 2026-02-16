@@ -9,6 +9,7 @@
     "<THIRD_PARTY_MODULES>",
     "^@shared/(.*)$",
     "^@admin/(.*)$",
+    "^@service/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
