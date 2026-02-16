@@ -9,6 +9,8 @@ export { default as SubBox } from "./components/SubBox";
 export { default as Switch } from "./components/Switch";
 export { default as TextField } from "./components/TextField";
 export { default as axios } from "./utils/axios";
+export { default as bytesToGB } from "./utils/bytesToGB";
 export { default as cn } from "./utils/cn";
 export { default as formatSize } from "./utils/formatSize";
 export { default as gbToBytes } from "./utils/gbToBytes";
+export * from "./assets/icons";
