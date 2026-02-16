@@ -108,7 +108,7 @@ const UsageDashboard = () => {
         </button>
       </div>
 
-      <MainBox className="w-full p-5">
+      <MainBox className="m-auto w-full p-5">
         {CUSTOMER_LIST.customers.length === 0 ? (
           <div className="flex flex-1 items-center justify-center text-gray-400">
             <p>등록된 가족 구성원이 없어요.</p>
@@ -118,7 +118,7 @@ const UsageDashboard = () => {
             {viewMode === "list" ? (
               <CustomerList customers={CUSTOMER_LIST.customers} />
             ) : (
-              <div className="aspect-square w-full max-w-[280px]">
+              <div className="mx-auto aspect-square w-full max-w-70">
                 <UsageChart
                   customers={CUSTOMER_LIST.customers}
                   totalUsageGB={totalUsageGB}

@@ -80,24 +80,22 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
   };
 
   return (
-    <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center duration-500">
+    <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center gap-5 duration-500">
       <div className="w-full">
         <Pie data={data} options={options} />
       </div>
 
-      <SubBox className="mt-2 w-full border-none bg-white p-4">
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-          {chartData.map((c) => (
-            <div key={c.id} className="flex items-center gap-2">
-              <div
-                className="h-3 w-3 rounded-full shadow-sm ring-1 ring-white"
-                style={{ backgroundColor: c.color }}
-              />
-              <span className="text-sm font-medium">{c.name}</span>
-            </div>
-          ))}
-        </div>
-      </SubBox>
+      <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+        {chartData.map((c) => (
+          <div key={c.id} className="flex items-center gap-2">
+            <div
+              className="h-3 w-3 rounded-full"
+              style={{ backgroundColor: c.color }}
+            />
+            <span className="text-caption-m">{c.name}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
