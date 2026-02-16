@@ -63,22 +63,21 @@ export default function TimeSettingSheet({
       >
         <div className="mb-6 h-1 w-20 rounded-full bg-gray-200" />
         <h2 className="text-h2-m mb-10">{title}</h2>
-        <div className="relative mb-12 flex h-50 w-full items-center justify-center gap-4">
-          <div className="bg-primary-50 pointer-events-none absolute h-11 w-full rounded-lg" />
-
-          <TimeColumn
-            items={HOURS}
-            selectedItem={selectedHour}
-            onSelect={setSelectedHour}
-          />
-
-          <span className="text-h2-m z-10 pb-1 text-gray-500">:</span>
-
-          <TimeColumn
-            items={MINUTES}
-            selectedItem={selectedMinute}
-            onSelect={setSelectedMinute}
-          />
+        <div className="mb-12 grid h-50 w-full grid-cols-1 grid-rows-1 place-items-center">
+          <div className="bg-primary-50 pointer-events-none z-0 col-start-1 row-start-1 h-11 w-full rounded-lg" />
+          <div className="z-10 col-start-1 row-start-1 flex h-full w-full items-center justify-center gap-4">
+            <TimeColumn
+              items={HOURS}
+              selectedItem={selectedHour}
+              onSelect={setSelectedHour}
+            />
+            <span className="text-h2-m z-10 pb-1 text-gray-500">:</span>
+            <TimeColumn
+              items={MINUTES}
+              selectedItem={selectedMinute}
+              onSelect={setSelectedMinute}
+            />
+          </div>
         </div>
 
         <button
