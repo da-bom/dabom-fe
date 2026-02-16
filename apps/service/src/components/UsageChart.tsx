@@ -3,6 +3,7 @@
 import { Pie } from "react-chartjs-2";
 
 import SubBox from "@repo/shared/src/components/SubBox";
+import bytesToGB from "@repo/shared/src/utils/bytestoGB";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { CHART_COLOR } from "src/app/(afterLogin)/home/contents";
 import { CustomerListType } from "src/types/dataUsage";
@@ -30,7 +31,7 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
     return {
       id: customer.customerId,
       name: customer.name,
-      usageGB: customer.monthlyUsedBytes,
+      usageGB: bytesToGB(customer.monthlyUsedBytes),
       color: CHART_COLOR.COLORS[idx],
       isMe: customer.isMe || false,
     };
@@ -58,7 +59,7 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
       tooltip: {
         enabled: !isEmpty,
         callbacks: {
-          label: function (context: any) {
+          label: function (context: import("chart.js").TooltipItem<"pie">) {
             return `${context.parsed.toFixed(1)}GB`;
           },
         },

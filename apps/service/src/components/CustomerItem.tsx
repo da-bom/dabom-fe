@@ -1,5 +1,5 @@
 import bytesToGB from "@repo/shared/src/utils/bytestoGB";
-import { Icon, formatSize } from "@shared";
+import { Icon } from "@shared";
 import { CustomerListType } from "src/types/dataUsage";
 
 const WARNING_THRESHOLD = 0.6;

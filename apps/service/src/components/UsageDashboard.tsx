@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import bytesToGB from "@repo/shared/src/utils/bytestoGB";
@@ -19,18 +17,9 @@ const UsageDashboard = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const year = Number(searchParams.get("year")) || 2026;
-  const month = Number(searchParams.get("month")) || 1;
+  const year = Number(searchParams.get("year")) || new Date().getFullYear();
+  const month = Number(searchParams.get("month")) || new Date().getMonth() + 1;
   const viewMode = (searchParams.get("view") as "list" | "chart") || "list";
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
-
-  console.log("render", year, month, viewMode);
 
   const totalUsedBytes = CUSTOMER_LIST.customers.reduce(
     (acc, curr) => acc + curr.monthlyUsedBytes,
