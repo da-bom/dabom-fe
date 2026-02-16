@@ -62,3 +62,26 @@ export interface ApiErrorResponse {
   details?: Record<string, unknown>;
   errorMessage: string;
 }
+
+export class ApiError extends Error {
+  code: ErrorCode;
+  status?: number;
+  errorMessage: string;
+  details?: Record<string, unknown>;
+
+  constructor(data: ApiErrorResponse & { status?: number }) {
+    super(data.errorMessage);
+
+    this.name = "ApiError";
+    this.code = data.code;
+    this.status = data.status;
+    this.errorMessage = data.errorMessage;
+    this.details = data.details;
+
+    Object.setPrototypeOf(this, ApiError.prototype);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ApiError);
+    }
+  }
+}

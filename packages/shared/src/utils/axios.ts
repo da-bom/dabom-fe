@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 import {
+  ApiError,
   ApiErrorResponse,
   ERROR_CODES,
   ERROR_MESSAGE_MAP,
@@ -34,20 +35,21 @@ http.interceptors.response.use(
         ERROR_MESSAGE_MAP[errorCode as keyof typeof ERROR_MESSAGE_MAP] ||
         serverMsg ||
         (status === 429
-          ? ERROR_CODES.LIMIT_EXCEEDED
-          : ERROR_CODES.UNKNOWN_ERROR);
+          ? ERROR_MESSAGE_MAP[ERROR_CODES.SYS_RATE_LIMIT_EXCEEDED]
+          : ERROR_MESSAGE_MAP[ERROR_CODES.UNKNOWN_ERROR]);
 
-      throw {
+      throw new ApiError({
         ...data.error,
         status,
         errorMessage,
-      };
+      });
     }
 
-    throw {
+    throw new ApiError({
       code: ERROR_CODES.NETWORK_ERROR,
+      message: "Network connection failed",
       errorMessage: ERROR_MESSAGE_MAP[ERROR_CODES.NETWORK_ERROR],
-    };
+    });
   },
 );
 
