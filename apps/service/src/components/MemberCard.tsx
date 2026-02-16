@@ -3,47 +3,57 @@
 import React from "react";
 
 import { cn } from "@shared";
+import { formatSize } from "@shared";
 
 const MAX_LIMIT_GB = 70;
 
-interface MemberCardProps {
-  id: string;
-  name: string;
-  phoneNumber: string;
-  usedAmount: string;
-  totalAmount: string;
-  usagePercent: number;
-  isDanger: boolean;
-  limitValue: number;
-  onLimitChange: (value: number) => void;
+export interface CustomerState {
+  customerId: number;
+  limitBytes: number;
+  isTimeEnabled: boolean;
   timeStart: string | null;
   timeEnd: string | null;
-  isTimeEnabled: boolean;
+}
+
+interface MemberCardProps {
+  customer: {
+    customerId: number;
+    name: string;
+    phoneNumber: string;
+    monthlyUsedBytes: number;
+    monthlyLimitBytes: number;
+  };
+  state: CustomerState;
   isSelected: boolean;
-  onSelect: () => void;
-  onToggleTime: () => void;
-  onTimeClick: (type: "start" | "end") => void;
+
+  handlers: {
+    onSelect: (id: string) => void;
+    onLimitChange: (id: string, newGB: number) => void;
+    onToggleTime: (id: string) => void;
+    onTimeClick: (id: string, type: "start" | "end") => void;
+  };
 }
 
 export default function MemberCard({
-  id,
-  name,
-  phoneNumber,
-  usedAmount,
-  totalAmount,
-  usagePercent,
-  isDanger,
-  limitValue,
-  onLimitChange,
-  timeStart,
-  timeEnd,
-  isTimeEnabled,
+  customer,
+  state,
   isSelected,
-  onSelect,
-  onToggleTime,
-  onTimeClick,
+  handlers,
 }: MemberCardProps) {
-  const percentage = (limitValue / MAX_LIMIT_GB) * 100;
+  const idStr = customer.customerId.toString();
+  const currentLimitGB = Math.round(state.limitBytes / (1024 * 1024 * 1024));
+
+  const sliderPercentage = (currentLimitGB / MAX_LIMIT_GB) * 100;
+
+  const formattedUsed = formatSize(customer.monthlyUsedBytes).total;
+  const formattedTotal = formatSize(state.limitBytes).total;
+
+  const usagePercent =
+    state.limitBytes === 0
+      ? 0
+      : Math.min((customer.monthlyUsedBytes / state.limitBytes) * 100, 100);
+
+  const isDanger = usagePercent >= 90;
 
   return (
     <li
@@ -54,23 +64,25 @@ export default function MemberCard({
     >
       <button
         type="button"
-        onClick={onSelect}
+        onClick={() => handlers.onSelect(idStr)}
         className="flex w-full flex-col gap-4 p-4 text-left"
         aria-expanded={isSelected}
-        aria-controls={`detail-${id}`}
+        aria-controls={`detail-${idStr}`}
       >
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-body1-m">{name}</span>
-            <span className="text-caption-m text-gray-800">{phoneNumber}</span>
+            <span className="text-body1-m">{customer.name}</span>
+            <span className="text-caption-m text-gray-800">
+              {customer.phoneNumber || "010-****-1234"}
+            </span>
           </div>
 
           <div className="flex flex-col items-end gap-1">
             <div className="text-caption-m">
               <span className={isDanger ? "text-negative" : "text-brand-black"}>
-                {usedAmount}{" "}
+                {formattedUsed}{" "}
               </span>
-              <span className="text-gray-800">/ {totalAmount}</span>
+              <span className="text-gray-800">/ {formattedTotal}</span>
             </div>
 
             <div className="h-1 w-20 overflow-hidden rounded-full bg-gray-100">
@@ -84,7 +96,7 @@ export default function MemberCard({
       </button>
 
       <div
-        id={`detail-${id}`}
+        id={`detail-${idStr}`}
         className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
           isSelected ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
@@ -100,7 +112,7 @@ export default function MemberCard({
                   <span className="text-body1-m">데이터 사용 한도</span>
                 </div>
                 <span className="text-body1-m text-primary font-bold">
-                  {limitValue}GB
+                  {currentLimitGB}GB
                 </span>
               </div>
 
@@ -108,11 +120,12 @@ export default function MemberCard({
                 <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
                 <div
                   className="bg-primary-500 col-start-1 row-start-1 h-2 justify-self-start rounded-full"
-                  style={{ width: `${percentage}%` }}
+                  style={{ width: `${sliderPercentage}%` }}
                 />
+
                 <div
                   className="pointer-events-none col-start-1 row-start-1 flex w-full items-center"
-                  style={{ marginLeft: `${percentage}%` }}
+                  style={{ marginLeft: `${sliderPercentage}%` }}
                 >
                   <div className="border-primary-500 bg-brand-white h-4 w-4 -translate-x-1/2 rounded-full border-2 shadow-sm" />
                 </div>
@@ -121,8 +134,10 @@ export default function MemberCard({
                   min="0"
                   max={MAX_LIMIT_GB}
                   step="1"
-                  value={limitValue}
-                  onChange={(e) => onLimitChange(Number(e.target.value))}
+                  value={currentLimitGB}
+                  onChange={(e) =>
+                    handlers.onLimitChange(idStr, Number(e.target.value))
+                  }
                   className="col-start-1 row-start-1 h-full w-full cursor-pointer touch-none opacity-0"
                   aria-label="데이터 한도 설정"
                 />
@@ -143,41 +158,41 @@ export default function MemberCard({
 
                 <button
                   type="button"
-                  onClick={onToggleTime}
+                  onClick={() => handlers.onToggleTime(idStr)}
                   role="switch"
-                  aria-checked={isTimeEnabled}
+                  aria-checked={state.isTimeEnabled}
                   className={cn(
                     "flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out",
-                    isTimeEnabled ? "bg-primary-500" : "bg-gray-500",
+                    state.isTimeEnabled ? "bg-primary-500" : "bg-gray-500",
                   )}
                 >
                   <div
                     className={cn(
                       "bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out",
-                      isTimeEnabled ? "translate-x-3" : "translate-x-0",
+                      state.isTimeEnabled ? "translate-x-3" : "translate-x-0",
                     )}
                   />
                 </button>
               </div>
 
-              {isTimeEnabled && timeStart && timeEnd ? (
+              {state.isTimeEnabled && state.timeStart && state.timeEnd ? (
                 <div className="bg-background-sub flex h-20 w-full flex-col items-center justify-center gap-2 rounded-lg">
                   <div className="flex items-center justify-center">
                     <button
                       type="button"
-                      onClick={() => onTimeClick("start")}
+                      onClick={() => handlers.onTimeClick(idStr, "start")}
                       className="border-primary-200 bg-primary-50 flex h-6 w-15 items-center justify-center rounded border"
                     >
-                      <span className="text-body1-m">{timeStart}</span>
+                      <span className="text-body1-m">{state.timeStart}</span>
                     </button>
                     <span className="text-body1-m mx-2">부터</span>
 
                     <button
                       type="button"
-                      onClick={() => onTimeClick("end")}
+                      onClick={() => handlers.onTimeClick(idStr, "end")}
                       className="border-primary-200 bg-primary-50 flex h-6 w-15 items-center justify-center rounded border"
                     >
-                      <span className="text-body1-m">{timeEnd}</span>
+                      <span className="text-body1-m">{state.timeEnd}</span>
                     </button>
                     <span className="text-body1-m ml-2">까지</span>
                   </div>

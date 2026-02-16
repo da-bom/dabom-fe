@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
-import { formatSize } from "@shared";
+import { gbToBytes } from "@repo/shared/src/utils/formatSize";
 
 import { FAMILY_DETAIL } from "@shared/data/familyDetail";
 
 import MemberCard from "@service/components/MemberCard";
 
-interface CustomerState {
-  customerId: string;
+export interface CustomerState {
+  customerId: number;
   limitBytes: number;
   isTimeEnabled: boolean; // API 가족 구성원 정책 수정 (추가 요청할 예정)
   timeStart: string | null; // API 가족 구성원 정책 수정 (추가 요청할 예정)
@@ -19,6 +19,8 @@ interface CustomerState {
 export default function PolicyManagementPage() {
   const { customers } = FAMILY_DETAIL;
 
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const [memberStates, setMemberStates] = useState<
@@ -26,13 +28,9 @@ export default function PolicyManagementPage() {
   >(() => {
     const initial: Record<string, CustomerState> = {};
     customers.forEach((c) => {
-      const initialLimitGB = Math.round(
-        c.monthlyLimitBytes / (1024 * 1024 * 1024),
-      );
-
       initial[c.customerId.toString()] = {
-        customerId: c.customerId.toString(),
-        limitBytes: initialLimitGB > 0 ? initialLimitGB : 50,
+        customerId: c.customerId,
+        limitBytes: c.monthlyLimitBytes,
         isTimeEnabled: true,
         timeStart: "23:00",
         timeEnd: "07:00",
@@ -41,61 +39,45 @@ export default function PolicyManagementPage() {
     return initial;
   });
 
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [editingTarget, setEditingTarget] = useState<{
-    id: string;
-    type: "start" | "end";
-  } | null>(null);
+  const handlers = {
+    onSelect: (id: string) =>
+      setSelectedId((prev) => (prev === id ? null : id)),
 
-  const handleSelectCard = (id: string) => {
-    setSelectedId((prev) => (prev === id ? null : id));
-  };
+    onLimitChange: (id: string, newGB: number) => {
+      const newBytes = gbToBytes(newGB);
 
-  const handleLimitChange = (id: string, newValue: number) => {
-    setMemberStates((prev) => ({
-      ...prev,
-      [id]: { ...prev[id], limitValue: newValue },
-    }));
-    // TODO: 추후 여기에 API 호출
-  };
-
-  const handleToggleTime = (id: string) => {
-    setMemberStates((prev) => ({
-      ...prev,
-      [id]: { ...prev[id], isTimeEnabled: !prev[id].isTimeEnabled },
-    }));
-  };
-
-  const handleTimeClick = (id: string, type: "start" | "end") => {
-    setEditingTarget({ id, type });
-    setIsSheetOpen(true);
-  };
-
-  const handleSaveTime = (newTime: string) => {
-    if (editingTarget) {
-      const { id, type } = editingTarget;
       setMemberStates((prev) => ({
         ...prev,
-        [id]: {
-          ...prev[id],
-          [type === "start" ? "timeStart" : "timeEnd"]: newTime,
-        },
+        [id]: { ...prev[id], limitBytes: newBytes },
       }));
-    }
-    setIsSheetOpen(false);
-    setEditingTarget(null);
-  };
 
-  const handleCloseSheet = () => {
-    setIsSheetOpen(false);
-    setEditingTarget(null);
-  };
+      // API 호출 디바운싱
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
 
-  const currentEditingTime = editingTarget
-    ? editingTarget.type === "start"
-      ? memberStates[editingTarget.id].timeStart
-      : memberStates[editingTarget.id].timeEnd
-    : "00:00";
+      debounceTimer.current = setTimeout(async () => {
+        try {
+          console.log(`[API 요청] ID: ${id}, 값: ${newBytes} Bytes`);
+
+          // API 사용
+        } catch (error) {
+          console.error("API 요청 실패:", error);
+        }
+      }, 500);
+    },
+
+    onToggleTime: (id: string) => {
+      setMemberStates((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], isTimeEnabled: !prev[id].isTimeEnabled },
+      }));
+    },
+
+    onTimeClick: (id: string, type: "start" | "end") => {
+      console.log("Open Sheet", id, type);
+    },
+  };
 
   return (
     <section className="flex min-h-screen w-full justify-center">
@@ -105,43 +87,18 @@ export default function PolicyManagementPage() {
         </div>
 
         <ul className="flex flex-col gap-4">
-          {customers.map((customer) => {
-            const id = customer.customerId.toString();
-            const state = memberStates[id];
-
-            const formattedUsed = formatSize(customer.monthlyUsedBytes);
-            const formattedLimit = formatSize(customer.monthlyLimitBytes);
-            const percent =
-              customer.monthlyLimitBytes === 0
-                ? 0
-                : Math.min(
-                    (customer.monthlyUsedBytes / customer.monthlyLimitBytes) *
-                      100,
-                    100,
-                  );
-
-            return (
-              <MemberCard
-                key={id}
-                id={id}
-                name={customer.name}
-                phoneNumber="010-****-1234"
-                usedAmount={formattedUsed.total}
-                totalAmount={formattedLimit.total}
-                usagePercent={percent}
-                isDanger={percent >= 90}
-                isSelected={selectedId === id}
-                limitValue={state.limitBytes}
-                isTimeEnabled={state.isTimeEnabled}
-                timeStart={state.timeStart}
-                timeEnd={state.timeEnd}
-                onSelect={() => handleSelectCard(id)}
-                onLimitChange={(val) => handleLimitChange(id, val)}
-                onToggleTime={() => handleToggleTime(id)}
-                onTimeClick={(type) => handleTimeClick(id, type)}
-              />
-            );
-          })}
+          {customers.map((customer) => (
+            <MemberCard
+              key={customer.customerId}
+              customer={{
+                ...customer,
+                phoneNumber: "010-****-1234", // Mock에 없어서 임시 주입
+              }}
+              state={memberStates[customer.customerId.toString()]}
+              isSelected={selectedId === customer.customerId.toString()}
+              handlers={handlers}
+            />
+          ))}
         </ul>
       </div>
     </section>
