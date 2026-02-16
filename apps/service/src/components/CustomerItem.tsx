@@ -1,4 +1,5 @@
-import { Icon } from "@shared";
+import bytesToGB from "@repo/shared/src/utils/bytestoGB";
+import { Icon, formatSize } from "@shared";
 import { CustomerListType } from "src/types/dataUsage";
 
 const WARNING_THRESHOLD = 0.6;
@@ -25,17 +26,17 @@ const CustomerItem = ({ customer }: { customer: CustomerListType }) => {
 
       <div className="flex flex-col items-end gap-1 pt-1">
         <div className="text-body2-d">
-          <span>{customer.monthlyUsedBytes}GB</span>
-          <span>/{customer.monthlyLimitBytes}GB</span>
+          <span>{bytesToGB(customer.monthlyUsedBytes)}GB</span>
+          <span>/{bytesToGB(customer.monthlyLimitBytes)}GB</span>
         </div>
 
         {showWarning && (
           <div className="flex items-center gap-1">
             <Icon
-              name="Warning"
+              name="WarningOutline"
               width={12}
               height={12}
-              className="bg-negative"
+              className="text-negative"
             />
             <span className="text-caption-m text-negative">
               데이터 사용량 조절이 필요해요
