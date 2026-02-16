@@ -40,4 +40,3 @@ export { default as Smile } from "./assets/icons/Smile";
 export { default as Table } from "./assets/icons/Table";
 export { default as Timeset } from "./assets/icons/Timeset";
 export { default as Warning } from "./assets/icons/Warning";
-export { default as WarningPrimary } from "./assets/icons/WarningPrimary";

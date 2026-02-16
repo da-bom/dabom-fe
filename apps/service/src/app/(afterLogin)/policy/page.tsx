@@ -9,11 +9,11 @@ import { FAMILY_DETAIL } from "@shared/data/familyDetail";
 import MemberCard from "@service/components/MemberCard";
 
 interface CustomerState {
-  id: string;
-  limitValue: number;
-  isTimeEnabled: boolean;
-  timeStart: string | null;
-  timeEnd: string | null;
+  customerId: string;
+  limitBytes: number;
+  isTimeEnabled: boolean; // API 가족 구성원 정책 수정 (추가 요청할 예정)
+  timeStart: string | null; // API 가족 구성원 정책 수정 (추가 요청할 예정)
+  timeEnd: string | null; // API 가족 구성원 정책 수정 (추가 요청할 예정)
 }
 
 export default function PolicyManagementPage() {
@@ -31,8 +31,8 @@ export default function PolicyManagementPage() {
       );
 
       initial[c.customerId.toString()] = {
-        id: c.customerId.toString(),
-        limitValue: initialLimitGB > 0 ? initialLimitGB : 50,
+        customerId: c.customerId.toString(),
+        limitBytes: initialLimitGB > 0 ? initialLimitGB : 50,
         isTimeEnabled: true,
         timeStart: "23:00",
         timeEnd: "07:00",
@@ -98,11 +98,11 @@ export default function PolicyManagementPage() {
     : "00:00";
 
   return (
-    <section className="bg-background-base flex min-h-screen w-full justify-center">
+    <section className="flex min-h-screen w-full justify-center">
       <div className="mt-4 w-full px-4 pb-20">
-        <h2 className="text-body1-m text-brand-black mb-4">
+        <div className="text-body1-m mb-4">
           변경을 원하는 구성원을 선택하세요.
-        </h2>
+        </div>
 
         <ul className="flex flex-col gap-4">
           {customers.map((customer) => {
@@ -131,7 +131,7 @@ export default function PolicyManagementPage() {
                 usagePercent={percent}
                 isDanger={percent >= 90}
                 isSelected={selectedId === id}
-                limitValue={state.limitValue}
+                limitValue={state.limitBytes}
                 isTimeEnabled={state.isTimeEnabled}
                 timeStart={state.timeStart}
                 timeEnd={state.timeEnd}
