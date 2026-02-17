@@ -104,13 +104,17 @@ export default function PolicyManagementPage() {
       },
     }));
 
-    // try {
-    //   const currentState = memberStates[targetId];
-    //   const updatedStart = type === "start" ? newTime : currentState.startTime;
-    //   const updatedEnd = type === "end" ? newTime : currentState.endTime;
-    // } catch (error) {
-    //   console.error("API 요청 실패", error);
-    // }
+    try {
+      const currentState = memberStates[targetId];
+      const updatedStart = type === "start" ? newTime : currentState.startTime;
+      const updatedEnd = type === "end" ? newTime : currentState.endTime;
+
+      console.log(
+        `[API 요청 - 시간] ID: ${targetId} | Start: ${updatedStart} - End: ${updatedEnd}`,
+      );
+    } catch (error) {
+      console.error("API 요청 실패", error);
+    }
   };
 
   const handleCLoseSheet = useCallback(() => {

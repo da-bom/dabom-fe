@@ -30,13 +30,32 @@ export default function TimeSettingSheet({
     initialTime ? initialTime.split(":")[1] : "00",
   );
 
+  const [isClosing, setIsClosing] = useState(false);
+  const pendingSaveRef = useRef<string | null>(null);
+
+  const startClosing = () => {
+    setIsClosing(true);
+  };
+
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      if (pendingSaveRef.current) {
+        onSave(pendingSaveRef.current);
+        pendingSaveRef.current = null;
+      }
+
+      onClose();
+      setIsClosing(false);
+    }
+  };
+
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) onClose();
+    if (e.target === e.currentTarget) startClosing();
   };
 
   const handleSave = () => {
-    onSave(`${selectedHour}:${selectedMinute}`);
-    onClose();
+    pendingSaveRef.current = `${selectedHour}:${selectedMinute}`;
+    startClosing();
   };
 
   if (!isOpen) return null;
@@ -44,8 +63,9 @@ export default function TimeSettingSheet({
   return (
     <div
       className={cn(
-        "animate-fade-in fixed inset-0 z-100 flex items-end justify-center",
+        "fixed inset-0 z-100 flex items-end justify-center",
         "bg-black/30 backdrop-blur-[2px]",
+        isClosing ? "animate-fade-out" : "animate-fade-in",
       )}
       onClick={handleBackdropClick}
     >
@@ -53,8 +73,12 @@ export default function TimeSettingSheet({
         role="dialog"
         aria-modal="true"
         aria-labelledby="sheet-title"
-        className="animate-slide-up bg-brand-white flex h-131 w-full flex-col rounded-xl px-8 pt-6 pb-8 shadow-2xl"
+        className={cn(
+          "bg-brand-white flex h-131 w-full flex-col rounded-xl px-8 pt-6 pb-8 shadow-2xl",
+          isClosing ? "animate-slide-down" : "animate-slide-up",
+        )}
         onClick={(e) => e.stopPropagation()}
+        onAnimationEnd={handleAnimationEnd}
       >
         <div className="mx-auto mb-6 h-1 w-20 rounded-full bg-gray-100" />
         <div id="sheet-title" className="text-h2-m mb-4">
@@ -97,7 +121,6 @@ interface TimeColumnProps {
 
 function TimeColumn({ items, selectedItem, onSelect }: TimeColumnProps) {
   const listRef = useRef<HTMLUListElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (listRef.current) {
@@ -112,11 +135,7 @@ function TimeColumn({ items, selectedItem, onSelect }: TimeColumnProps) {
 
     if (index >= 0 && index < items.length) {
       if (items[index] !== selectedItem) {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-        timeoutRef.current = setTimeout(() => {
-          onSelect(items[index]);
-        }, 100);
+        onSelect(items[index]);
       }
     }
   };
