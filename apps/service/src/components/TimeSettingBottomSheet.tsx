@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { cn } from "@shared";
+import { Button, cn } from "@shared";
 
 import { HOURS, MINUTES } from "@shared/data/times";
 
@@ -68,10 +68,7 @@ export default function TimeSettingSheet({
               selectedItem={selectedHour}
               onSelect={setSelectedHour}
             />
-            <span
-              className="text-h2-m z-10 pb-1 text-gray-500"
-              aria-hidden="true"
-            >
+            <span className="text-gray-500" aria-hidden="true">
               :
             </span>
             <TimeColumn
@@ -82,17 +79,11 @@ export default function TimeSettingSheet({
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSave}
-          className={cn(
-            "text-body1-m flex w-full items-center justify-center rounded-2xl",
-            "mt-auto h-14",
-            "bg-brand-dark text-brand-white",
-          )}
-        >
-          변경사항 저장
-        </button>
+        <div className="mt-auto flex h-14 w-full items-center justify-center">
+          <Button type="submit" size="lg" color="dark" onClick={handleSave}>
+            변경사항 저장
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -146,9 +137,7 @@ function TimeColumn({ items, selectedItem, onSelect }: TimeColumnProps) {
             role="option"
             className={cn(
               "flex h-11 shrink-0 snap-center items-center justify-center",
-              isSelected
-                ? "text-h1-m text-primary font-bold transition-all duration-200"
-                : "text-h2-m text-gray-500 opacity-50 transition-all duration-200",
+              isSelected ? "text-h1-m text-primary" : "text-h2-m text-gray-500",
             )}
           >
             {item}
