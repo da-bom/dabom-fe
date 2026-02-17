@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { cn } from "@shared";
 
@@ -54,6 +54,9 @@ export default function TimeSettingSheet({
       onClick={handleBackdropClick}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sheet-title"
         className={cn(
           "animate-slide-up flex w-full flex-col",
           "h-131 rounded-xl",
@@ -63,7 +66,9 @@ export default function TimeSettingSheet({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mx-auto mb-6 h-1 w-20 rounded-full bg-gray-100" />
-        <div className="text-h2-m mb-4">{title}</div>
+        <div id="sheet-title" className="text-h2-m mb-4">
+          {title}
+        </div>
         <div className="grid h-71 w-full grid-cols-1 grid-rows-1 place-items-center">
           <div className="bg-primary-50 pointer-events-none z-0 col-start-1 row-start-1 h-11 w-full rounded-lg" />
           <div className="z-10 col-start-1 row-start-1 flex h-full w-full items-center justify-center gap-4">
@@ -72,7 +77,12 @@ export default function TimeSettingSheet({
               selectedItem={selectedHour}
               onSelect={setSelectedHour}
             />
-            <span className="text-h2-m z-10 pb-1 text-gray-500">:</span>
+            <span
+              className="text-h2-m z-10 pb-1 text-gray-500"
+              aria-hidden="true"
+            >
+              :
+            </span>
             <TimeColumn
               items={MINUTES}
               selectedItem={selectedMinute}
@@ -104,29 +114,36 @@ interface TimeColumnProps {
 }
 
 function TimeColumn({ items, selectedItem, onSelect }: TimeColumnProps) {
-  const setScrollRef = (node: HTMLUListElement | null) => {
-    if (node) {
+  const listRef = useRef<HTMLUListElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (listRef.current) {
       const targetScroll = items.indexOf(selectedItem) * ITEM_HEIGHT;
-      if (Math.abs(node.scrollTop - targetScroll) > 10) {
-        node.scrollTop = targetScroll;
-      }
+      listRef.current.scrollTop = targetScroll;
     }
-  };
+  }, []);
 
   const handleScroll = (e: React.UIEvent<HTMLUListElement>) => {
     const scrollTop = e.currentTarget.scrollTop;
     const index = Math.round(scrollTop / ITEM_HEIGHT);
+
     if (index >= 0 && index < items.length) {
       if (items[index] !== selectedItem) {
-        onSelect(items[index]);
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+        timeoutRef.current = setTimeout(() => {
+          onSelect(items[index]);
+        }, 100);
       }
     }
   };
 
   return (
     <ul
-      ref={setScrollRef}
+      ref={listRef}
       onScroll={handleScroll}
+      tabIndex={0}
       className={cn(
         "scrollbar-hide z-10 flex h-full flex-col items-center",
         "snap-y snap-mandatory overflow-y-auto",
@@ -142,12 +159,14 @@ function TimeColumn({ items, selectedItem, onSelect }: TimeColumnProps) {
         return (
           <li
             key={item}
+            aria-selected={isSelected}
+            role="option"
             className={cn(
               "flex shrink-0 snap-center items-center justify-center",
               "h-11",
               isSelected
-                ? "text-h1-m text-primary scale-110 font-bold"
-                : "text-h2-m text-gray-500 opacity-50",
+                ? "text-h1-m text-primary scale-110 font-bold transition-all duration-200"
+                : "text-h2-m text-gray-500 opacity-50 transition-all duration-200",
             )}
           >
             {item}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 import { gbToBytes } from "@repo/shared/src/utils/formatSize";
 
@@ -117,6 +117,10 @@ export default function PolicyManagementPage() {
     }
   };
 
+  const handleCLoseSheet = useCallback(() => {
+    setSheetConfig((prev) => ({ ...prev, isOpen: false }));
+  }, []);
+
   const activeCustomerState = sheetConfig.targetId
     ? memberStates[sheetConfig.targetId]
     : null;
@@ -151,7 +155,7 @@ export default function PolicyManagementPage() {
         <TimeSettingBottomSheet
           key={initialTimeForSheet}
           isOpen={sheetConfig.isOpen}
-          onClose={() => setSheetConfig((prev) => ({ ...prev, isOpen: false }))}
+          onClose={handleCLoseSheet}
           title={
             sheetConfig.type === "start" ? "시작 시간 설정" : "종료 시간 설정"
           }
