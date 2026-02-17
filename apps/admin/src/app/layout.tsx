@@ -3,7 +3,7 @@ import "@globalstyles";
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: Readonly<React.ReactNode>;
 }) {
   return (
     <html lang="ko">

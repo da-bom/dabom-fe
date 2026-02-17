@@ -3,7 +3,7 @@ import { Providers } from "../providers";
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: Readonly<React.ReactNode>;
 }) {
   return <Providers>{children}</Providers>;
 }

@@ -4,7 +4,11 @@ import { useState } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+}: {
+  children: Readonly<React.ReactNode>;
+}) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
