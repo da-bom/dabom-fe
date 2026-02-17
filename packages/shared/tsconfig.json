@@ -13,6 +13,7 @@
   "include": [
     "src",
     "../../apps/service/next.config.ts",
-    "src/components/InputField.tsx"
+    "src/components/InputField.tsx",
+    "../../apps/admin/src/app/providers.tsx"
   ]
 }

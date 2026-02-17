@@ -4,40 +4,45 @@ import { useState } from "react";
 
 import Icon from "./Icon";
 
-type InputType = "text" | "password" | "tel" | "id";
+type InputType = "text" | "password" | "tel" | "email";
 
 interface InputFieldProps {
   label: string;
   type: InputType;
   placeholder?: string;
-  // TODO: 퍼블리싱 완료 후 타입 수정
-  value?: any;
-  onChange?: (e: any) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 const Input = ({
   placeholder,
   type,
+  value,
+  onChange,
 }: {
   placeholder: string;
   type: InputType;
+  value: string;
+  onChange: (value: string) => void;
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const inputType = type === "password" && isVisible ? "text" : type;
+
   return (
-    <div className="bg-brand-white flex h-12 w-82 items-center rounded-lg border-[1px] border-gray-200 px-4">
+    <div className="bg-brand-white flex h-12 w-82 items-center rounded-2xl border-[1px] border-gray-200 px-4">
       <input
         type={inputType}
+        value={value}
         className="w-full outline-none"
         placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
       />
       {type === "password" && (
         <button
+          className="cursor-pointer"
           type="button"
-          onClick={() => {
-            setIsVisible((prev) => !prev);
-          }}
+          onClick={() => setIsVisible((prev) => !prev)}
         >
           <Icon name={isVisible ? "EyeOn" : "EyeOff"} />
         </button>
@@ -55,8 +60,13 @@ const InputField = ({
 }: InputFieldProps) => {
   return (
     <div className="flex w-full flex-col gap-2">
-      <label className="body1-m">{label}</label>
-      <Input placeholder={placeholder} type={type} />
+      <label className="body1-m text-gray-800">{label}</label>
+      <Input
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 };
