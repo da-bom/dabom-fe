@@ -124,11 +124,13 @@ export default function PolicyManagementPage() {
   const activeCustomerState = sheetConfig.targetId
     ? memberStates[sheetConfig.targetId]
     : null;
-  const initialTimeForSheet = activeCustomerState
-    ? sheetConfig.type === "start"
-      ? activeCustomerState.startTime
-      : activeCustomerState.endTime
-    : "00:00";
+
+  const targetTime =
+    sheetConfig.type === "start"
+      ? activeCustomerState?.startTime
+      : activeCustomerState?.endTime;
+
+  const initialTimeForSheet = targetTime ?? "00:00";
 
   return (
     <section className="flex min-h-screen w-full justify-center">

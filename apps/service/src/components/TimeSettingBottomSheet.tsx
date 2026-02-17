@@ -22,7 +22,7 @@ export default function TimeSettingSheet({
   title,
   initialTime,
   onSave,
-}: TimeSettingSheetProps) {
+}: Readonly<TimeSettingSheetProps>) {
   const [selectedHour, setSelectedHour] = useState(() =>
     initialTime ? initialTime.split(":")[0] : "07",
   );
@@ -58,10 +58,23 @@ export default function TimeSettingSheet({
     startClosing();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      startClosing();
+    }
+    if (e.key === "Escape") {
+      startClosing();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label="Close modal"
+      onKeyDown={handleKeyDown}
       className={cn(
         "fixed inset-0 z-100 flex items-end justify-center",
         "bg-black/30 backdrop-blur-[2px]",
