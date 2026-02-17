@@ -29,7 +29,7 @@ export default function LoginPage() {
               type="tel"
               placeholder="전화번호를 입력해주세요"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(value) => setPhone(value)}
             />
 
             <InputField
@@ -37,7 +37,7 @@ export default function LoginPage() {
               type="password"
               placeholder="비밀번호를 입력해주세요"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(value) => setPassword(value)}
             />
 
             <div className="mt-53.25 flex justify-center">
