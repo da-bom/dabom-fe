@@ -2,7 +2,7 @@
 
 import React, { useCallback, useRef, useState } from "react";
 
-import { gbToBytes } from "@repo/shared/src/utils/formatSize";
+import { gbToBytes } from "@shared";
 
 import { FAMILY_DETAIL } from "@shared/data/familyDetail";
 
