@@ -156,28 +156,26 @@ export default function MemberCard({
         <div className="overflow-hidden">
           <div className="mx-4 h-px bg-gray-100" />
 
-          {isEditingByOther ? (
-            <div className="relative flex h-[180px] w-full flex-col items-center justify-center p-4">
-              <div className="bg-background-sub flex h-[49px] w-full items-center justify-center gap-2 rounded-lg">
-                {/* <Icon name="Stop" /> */}
-                <span className="text-caption-m text-gray-800">
-                  다른 가족이 수정 중이에요.
+          <div className="flex flex-col gap-6 p-4 pt-6">
+            <div className="flex w-full flex-col gap-2">
+              <div className="flex w-full items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="bg-primary h-3 w-3 rounded-sm" />
+                  <span className="text-body1-m">데이터 사용 한도</span>
+                </div>
+                <span className="text-body1-m text-primary font-bold">
+                  {localLimit}GB
                 </span>
               </div>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-6 p-4 pt-6">
-              <div className="flex w-full flex-col gap-2">
-                <div className="flex w-full items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-primary h-3 w-3 rounded-sm" />
-                    <span className="text-body1-m">데이터 사용 한도</span>
-                  </div>
-                  <span className="text-body1-m text-primary font-bold">
-                    {localLimit}GB
+
+              {isEditingByOther ? (
+                <div className="bg-background-sub flex h-[49px] w-full items-center justify-center gap-2 rounded-lg">
+                  {/* <Icon name="Stop" /> */}
+                  <span className="text-caption-m text-gray-800">
+                    다른 가족이 수정 중이에요.
                   </span>
                 </div>
-
+              ) : (
                 <div className="grid h-8 w-full items-center">
                   <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
                   <div
@@ -202,40 +200,56 @@ export default function MemberCard({
                     aria-label="데이터 한도 설정"
                   />
                 </div>
+              )}
 
+              {!isEditingByOther && (
                 <div className="text-caption-m flex w-full justify-between text-gray-800">
                   <span>0GB</span>
                   <span>{MAX_LIMIT_GB}GB</span>
                 </div>
-              </div>
+              )}
+            </div>
 
-              <div className="flex w-full flex-col gap-4">
-                <div className="flex w-full items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-primary h-3 w-3 rounded-sm" />
-                    <span className="text-body1-m">시간 제한</span>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => handlers.onToggleTime(idStr)}
-                    role="switch"
-                    aria-checked={state.isTimeEnabled}
-                    className={cn(
-                      "flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out",
-                      state.isTimeEnabled ? "bg-primary-500" : "bg-gray-500",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out",
-                        state.isTimeEnabled ? "translate-x-3" : "translate-x-0",
-                      )}
-                    />
-                  </button>
+            <div className="flex w-full flex-col gap-4">
+              <div className="flex w-full items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="bg-primary h-3 w-3 rounded-sm" />
+                  <span className="text-body1-m">시간 제한</span>
                 </div>
 
-                {state.isTimeEnabled && state.startTime && state.endTime ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    !isEditingByOther && handlers.onToggleTime(idStr)
+                  }
+                  role="switch"
+                  disabled={isEditingByOther}
+                  aria-checked={state.isTimeEnabled}
+                  className={cn(
+                    "flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out",
+                    state.isTimeEnabled ? "bg-primary-500" : "bg-gray-500",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out",
+                      state.isTimeEnabled ? "translate-x-3" : "translate-x-0",
+                    )}
+                  />
+                </button>
+              </div>
+
+              {isEditingByOther ? (
+                <div className="bg-background-sub flex h-[49px] w-full items-center justify-center gap-2 rounded-lg">
+                  {/* <Icon name="Stop" /> */}
+                  <span className="text-caption-m text-gray-800">
+                    다른 가족이 수정 중이에요.
+                  </span>
+                </div>
+              ) : (
+                state.isTimeEnabled &&
+                state.startTime &&
+                state.endTime && (
                   <div className="bg-background-sub flex h-20 w-full flex-col items-center justify-center gap-2 rounded-lg">
                     <div className="flex items-center justify-center">
                       <button
@@ -260,16 +274,20 @@ export default function MemberCard({
                       터치하여 시간을 설정하세요.
                     </span>
                   </div>
-                ) : (
+                )
+              )}
+              {!isEditingByOther &&
+                (!state.isTimeEnabled ||
+                  !state.startTime ||
+                  !state.endTime) && (
                   <div className="bg-background-sub flex h-12 w-full items-center justify-center rounded-lg">
                     <span className="text-caption-m text-gray-800">
                       시간 제한이 설정되지 않았습니다.
                     </span>
                   </div>
                 )}
-              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </li>
