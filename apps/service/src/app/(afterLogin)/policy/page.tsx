@@ -18,7 +18,7 @@ export interface CustomerState {
 }
 
 export default function PolicyManagementPage() {
-  // TODO: 추후 실제 유저 권한 데이터로 교체
+  // 추후 실제 유저 권한 데이터로 교체
   const currentUserRole = "OWNER";
 
   const { customers } = FAMILY_DETAIL;
@@ -58,8 +58,6 @@ export default function PolicyManagementPage() {
 
     onLimitChange: (id: string, newGB: number) => {
       const newBytes = gbToBytes(newGB);
-
-      // throw new Error("테스트용 에러 발생!");
 
       setMemberStates((prev) => ({
         ...prev,
@@ -156,7 +154,7 @@ export default function PolicyManagementPage() {
               }}
               state={memberStates[customer.customerId.toString()]}
               isSelected={selectedId === customer.customerId.toString()}
-              isEditingByOther={false} // true면 차단
+              isEditingByOther={true} // true면 차단
               handlers={handlers}
             />
           ))}
