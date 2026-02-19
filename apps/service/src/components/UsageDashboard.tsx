@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { Icon, MainBox, bytesToGB, cn } from "@shared";
+import { Icon, MainBox, bytesToGB } from "@shared";
 import CUSTOMER_LIST from "src/data/customerList";
 
 import MonthNavigator from "@service/components/MonthNavigator";
@@ -10,6 +10,7 @@ import ProgressBar from "@service/components/ProgressBar";
 
 import CustomerList from "./CustomerList";
 import UsageChart from "./UsageChart";
+import { ViewSegment } from "./ViewSegment";
 
 const UsageDashboard = () => {
   const router = useRouter();
@@ -101,31 +102,7 @@ const UsageDashboard = () => {
         />
 
         <div className="bg-brand-white flex h-8 w-full max-w-87.5 items-center rounded-full border border-gray-200">
-          <button
-            onClick={() => handleModeChange("list")}
-            className={cn(
-              "text-caption-m mx-2 flex h-5 flex-1 items-center justify-center gap-1 rounded-full transition-colors",
-              viewMode === "list"
-                ? "bg-primary-50 text-primary"
-                : "bg-transparent text-gray-400",
-            )}
-          >
-            <Icon name={viewMode === "list" ? "ListColor" : "List"} />
-            <span>리스트</span>
-          </button>
-
-          <button
-            onClick={() => handleModeChange("chart")}
-            className={cn(
-              "text-caption-m mx-2 flex h-5 flex-1 items-center justify-center gap-1 rounded-full transition-colors",
-              viewMode === "chart"
-                ? "bg-primary-50 text-primary"
-                : "bg-transparent text-gray-400",
-            )}
-          >
-            <Icon name={viewMode === "chart" ? "GraphColor" : "Graph"} />
-            <span>차트</span>
-          </button>
+          <ViewSegment viewMode={viewMode} onModeChange={handleModeChange} />
         </div>
       </div>
 

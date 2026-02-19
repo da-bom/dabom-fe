@@ -82,13 +82,13 @@ export default function NotificationPage() {
         {hasMore && (
           <div
             ref={observerTarget}
-            className="flex h-10 w-full items-center justify-center py-4"
+            className="flex w-full items-center justify-center py-4"
           >
             {isLoading && (
-              <div className="flex items-center gap-1">
-                <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]" />
-                <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]" />
-                <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-gray-400" />
+              <div className="flex items-center gap-2.5">
+                <div className="h-2 w-2 animate-bounce rounded-full bg-gray-600 [animation-delay:-0.3s]" />
+                <div className="h-2 w-2 animate-bounce rounded-full bg-gray-600 [animation-delay:-0.15s]" />
+                <div className="h-2 w-2 animate-bounce rounded-full bg-gray-600" />
               </div>
             )}
           </div>
@@ -96,7 +96,7 @@ export default function NotificationPage() {
 
         {!hasMore && (
           // 알람 리스트의 개수가 많아 화면을 가득 채울 때 바텀의 도달점?을 일단 임의로 정했습니다. mt-8, mb-12
-          <p className="text-body2-m text-subtle mt-8 mb-12 text-center text-gray-500">
+          <p className="text-body2-m mt-8 mb-12 text-center text-gray-500">
             {NOTICE_MESSAGE}
           </p>
         )}

@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -9,8 +7,6 @@ import { Bomi, Button, Logo } from "@shared";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();

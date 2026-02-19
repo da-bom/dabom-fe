@@ -12,9 +12,10 @@ import TimeSettingBottomSheet from "@service/components/TimeSettingBottomSheet";
 export interface CustomerState {
   customerId: number;
   limitBytes: number;
-  isTimeEnabled: boolean; // API 가족 구성원 정책 수정 (추가 요청할 예정)
-  startTime: string | null; // API 가족 구성원 정책 수정 (추가 요청할 예정)
-  endTime: string | null; // API 가족 구성원 정책 수정 (추가 요청할 예정)
+  timeLimit: {
+    start: string;
+    end: string;
+  } | null;
 }
 
 export default function PolicyManagementPage() {
@@ -34,9 +35,10 @@ export default function PolicyManagementPage() {
       initial[c.customerId.toString()] = {
         customerId: c.customerId,
         limitBytes: c.monthlyLimitBytes,
-        isTimeEnabled: true,
-        startTime: "23:00",
-        endTime: "07:00",
+        timeLimit: {
+          start: "23:00",
+          end: "07:00",
+        },
       };
     });
     return initial;
@@ -80,10 +82,18 @@ export default function PolicyManagementPage() {
     },
 
     onToggleTime: (id: string) => {
-      setMemberStates((prev) => ({
-        ...prev,
-        [id]: { ...prev[id], isTimeEnabled: !prev[id].isTimeEnabled },
-      }));
+      setMemberStates((prev) => {
+        const currentTarget = prev[id];
+        return {
+          ...prev,
+          [id]: {
+            ...currentTarget,
+            timeLimit: currentTarget.timeLimit
+              ? null
+              : { start: "00:00", end: "23:59" },
+          },
+        };
+      });
     },
 
     onTimeClick: (id: string, type: "start" | "end") => {
@@ -99,13 +109,24 @@ export default function PolicyManagementPage() {
     const { targetId, type } = sheetConfig;
     if (!targetId) return;
 
-    setMemberStates((prev) => ({
-      ...prev,
-      [targetId]: {
-        ...prev[targetId],
-        [type === "start" ? "startTime" : "endTime"]: newTime,
-      },
-    }));
+    setMemberStates((prev) => {
+      const currentTarget = prev[targetId];
+      const currentLimit = currentTarget.timeLimit || {
+        start: "00:00",
+        end: "23:59",
+      };
+
+      return {
+        ...prev,
+        [targetId]: {
+          ...currentTarget,
+          timeLimit: {
+            ...currentLimit,
+            [type]: newTime,
+          },
+        },
+      };
+    });
 
     // try {
     //   const currentState = memberStates[targetId];
@@ -130,8 +151,8 @@ export default function PolicyManagementPage() {
 
   const targetTime =
     sheetConfig.type === "start"
-      ? activeCustomerState?.startTime
-      : activeCustomerState?.endTime;
+      ? activeCustomerState?.timeLimit?.start
+      : activeCustomerState?.timeLimit?.end;
 
   const initialTimeForSheet = targetTime ?? "00:00";
 
@@ -161,7 +182,7 @@ export default function PolicyManagementPage() {
         </ul>
 
         <TimeSettingBottomSheet
-          key={initialTimeForSheet}
+          key={`${sheetConfig.targetId}-${sheetConfig.type}-${initialTimeForSheet}`}
           isOpen={sheetConfig.isOpen}
           onClose={handleCLoseSheet}
           title={

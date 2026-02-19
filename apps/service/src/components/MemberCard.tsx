@@ -3,16 +3,17 @@
 import React, { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
-import { Icon, bytesToGB, cn, formatSize } from "@shared";
+import { Icon, bytesToGB, cn, formatSize, gbToBytes } from "@shared";
 
 const MAX_LIMIT_GB = 70;
 
 export interface CustomerState {
   customerId: number;
   limitBytes: number;
-  isTimeEnabled: boolean;
-  startTime: string | null;
-  endTime: string | null;
+  timeLimit: {
+    start: string;
+    end: string;
+  } | null;
 }
 
 interface MemberCardProps {
@@ -53,7 +54,7 @@ export default function MemberCard({
 
   const sliderPercentage = (localLimit / MAX_LIMIT_GB) * 100;
   const formattedUsed = formatSize(customer.monthlyUsedBytes).total;
-  const displayedTotalBytes = localLimit * 1024 * 1024 * 1024;
+  const displayedTotalBytes = gbToBytes(localLimit);
   const formattedTotal = formatSize(displayedTotalBytes).total;
 
   const usagePercent =
@@ -224,16 +225,16 @@ export default function MemberCard({
                   }
                   role="switch"
                   disabled={isEditingByOther}
-                  aria-checked={state.isTimeEnabled}
+                  aria-checked={!state.timeLimit}
                   className={cn(
                     "flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out",
-                    state.isTimeEnabled ? "bg-primary-500" : "bg-gray-500",
+                    state.timeLimit ? "bg-primary-500" : "bg-gray-500",
                   )}
                 >
                   <div
                     className={cn(
                       "bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out",
-                      state.isTimeEnabled ? "translate-x-3" : "translate-x-0",
+                      state.timeLimit ? "translate-x-3" : "translate-x-0",
                     )}
                   />
                 </button>
@@ -247,9 +248,7 @@ export default function MemberCard({
                   </span>
                 </div>
               ) : (
-                state.isTimeEnabled &&
-                state.startTime &&
-                state.endTime && (
+                state.timeLimit && (
                   <div className="bg-background-sub flex h-20 w-full flex-col items-center justify-center gap-2 rounded-lg">
                     <div className="flex items-center justify-center">
                       <button
@@ -257,7 +256,9 @@ export default function MemberCard({
                         onClick={() => handlers.onTimeClick(idStr, "start")}
                         className="border-primary-200 bg-primary-50 flex h-6 w-15 items-center justify-center rounded border"
                       >
-                        <span className="text-body1-m">{state.startTime}</span>
+                        <span className="text-body1-m">
+                          {state.timeLimit.start}
+                        </span>
                       </button>
                       <span className="text-body1-m mx-2">부터</span>
 
@@ -266,7 +267,9 @@ export default function MemberCard({
                         onClick={() => handlers.onTimeClick(idStr, "end")}
                         className="border-primary-200 bg-primary-50 flex h-6 w-15 items-center justify-center rounded border"
                       >
-                        <span className="text-body1-m">{state.endTime}</span>
+                        <span className="text-body1-m">
+                          {state.timeLimit.end}
+                        </span>
                       </button>
                       <span className="text-body1-m ml-2">까지</span>
                     </div>
@@ -276,16 +279,13 @@ export default function MemberCard({
                   </div>
                 )
               )}
-              {!isEditingByOther &&
-                (!state.isTimeEnabled ||
-                  !state.startTime ||
-                  !state.endTime) && (
-                  <div className="bg-background-sub flex h-12 w-full items-center justify-center rounded-lg">
-                    <span className="text-caption-m text-gray-800">
-                      시간 제한이 설정되지 않았습니다.
-                    </span>
-                  </div>
-                )}
+              {!isEditingByOther && !state.timeLimit && (
+                <div className="bg-background-sub flex h-12 w-full items-center justify-center rounded-lg">
+                  <span className="text-caption-m text-gray-800">
+                    시간 제한이 설정되지 않았습니다.
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

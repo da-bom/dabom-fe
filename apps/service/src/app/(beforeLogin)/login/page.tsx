@@ -22,13 +22,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <main className="mt-46.75 flex w-full justify-center">
-        <form
-          onSubmit={handleLogin}
-          className="flex w-85 flex-col items-center"
-        >
-          <div className="flex w-full flex-col gap-10">
+    <div className="flex min-h-screen justify-center">
+      <main className="flex flex-col justify-center">
+        <form onSubmit={handleLogin} className="flex flex-col items-center">
+          <div className="flex flex-col gap-10">
             <InputField
               label="전화번호"
               type="tel"
@@ -37,27 +34,25 @@ export default function LoginPage() {
               onChange={(value) => setPhone(value)}
             />
 
-            <div className="flex flex-col gap-2">
-              <InputField
-                label="비밀번호"
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                value={password}
-                onChange={(value) => {
-                  setPassword(value);
-                  setIsLoginFailed(false);
-                }}
-              />
+            <InputField
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={(value) => {
+                setPassword(value);
+                setIsLoginFailed(false);
+              }}
+            />
 
-              {isLoginFailed && (
-                <div className="mt-2 flex flex-row items-center justify-center gap-1">
-                  <Icon name="Warning" className="text-negative h-3.5 w-3.5" />
-                  <span className="text-body2-m text-negative">
-                    아이디 또는 비밀번호가 일치하지 않습니다.
-                  </span>
-                </div>
-              )}
-            </div>
+            {isLoginFailed && (
+              <div className="flex flex-row items-center justify-center gap-1">
+                <Icon name="Warning" className="text-negative h-3.5 w-3.5" />
+                <span className="text-body2-m text-negative">
+                  아이디 또는 비밀번호가 일치하지 않습니다.
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="mt-57 flex w-full justify-center">

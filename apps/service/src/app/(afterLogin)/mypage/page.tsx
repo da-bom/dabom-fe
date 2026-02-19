@@ -1,5 +1,6 @@
 import { Icon, MainBox } from "@shared";
 
+import { BomiIcon } from "@service/components/BomiIcon";
 import ProgressBar from "@service/components/ProgressBar";
 
 const data = {
@@ -14,20 +15,10 @@ const MyPage = () => {
     100,
   );
 
-  const getCharacterIcon = (percent: number) => {
-    if (percent >= 81) return "four";
-    if (percent >= 51) return "three";
-    if (percent >= 31) return "two";
-    if (percent >= 1) return "one";
-    return "zero";
-  };
-
-  const characterIconName = getCharacterIcon(usagePercent);
-
   return (
     <div className="mx-5 mt-14 flex flex-col gap-4">
       <MainBox className="flex w-full flex-col items-center gap-6 rounded-xl p-7">
-        <Icon name={characterIconName} />
+        <BomiIcon icon={usagePercent} />
         <span className="text-h1-m">{data.name}</span>
         <div className="flex w-full flex-col gap-2">
           <div className="text-body2-m flex justify-between">

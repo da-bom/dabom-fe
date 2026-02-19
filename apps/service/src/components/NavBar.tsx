@@ -13,7 +13,6 @@ interface NavItem {
   label: string;
   href: string;
   icon: IconName;
-  activeIcon: IconName;
 }
 
 const NavBar = () => {
@@ -21,20 +20,10 @@ const NavBar = () => {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: "홈", href: "/home", icon: "Home", activeIcon: "HomeColor" },
-      {
-        label: "정책",
-        href: "/policy",
-        icon: "Policy",
-        activeIcon: "PolicyColor",
-      },
-      {
-        label: "알림",
-        href: "/notification",
-        icon: "Noti",
-        activeIcon: "NotiColor",
-      },
-      { label: "MY", href: "/mypage", icon: "My", activeIcon: "MyColor" },
+      { label: "홈", href: "/home", icon: "Home" },
+      { label: "정책", href: "/policy", icon: "Policy" },
+      { label: "알림", href: "/notification", icon: "Noti" },
+      { label: "MY", href: "/mypage", icon: "My" },
     ],
     [],
   );
@@ -52,11 +41,17 @@ const NavBar = () => {
             <li key={item.href} className="flex-1">
               <Link
                 href={item.href}
-                className="flex h-full flex-col items-center justify-center space-y-1 transition-opacity duration-200 hover:opacity-80"
+                className={`flex h-full flex-col items-center justify-center space-y-1 transition-opacity duration-200 hover:opacity-80 ${
+                  isActive ? "text-primary-500" : "text-gray-400"
+                }`}
                 aria-current={isActive ? "page" : undefined}
               >
-                <Icon name={isActive ? item.activeIcon : item.icon} />
-                <span className="text-caption-m text-gray-700">
+                <Icon name={item.icon} />
+                <span
+                  className={`text-caption-m ${
+                    isActive ? "text-primary-500" : "text-gray-700"
+                  }`}
+                >
                   {item.label}
                 </span>
               </Link>
