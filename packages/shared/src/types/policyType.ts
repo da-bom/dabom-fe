@@ -1,12 +1,36 @@
+export type RuleType =
+  | "MONTHLY_BLOCK"
+  | "MANUAL_BLOCK"
+  | "TIME_BLOCK"
+  | "APP_BLOCK";
+
+export interface MONTHLY_BLOCK {
+  monthlyLimitBytes: number;
+}
+
+export interface TIME_BLOCK {
+  start: string;
+  end: string;
+  timezone: string;
+}
+
+export interface MANUAL_BLOCK {
+  reason: "MANUAL";
+}
+
+export interface APP_BLOCK {
+  apps: string[];
+}
+
 export interface PolicyType {
   policyId: number;
   name: string;
-  // TODO: 타입 상세 정의 필요
+  description: string;
   type: string;
-  default_rules: {};
-  requiredRole: "ADMIN" | "OWNER" | "MEMBER";
+  default_rules: MONTHLY_BLOCK | TIME_BLOCK | MANUAL_BLOCK;
+  requireRole: "ADMIN" | "OWNER" | "MEMBER";
   isActive: boolean;
-  isSystem: false;
+  isSystem: boolean;
   createdAt: string;
   updatedAt: string;
 }
