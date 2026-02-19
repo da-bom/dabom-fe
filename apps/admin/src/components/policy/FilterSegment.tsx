@@ -23,7 +23,7 @@ const FilterButton = ({
   );
 };
 
-const FilterBar = ({
+const FilterSegment = ({
   selectedFilter,
   setSelectedFilter,
 }: {
@@ -54,4 +54,4 @@ const FilterBar = ({
   );
 };
 
-export default FilterBar;
+export default FilterSegment;

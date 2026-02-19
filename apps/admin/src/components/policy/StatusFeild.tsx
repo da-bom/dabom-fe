@@ -1,0 +1,63 @@
+import { Badge, RadioGroup, Switch, TextField } from "@shared";
+
+import { EditablePolicyFields } from "@shared/types/policyType";
+
+const StatusFeild = ({
+  isSystem,
+  data,
+  setData,
+}: {
+  isSystem: boolean;
+  data: EditablePolicyFields;
+  setData: React.Dispatch<React.SetStateAction<EditablePolicyFields>>;
+}) => {
+  if (isSystem) {
+    return (
+      <TextField label="상태" description="기본 정책은 비활성화할 수 없습니다.">
+        <Badge color="primary_light" size="lg">
+          활성화
+        </Badge>
+      </TextField>
+    );
+  }
+  return (
+    <>
+      <TextField
+        label="상태"
+        description="정책 활성화 즉시 모든 유저에게 적용됩니다."
+      >
+        <div className="flex items-center gap-4">
+          <Switch
+            type={data.isActive ? "primary" : "gray"}
+            size="lg"
+            onClick={() => {
+              setData((prev) => ({ ...prev, isActive: !prev.isActive }));
+            }}
+          >
+            {data.isActive ? "활성화" : "비활성화"}
+          </Switch>
+        </div>
+      </TextField>
+      {data.isActive && (
+        <RadioGroup
+          options={[
+            { label: "정책 수정 이후에만 적용하기", value: "after" },
+            {
+              label: "기존 값 덮어쓰기",
+              value: "overwrite",
+              subLabel: "유저가 설정했던 값이 모두 덮어씌워집니다.",
+              isWarning: true,
+            },
+          ]}
+          name="policy"
+          selectedValue=""
+          onChange={() => {
+            // TODO: 변경하기 ...
+          }}
+        />
+      )}
+    </>
+  );
+};
+
+export default StatusFeild;

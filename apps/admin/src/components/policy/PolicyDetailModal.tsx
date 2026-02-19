@@ -1,26 +1,50 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { Button, DropDown, Icon, RadioGroup, Switch, TextField } from "@shared";
+import { useParams, useRouter } from "next/navigation";
+
+import { Button, DropDown, Icon, MainBox, TextField } from "@shared";
 
 import POLICY_DETAIL from "@shared/data/policyDetail";
+import { PolicyDetailType } from "@shared/types/policyType";
+
+import DefaultRuleFeild from "./DefaultRuleFeild";
+import StatusFeild from "./StatusFeild";
 
 const PolicyDetailModal = () => {
   const router = useRouter();
+  const params = useParams();
+  const policyId = Number(params.id);
+
+  const data = POLICY_DETAIL[
+    policyId as keyof typeof POLICY_DETAIL
+  ] as unknown as PolicyDetailType;
+
+  const [newData, setNewData] = useState({
+    description: data.description,
+    default_rules: data.default_rules,
+    requireRole: data.requireRole,
+    isActive: data.isActive,
+  });
+
+  if (!data) {
+    // TODO: 데이터가 없을 경우 에러 처리
+    return null;
+  }
 
   return (
     <div
-      role="button"
+      role="presentation"
       onClick={() => router.back()}
       className="fixed inset-0 z-50 flex h-screen justify-end bg-black/20"
       aria-label="닫기"
     >
-      <dialog
+      <aside
         onClick={(e) => e.stopPropagation()}
         className="bg-brand-white flex h-full w-175 flex-col border-l border-gray-300 px-11 py-8 shadow-[-4px_0_10px_rgba(0,0,0,0.1)]"
       >
-        <div className="flex flex-col gap-10 overflow-y-auto">
+        <div className="flex h-full flex-col gap-10 overflow-y-auto">
           <button
             className="w-fit cursor-pointer text-gray-500"
             onClick={() => router.back()}
@@ -29,67 +53,38 @@ const PolicyDetailModal = () => {
           </button>
 
           <header className="flex flex-col gap-3">
-            <Badge active={POLICY_DETAIL.isActive} />
-            <h1 className="text-h1-d">{POLICY_DETAIL.name}</h1>
-            <p className="text-body1-d text-gray-700">
-              {POLICY_DETAIL.description}
-            </p>
+            <Status active={data.isActive} />
+            <h1 className="text-h1-d">{data.name}</h1>
+            {/* TODO: input으로 변경 */}
+            <p className="text-body1-d text-gray-700">{data.description}</p>
           </header>
 
           <hr className="border-gray-100" />
 
-          <div className="flex flex-col gap-8">
+          <div className="flex h-full flex-col gap-8">
             <TextField label="권한">
-              <DropDown
-                options={["ADMIN", "OWNER", "MEMBER"]}
-                selectedOption={POLICY_DETAIL.requireRole}
-                setSelectedOption={() => {}}
-              />
-            </TextField>
-
-            <TextField label="기본값">
-              <DropDown
-                options={["추가 사용량 부과", "속도 제한", "사용 차단"]}
-                selectedOption={POLICY_DETAIL.default_rules.rule}
-                setSelectedOption={() => {}}
-              />
-            </TextField>
-
-            <TextField
-              label="상태"
-              description="정책 활성화 시 즉시 모든 유저에게 적용됩니다."
-            >
-              <div className="flex items-center gap-4">
-                <Switch
-                  type={POLICY_DETAIL.isActive ? "primary" : "gray"}
-                  radius="half"
-                  onClick={() => {}}
-                >
-                  {POLICY_DETAIL.isActive ? "활성화" : "비활성화"}
-                </Switch>
-              </div>
-            </TextField>
-
-            {POLICY_DETAIL.isActive && (
-              <div className="ml-16">
-                <RadioGroup
-                  options={[
-                    { label: "정책 수정 이후에만 적용하기", value: "after" },
-                    {
-                      label: "기존 값 덮어쓰기",
-                      value: "overwrite",
-                      subLabel: "유저가 설정했던 값이 모두 덮어씌워집니다.",
-                      isWarning: true,
-                    },
-                  ]}
-                  name="policy"
-                  selectedValue=""
-                  onChange={() => {
-                    // TODO: 변경하기 ...
-                  }}
+              <MainBox className="rounded-xl border-[1px] border-gray-200 hover:border-gray-300 active:bg-gray-50">
+                <DropDown
+                  options={["ADMIN", "OWNER", "MEMBER"]}
+                  selectedOption={newData.requireRole}
+                  setSelectedOption={() => {}}
                 />
-              </div>
-            )}
+              </MainBox>
+            </TextField>
+
+            <DefaultRuleFeild
+              type={data.type}
+              rules={newData.default_rules}
+              onRuleChange={(newRules) => {
+                setNewData((prev) => ({ ...prev, default_rules: newRules }));
+              }}
+            />
+
+            <StatusFeild
+              isSystem={data.isSystem}
+              data={newData}
+              setData={setNewData}
+            />
           </div>
         </div>
 
@@ -101,12 +96,12 @@ const PolicyDetailModal = () => {
             변경사항 저장
           </Button>
         </div>
-      </dialog>
+      </aside>
     </div>
   );
 };
 
-const Badge = ({ active }: { active: boolean }) => (
+const Status = ({ active }: { active: boolean }) => (
   <div
     className={`text-body1-d flex items-center gap-1 ${active ? "text-primary" : "text-gray-600"}`}
   >

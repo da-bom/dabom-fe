@@ -9,13 +9,13 @@ import { formatPolicy } from "src/utils/formatPolicy";
 import { POLICY } from "@shared/data/policy";
 
 import Table from "@admin/components/Table";
-import FilterBar from "@admin/components/policy/FilterBar";
+import FilterSegment from "@admin/components/policy/FilterSegment";
 
 const PolicyPage = () => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("ALL");
   return (
     <div className="flex h-screen flex-col gap-5">
-      <FilterBar
+      <FilterSegment
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
       />
