@@ -28,6 +28,11 @@ const PolicyDetailModal = () => {
     isActive: data.isActive,
   });
 
+  if (!data) {
+    // TODO: 데이터가 없을 경우 에러 처리
+    return null;
+  }
+
   return (
     <div
       role="presentation"

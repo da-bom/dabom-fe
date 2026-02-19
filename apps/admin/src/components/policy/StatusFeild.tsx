@@ -9,9 +9,8 @@ const StatusFeild = ({
 }: {
   isSystem: boolean;
   data: EditablePolicyFields;
-  setData: (data: EditablePolicyFields) => void;
+  setData: React.Dispatch<React.SetStateAction<EditablePolicyFields>>;
 }) => {
-  console.log(isSystem);
   if (isSystem) {
     return (
       <TextField label="상태" description="기본 정책은 비활성화할 수 없습니다.">
@@ -32,7 +31,7 @@ const StatusFeild = ({
             type={data.isActive ? "primary" : "gray"}
             size="lg"
             onClick={() => {
-              setData({ ...data, isActive: !data.isActive });
+              setData((prev) => ({ ...prev, isActive: !prev.isActive }));
             }}
           >
             {data.isActive ? "활성화" : "비활성화"}
