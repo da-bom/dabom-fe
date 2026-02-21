@@ -1,13 +1,29 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 import { gbToBytes } from "@shared";
-
-import { FAMILY_DETAIL } from "@shared/data/familyDetail";
+import {
+  CustomerDetail,
+  useGetFamilyPolicies,
+} from "src/hooks/useFamilyPolicies";
 
 import MemberCard from "@service/components/MemberCard";
 import TimeSettingBottomSheet from "@service/components/TimeSettingBottomSheet";
+
+const emptySubscribe = () => () => {};
+function useIsClient() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+}
 
 export interface CustomerState {
   customerId: number;
@@ -19,13 +35,37 @@ export interface CustomerState {
 }
 
 export default function PolicyManagementPage() {
-  // 추후 실제 유저 권한 데이터로 교체
+  const isClient = useIsClient();
+  const { data: familyDetail, isLoading, isError } = useGetFamilyPolicies();
+
+  if (!isClient || isLoading) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <p className="text-body1-m">가족 데이터를 불러오는 중입니다...</p>
+      </div>
+    );
+  }
+
+  if (isError || !familyDetail || !familyDetail.customers) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <p className="text-body1-m text-red-500">
+          데이터를 불러오는데 실패했습니다.
+        </p>
+      </div>
+    );
+  }
+
+  return <PolicyManagementList customers={familyDetail.customers} />;
+}
+
+interface PolicyManagementListProps {
+  customers: CustomerDetail[];
+}
+
+function PolicyManagementList({ customers }: PolicyManagementListProps) {
   const currentUserRole = "OWNER";
-
-  const { customers } = FAMILY_DETAIL;
-
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
-
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [memberStates, setMemberStates] = useState<
     Record<string, CustomerState>
@@ -66,7 +106,6 @@ export default function PolicyManagementPage() {
         [id]: { ...prev[id], limitBytes: newBytes },
       }));
 
-      // API 호출 디바운싱
       if (debounceTimer.current) {
         clearTimeout(debounceTimer.current);
       }
@@ -100,7 +139,7 @@ export default function PolicyManagementPage() {
       setSheetConfig({
         isOpen: true,
         targetId: id,
-        type: type,
+        type,
       });
     },
   };
@@ -171,7 +210,7 @@ export default function PolicyManagementPage() {
               key={customer.customerId}
               customer={{
                 ...customer,
-                phoneNumber: "010-****-1234", // Mock에 없어서 임시 주입
+                phoneNumber: String(customer.phoneNumber) || "정보 없음",
               }}
               state={memberStates[customer.customerId.toString()]}
               isSelected={selectedId === customer.customerId.toString()}
