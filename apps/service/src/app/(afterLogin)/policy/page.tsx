@@ -8,10 +8,7 @@ import React, {
 } from "react";
 
 import { gbToBytes } from "@shared";
-import {
-  CustomerDetail,
-  useGetFamilyPolicies,
-} from "src/hooks/useFamilyPolicies";
+import { useGetFamilyPolicies } from "src/hooks/useFamilyPolicies";
 
 import MemberCard from "@service/components/MemberCard";
 import TimeSettingBottomSheet from "@service/components/TimeSettingBottomSheet";
