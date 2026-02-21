@@ -9,6 +9,7 @@ import React, {
 
 import { gbToBytes } from "@shared";
 import { useGetFamilyPolicies } from "src/hooks/useFamilyPolicies";
+import { CustomerDetail } from "src/types/policiesType";
 
 import MemberCard from "@service/components/MemberCard";
 import TimeSettingBottomSheet from "@service/components/TimeSettingBottomSheet";
