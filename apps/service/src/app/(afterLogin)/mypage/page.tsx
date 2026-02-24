@@ -15,7 +15,6 @@ const data = {
 };
 
 const MyPage = () => {
-  console.log(MainBox);
   const usagePercent = Math.min(
     Math.round((data.usedGB / data.limitGB) * 100),
     100,

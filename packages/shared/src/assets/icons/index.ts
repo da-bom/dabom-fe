@@ -15,6 +15,8 @@ import NotificationIcon from '@mui/icons-material/NotificationsNone';
 import GraphIcon from "@mui/icons-material/Equalizer";
 import ListIcon from "@mui/icons-material/List";
 import UnpublishedIcon from '@mui/icons-material/Unpublished';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 export {
   HomeIcon,
@@ -33,5 +35,7 @@ export {
   NotificationIcon,
   GraphIcon,
   ListIcon,
-  UnpublishedIcon
+  UnpublishedIcon,
+  VisibilityIcon,
+  VisibilityOffIcon
 };

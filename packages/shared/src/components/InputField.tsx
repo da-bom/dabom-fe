@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { VisibilityIcon, VisibilityOffIcon } from "../assets/icons";
+
 type InputType = "text" | "password" | "tel" | "email";
 
 interface InputFieldProps {
@@ -42,7 +44,11 @@ const Input = ({
           type="button"
           onClick={() => setIsVisible((prev) => !prev)}
         >
-          {/* <Icon name={isVisible ? "EyeOn" : "EyeOff"} /> */}
+          {isVisible ? (
+            <VisibilityIcon className="text-gray-600" />
+          ) : (
+            <VisibilityOffIcon className="text-gray-600" />
+          )}
         </button>
       )}
     </div>
