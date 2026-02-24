@@ -1,5 +1,3 @@
-import { useRouter } from "next/navigation";
-
 import { http } from "@shared";
 import { useMutation } from "@tanstack/react-query";
 import { AdminLoginRequest, AdminLoginResponse } from "src/types/LoginType";
@@ -15,8 +13,6 @@ export const login = async (email: string, password: string) => {
 };
 
 export const useLogin = () => {
-  const router = useRouter();
-
   return useMutation({
     mutationFn: ({ email, password }: AdminLoginRequest) =>
       login(email, password),
@@ -24,8 +20,6 @@ export const useLogin = () => {
     onSuccess: (data: AdminLoginResponse) => {
       localStorage.setItem("access_token", data.accessToken);
       localStorage.setItem("refresh_token", data.refreshToken);
-
-      router.push("/policy");
     },
 
     onError: (error: ApiErrorResponse) => {

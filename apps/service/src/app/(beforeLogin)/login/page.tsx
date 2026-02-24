@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import router from "next/router";
+
 import { Button, ErrorIcon, InputField } from "@shared";
 import { useLogin } from "src/hooks/useLogin";
 
@@ -12,13 +14,19 @@ export default function LoginPage() {
 
   const { mutate: login, isPending: isLoading } = useLogin();
 
-  const handleLogin = (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const handleLogin = async () => {
     if (!phone || !password) {
       alert("전화번호와 비밀번호를 입력해주세요.");
       return;
     }
-    login({ phone, password });
+
+    try {
+      await login({ phone, password });
+      router.push("/");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인 정보가 올바르지 않습니다.");
+    }
   };
 
   return (
