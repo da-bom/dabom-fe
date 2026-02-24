@@ -46,7 +46,6 @@ export const POLICY = {
     {
       policyId: 4,
       name: "어플 차단",
-      description: "어떻게 할까용?",
       type: "APP_BLOCK",
       default_rules: {
         apps: ["youtube", "instagram"],
@@ -57,7 +56,7 @@ export const POLICY = {
       createdAt: "2024-01-01T00:00:00Z",
       updatedAt: "2024-01-01T00:00:00Z",
     },
-  ] as PolicyType[],
+  ] as unknown as PolicyType[],
   page: 0,
   size: 20,
   totalElements: 15,
