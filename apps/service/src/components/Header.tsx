@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { ChevronIcon, cn } from "@shared";
+import { ChevronIcon, Logo, cn } from "@shared";
 
 interface HeaderProps {
   isBackVisible?: boolean;
@@ -51,7 +51,7 @@ const Header = ({
       </div>
 
       <div>
-        {/* <Icon name="Logo" width={66} height={12} aria-label="DABOM Logo" /> */}
+        <Logo type="default" />
       </div>
       <div className="flex w-10 items-center"></div>
     </header>

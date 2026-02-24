@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import { ChevronIcon, MainBox } from "@shared";
+import { ChevronIcon, DaboIcon, MainBox } from "@shared";
 
 const ProgressBar = dynamic(() => import("@service/components/ProgressBar"), {
   ssr: false,
@@ -24,6 +24,7 @@ const MyPage = () => {
   return (
     <div className="mx-5 mt-14 flex flex-col gap-4">
       <MainBox className="flex w-full flex-col items-center gap-6 rounded-xl p-7">
+        <DaboIcon usage={usagePercent} />
         <span className="text-h1-m">{data.name}</span>
         <div className="flex w-full flex-col gap-2">
           <div className="text-body2-m flex justify-between">

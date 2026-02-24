@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+import { Logo } from "@shared";
 import { MENU } from "src/constants/MENU";
 
 import MenuItem from "./MenuItem";
@@ -13,8 +14,7 @@ const Sidebar = () => {
   return (
     <div className="bg-brand-white flex h-screen w-62 flex-col justify-between border-r-[1px] border-gray-100 py-5">
       <div className="flex w-full flex-col items-center gap-7">
-        {/* TODO: 어드민 로고 변경 */}
-        {/* <Icon name="LogoAdmin" /> */}
+        <Logo type="admin" />
         <div className="w-38 border-[1px] border-gray-100" />
 
         <div className="flex w-full flex-col gap-5 px-2">

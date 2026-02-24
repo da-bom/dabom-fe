@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Button, DaboIcon } from "@shared";
+import { Button, DaboIcon, Logo } from "@shared";
 
 const data = {
   name: "김철수",
@@ -27,8 +27,7 @@ export default function SignupPage() {
       <main className="flex w-82 flex-col items-center">
         <div className="flex flex-col items-center gap-17.5">
           <DaboIcon usage={usagePercent} className="h-50 w-50 animate-bounce" />
-          {/* <Bomi  />
-          {/* <Logo className="h-8.25 w-46" /> */}
+          <Logo type="default" className="w-46" />
         </div>
 
         <form
