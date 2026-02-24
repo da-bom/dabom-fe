@@ -1,32 +1,29 @@
 import Link from "next/link";
 
-import { Icon, cn } from "@shared";
-
-import { IconName } from "@shared/types/icon";
+import { SvgIconProps } from "@mui/material";
+import { cn } from "@shared";
 
 const MenuItem = ({
   name,
   isSelected,
   href,
-  icon,
+  icon: Icon,
 }: {
   name: string;
   isSelected: boolean;
   href: string;
-  icon: string;
+  icon: React.ComponentType<SvgIconProps>;
 }) => {
   return (
     <Link
       href={href}
       className={cn(
         "flex w-full items-center gap-2 rounded-md px-2 py-1",
-        isSelected && "bg-primary-50",
+        isSelected ? "bg-primary-50 text-primary" : "text-gray-700",
       )}
     >
-      <Icon name={`${icon}${isSelected ? "Color" : ""}` as IconName} />
-      <div className={isSelected ? "text-primary" : "text-gray-700"}>
-        {name}
-      </div>
+      <Icon className="text-5" />
+      <span>{name}</span>
     </Link>
   );
 };

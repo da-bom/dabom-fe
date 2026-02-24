@@ -4,7 +4,14 @@ import { useState } from "react";
 
 import { useParams, useRouter } from "next/navigation";
 
-import { Button, DropDown, Icon, MainBox, TextField } from "@shared";
+import {
+  Button,
+  CheckIcon,
+  ChevronIcon,
+  DropDown,
+  MainBox,
+  TextField,
+} from "@shared";
 
 import POLICY_DETAIL from "@shared/data/policyDetail";
 import { PolicyDetailType } from "@shared/types/policyType";
@@ -49,7 +56,7 @@ const PolicyDetailModal = () => {
             className="w-fit cursor-pointer text-gray-500"
             onClick={() => router.back()}
           >
-            <Icon name="Chevron" />
+            <ChevronIcon />
           </button>
 
           <header className="flex flex-col gap-3">
@@ -107,12 +114,13 @@ const Status = ({ active }: { active: boolean }) => (
   >
     {active ? (
       <>
-        <Icon name="Check" />
+        <CheckIcon />
         <span>활성화</span>
       </>
     ) : (
       <>
-        <Icon name="Deactive" />
+        {/* TODO: 비활성화 아이콘 추가 */}
+        {/* <Icon name="Deactive" /> */}
         <span>비활성화</span>
       </>
     )}

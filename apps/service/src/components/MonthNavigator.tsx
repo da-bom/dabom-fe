@@ -1,6 +1,7 @@
 "use client";
 
-import { Icon } from "@repo/shared/src";
+import { Icon } from "@mui/material";
+import { ChevronIcon } from "@shared";
 
 interface MonthNavigatorProps {
   currentDateText: string;
@@ -28,7 +29,7 @@ const MonthNavigator = ({
         className="flex items-center justify-center transition-opacity hover:opacity-70 active:scale-95"
         aria-label="이전 달로 이동"
       >
-        <Icon name="Chevron" />
+        <ChevronIcon />
       </button>
 
       <span className="text-body1-m w-28 text-center tabular-nums">
@@ -41,7 +42,7 @@ const MonthNavigator = ({
         aria-label="다음 달로 이동"
       >
         <div className="rotate-180">
-          <Icon name="Chevron" />
+          <ChevronIcon />
         </div>
       </button>
     </div>

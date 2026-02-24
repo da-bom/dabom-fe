@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Button, Icon, InputField } from "@shared";
+import { Button, InputField } from "@shared";
 
 import { useLogin } from "../../hooks/useLogin";
 
@@ -24,7 +24,7 @@ const Login = () => {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="bg-brand-white shadow-default flex w-fit flex-col items-center gap-20 rounded-3xl px-20 py-14">
-        <Icon name="Logo" className="w-34" />
+        {/* <Icon name="Logo" className="w-34" /> */}
         <div className="flex flex-col gap-7">
           <InputField
             label="이메일"

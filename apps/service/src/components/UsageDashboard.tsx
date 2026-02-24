@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { Icon, MainBox, bytesToGB } from "@shared";
+import { MainBox, bytesToGB } from "@shared";
 import CUSTOMER_LIST from "src/data/customerList";
 
 import MonthNavigator from "@service/components/MonthNavigator";
@@ -88,7 +88,7 @@ const UsageDashboard = () => {
             </span>
           </div>
         </div>
-        <Icon className="-mt-35 -mr-2 ml-auto block" name="Bomi" />
+        {/* <Icon className="-mt-35 -mr-2 ml-auto block" name="Bomi" /> */}
         <div className="mt-6">
           <ProgressBar value={usagePercent} className="h-4" />
         </div>

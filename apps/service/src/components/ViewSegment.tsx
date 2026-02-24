@@ -1,4 +1,4 @@
-import { Icon, cn } from "@shared";
+import { cn } from "@shared";
 
 export type ViewMode = "list" | "chart";
 
@@ -38,7 +38,7 @@ export const ViewSegment = ({ viewMode, onModeChange }: ViewSegmentProps) => {
                 : "bg-transparent text-gray-400",
             )}
           >
-            <Icon name={isActive ? activeIcon : inactiveIcon} />
+            {/* <Icon name={isActive ? activeIcon : inactiveIcon} /> */}
             <span>{label}</span>
           </button>
         );

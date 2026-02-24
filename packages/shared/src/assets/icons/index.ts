@@ -1,34 +1,29 @@
-export { default as Bell } from "./Bell";
-export { default as Bomi } from "./Bomi";
-export { default as Change } from "./Change";
-export { default as Check } from "./Check";
-export { default as Chevron } from "./Chevron";
-export { default as Deactive } from "./Deactive";
-export { default as EyeOff } from "./EyeOff";
-export { default as EyeOn } from "./EyeOn";
-export { default as Family } from "./Family";
-export { default as Home } from "./Home";
-export { default as Logo } from "./Logo";
-export { default as LogoAdmin } from "./LogoAdmin";
-export { default as Logout } from "./Logout";
-export { default as My } from "./My";
-export { default as Noti } from "./Noti";
-export { default as NotiColor } from "./NotiColor";
-export { default as Person } from "./Person";
-export { default as Policy } from "./Policy";
-export { default as Reset } from "./Reset";
-export { default as Smile } from "./Smile";
-export { default as Table } from "./Table";
-export { default as Time } from "./Time";
-export { default as Timeset } from "./Timeset";
-export { default as Warning } from "./Warning";
-export { default as WarningOutline } from "./WarningOutline";
-export { default as List } from "./List";
-export { default as Graph } from "./Graph";
-export { default as Stop } from "./Stop";
-export { default as zero } from "./0";
-export { default as one } from "./1";
-export { default as two } from "./2";
-export { default as three } from "./3";
-export { default as four } from "./4";
-export { default as five } from "./5";
+import HomeIcon from '@mui/icons-material/Home';
+import RefreshIcon from '@mui/icons-material/CachedOutlined';
+import PeopleIcon from '@mui/icons-material/PeopleOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import DocumentIcon from '@mui/icons-material/DescriptionOutlined';
+import TableChartIcon from '@mui/icons-material/TableChartOutlined';
+import ChevronIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import CheckIcon from '@mui/icons-material/CheckCircle';
+import WarningIcon from '@mui/icons-material/Error';
+import WarningOutlineIcon from '@mui/icons-material/ErrorOutline';
+import DoNotIcon from '@mui/icons-material/DoNotDisturbAlt';
+import TimeIcon from '@mui/icons-material/AccessTime';
+
+export {
+  HomeIcon,
+  RefreshIcon,
+  PeopleIcon,
+  PersonIcon,
+  LogoutIcon,
+  DocumentIcon,
+  TableChartIcon,
+  ChevronIcon,
+  CheckIcon,
+  WarningIcon,
+  WarningOutlineIcon,
+  DoNotIcon,
+  TimeIcon
+};

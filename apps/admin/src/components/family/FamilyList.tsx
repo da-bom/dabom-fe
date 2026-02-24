@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@shared";
+import { TableChartIcon } from "@shared";
 
 import { FAMILY } from "@shared/data/family";
 
@@ -16,7 +16,7 @@ const FamilyList = ({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2 py-2">
-        <Icon name="Table" />
+        <TableChartIcon />
         <span className="text-h2-d">검색된 가족 ({FAMILY.length})</span>
       </div>
       <div className="border-[1px] border-gray-100" />

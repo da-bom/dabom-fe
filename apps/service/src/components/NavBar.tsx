@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Icon } from "@shared";
+import { HomeIcon } from "@shared";
 
 import { IconName } from "@shared/type/icon";
 
@@ -20,7 +20,7 @@ const NavBar = () => {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: "홈", href: "/home", icon: "Home" },
+      { label: "홈", href: "/home", icon: "HomeIcon" },
       { label: "정책", href: "/policy", icon: "Policy" },
       { label: "알림", href: "/notification", icon: "Noti" },
       { label: "MY", href: "/mypage", icon: "My" },
@@ -46,7 +46,7 @@ const NavBar = () => {
                 }`}
                 aria-current={isActive ? "page" : undefined}
               >
-                <Icon name={item.icon} />
+                <HomeIcon />
                 <span
                   className={`text-caption-m ${
                     isActive ? "text-primary-500" : "text-gray-700"

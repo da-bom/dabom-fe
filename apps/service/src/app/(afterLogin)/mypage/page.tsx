@@ -1,4 +1,4 @@
-import { Icon, MainBox } from "@shared";
+import { ChevronIcon, MainBox } from "@shared";
 
 import { BomiIcon } from "@service/components/BomiIcon";
 import ProgressBar from "@service/components/ProgressBar";
@@ -32,7 +32,7 @@ const MyPage = () => {
       </MainBox>
       <MainBox className="flex h-14 items-center justify-between rounded-xl px-4">
         <span>이용 약관</span>
-        <Icon name="Chevron" className="rotate-180 text-gray-800" />
+        <ChevronIcon className="rotate-180 text-gray-800" />
       </MainBox>
       <footer className="text-body2-m ml-2 flex flex-col items-start gap-1 text-gray-800 underline">
         <button>로그아웃</button>

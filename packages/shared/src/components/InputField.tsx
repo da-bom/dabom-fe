@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import Icon from "./Icon";
-
 type InputType = "text" | "password" | "tel" | "email";
 
 interface InputFieldProps {
@@ -44,7 +42,7 @@ const Input = ({
           type="button"
           onClick={() => setIsVisible((prev) => !prev)}
         >
-          <Icon name={isVisible ? "EyeOn" : "EyeOff"} />
+          {/* <Icon name={isVisible ? "EyeOn" : "EyeOff"} /> */}
         </button>
       )}
     </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Icon, MainBox, SubBox } from "@shared";
+import { MainBox, RefreshIcon, SubBox } from "@shared";
 
 import FamilyDetail from "@admin/components/family/FamilyDetail";
 import FamilyList from "@admin/components/family/FamilyList";
@@ -19,7 +19,7 @@ const FamilyPage = () => {
           // TODO: params 제외한 요청 다시 보내는 로직 추가
           onClick={() => setSelectedFam(undefined)}
         >
-          <Icon name="Reset" />
+          <RefreshIcon />
           <span>초기화</span>
         </button>
       </MainBox>

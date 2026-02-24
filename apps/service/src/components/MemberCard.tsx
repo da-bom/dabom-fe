@@ -3,7 +3,15 @@
 import React, { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
-import { Icon, bytesToGB, cn, formatSize, gbToBytes } from "@shared";
+import {
+  DoNotIcon,
+  TimeIcon,
+  WarningOutlineIcon,
+  bytesToGB,
+  cn,
+  formatSize,
+  gbToBytes,
+} from "@shared";
 
 const MAX_LIMIT_GB = 70;
 
@@ -156,8 +164,7 @@ export default function MemberCard({
             <div className="flex w-full flex-col gap-2">
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon
-                    name="WarningOutline"
+                  <WarningOutlineIcon
                     width={13}
                     height={13}
                     className="text-primary"
@@ -171,7 +178,7 @@ export default function MemberCard({
 
               {isEditingByOther ? (
                 <div className="bg-background-sub flex h-12.5 w-full items-center justify-center gap-2 rounded-lg">
-                  <Icon name="Stop" />
+                  <DoNotIcon />
                   <span className="text-caption-m text-gray-800">
                     다른 가족이 수정 중이에요.
                   </span>
@@ -214,7 +221,7 @@ export default function MemberCard({
             <div className="flex w-full flex-col gap-4">
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon name="Time" />
+                  <TimeIcon />
                   <span className="text-body1-m">시간 제한</span>
                 </div>
 
@@ -242,7 +249,7 @@ export default function MemberCard({
 
               {isEditingByOther ? (
                 <div className="bg-background-sub flex h-12.25 w-full items-center justify-center gap-2 rounded-lg">
-                  <Icon name="Stop" />
+                  <DoNotIcon />
                   <span className="text-caption-m text-gray-800">
                     다른 가족이 수정 중이에요.
                   </span>

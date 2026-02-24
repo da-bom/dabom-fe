@@ -1,4 +1,4 @@
-import { Badge, Button, Icon, SubBox, formatSize } from "@shared";
+import { Badge, Button, PersonIcon, SubBox, formatSize } from "@shared";
 import dayjs from "dayjs";
 import { formatFamily } from "src/utils/formatFamily";
 
@@ -49,7 +49,7 @@ const FamilyDetail = ({
 
       <SubBox className="flex flex-col gap-4 p-4">
         <div className="flex items-center gap-2">
-          <Icon name="Person" />
+          <PersonIcon />
           <span className="text-body1-d">구성원 권한 및 한도 설정</span>
         </div>
         <Table

@@ -5,7 +5,6 @@ export * from "./assets/icons";
 export { default as Badge } from "./components/Badge";
 export { default as Button } from "./components/Button";
 export { default as DropDown } from "./components/DropDown";
-export { default as Icon } from "./components/Icon";
 export { default as InputField } from "./components/InputField";
 export { default as MainBox } from "./components/MainBox";
 export { default as RadioGroup } from "./components/RadioGroup";
