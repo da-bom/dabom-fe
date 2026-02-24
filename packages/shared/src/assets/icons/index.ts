@@ -12,6 +12,8 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import DoNotIcon from '@mui/icons-material/DoNotDisturbAlt';
 import TimeIcon from '@mui/icons-material/AccessTime';
 import NotificationIcon from '@mui/icons-material/NotificationsNone';
+import GraphIcon from "@mui/icons-material/Equalizer";
+import ListIcon from "@mui/icons-material/List";
 
 export {
   HomeIcon,
@@ -27,5 +29,7 @@ export {
   ErrorOutlineIcon,
   DoNotIcon,
   TimeIcon,
-  NotificationIcon
+  NotificationIcon,
+  GraphIcon,
+  ListIcon
 };

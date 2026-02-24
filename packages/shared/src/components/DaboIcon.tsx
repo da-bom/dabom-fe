@@ -9,7 +9,7 @@ import DaboHurtIcon from "../assets/svgs/DaboHurtIcon.svg";
 import DaboLovedIcon from "../assets/svgs/DaboLovedIcon.svg";
 import DaboSadIcon from "../assets/svgs/DaboSadIcon.svg";
 
-interface DaboIconProps extends React.SVGProps<SVGSVGElement> {
+interface DaboIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   usage?: number;
   isBlocked?: boolean;
 }
@@ -32,8 +32,12 @@ const DaboIcon = ({ usage = 0, isBlocked, ...props }: DaboIconProps) => {
     return DaboBombIcon;
   })();
 
-  const IconComponent = SelectedComponent as React.ElementType;
-  return <IconComponent {...props} />;
+  const src =
+    (SelectedComponent as unknown as { src?: string })?.src ??
+    (SelectedComponent as unknown as string);
+
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt="dabo-icon" {...props} />;
 };
 
 export default DaboIcon;

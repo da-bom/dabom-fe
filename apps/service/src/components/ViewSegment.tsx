@@ -1,4 +1,6 @@
-import { cn } from "@shared";
+"use client";
+
+import { GraphIcon, ListIcon, cn } from "@shared";
 
 export type ViewMode = "list" | "chart";
 
@@ -11,21 +13,19 @@ const VIEW_OPTIONS = [
   {
     id: "list" as const,
     label: "리스트",
-    activeIcon: "List",
-    inactiveIcon: "List",
+    Icon: ListIcon,
   },
   {
     id: "chart" as const,
     label: "차트",
-    activeIcon: "Graph",
-    inactiveIcon: "Graph",
+    Icon: GraphIcon,
   },
 ] as const;
 
 export const ViewSegment = ({ viewMode, onModeChange }: ViewSegmentProps) => {
   return (
     <div className="bg-brand-white flex h-8 w-full max-w-87.5 items-center rounded-full border border-gray-200">
-      {VIEW_OPTIONS.map(({ id, label, activeIcon, inactiveIcon }) => {
+      {VIEW_OPTIONS.map(({ id, label, Icon }) => {
         const isActive = viewMode === id;
         return (
           <button
@@ -38,7 +38,7 @@ export const ViewSegment = ({ viewMode, onModeChange }: ViewSegmentProps) => {
                 : "bg-transparent text-gray-400",
             )}
           >
-            {/* <Icon name={isActive ? activeIcon : inactiveIcon} /> */}
+            <Icon sx={{ fontSize: 18 }} />
             <span>{label}</span>
           </button>
         );
