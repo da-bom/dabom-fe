@@ -1,21 +1,21 @@
 import { Switch, formatSize } from "@shared";
+import { FamilyCustomer } from "src/services/family/schema";
 
-import { CustomerDetail } from "@shared/types/familyType";
-
-export const formatFamily = ({ customer }: { customer: CustomerDetail[] }) => {
+export const formatFamily = ({ customer }: { customer: FamilyCustomer[] }) => {
   return customer.map((i) => ({
     id: i.customerId,
     cells: [
-      <Switch
-        key={i.customerId}
-        type={i.role === "OWNER" ? "primary" : "secondary"}
-        size="sm"
-        onClick={() => {
-          // TODO: OWNER <> MEMBER 값이 바뀌도록
-        }}
-      >
-        {i.role}
-      </Switch>,
+      <div className="flex justify-center" key={i.customerId}>
+        <Switch
+          type={i.role === "OWNER" ? "primary" : "secondary"}
+          size="sm"
+          onClick={() => {
+            // TODO: OWNER <> MEMBER 값이 바뀌도록
+          }}
+        >
+          {i.role}
+        </Switch>
+      </div>,
       <span key={`name-${i.customerId}`}>{i.name}</span>,
       <div key={`usage-${i.customerId}`} className="flex justify-center gap-1">
         <span className="text-gray-700">
@@ -24,12 +24,17 @@ export const formatFamily = ({ customer }: { customer: CustomerDetail[] }) => {
         <input
           type="number"
           className="w-13 rounded border-[1px] border-gray-600 px-4 text-center outline-none"
-          value={formatSize(i.monthlyLimitBytes).value}
+          // TODO: 한도가 없는 경우 UI 추가
+          value={
+            i.monthlyLimitBytes ? formatSize(i.monthlyLimitBytes).value : 0
+          }
           onChange={() => {
             // TODO: 기능 구현 시 추가
           }}
         />
-        <span>{formatSize(i.monthlyLimitBytes).unit}</span>
+        <span>
+          {i.monthlyLimitBytes ? formatSize(i.monthlyLimitBytes).unit : "GB"}
+        </span>
       </div>,
     ],
   }));

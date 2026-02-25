@@ -33,7 +33,7 @@ const DropDown = ({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [setIsOpen]);
+  });
 
   return (
     <div
