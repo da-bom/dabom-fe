@@ -6,9 +6,9 @@ export default function PolicyLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <div>
+    <>
       {children}
       {modal}
-    </div>
+    </>
   );
 }

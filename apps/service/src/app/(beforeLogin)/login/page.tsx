@@ -2,30 +2,33 @@
 
 import { useState } from "react";
 
-import { Button, Icon, InputField } from "@shared";
+import { useRouter } from "next/navigation";
+
+import { Button, ErrorIcon, InputField } from "@shared";
 import { useLogin } from "src/hooks/useLogin";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [phoneNumber, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginFailed, setIsLoginFailed] = useState(false);
 
   const { mutate: login, isPending: isLoading } = useLogin();
 
-  const handleLogin = (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const handleLogin = async () => {
     if (!phoneNumber || !password) {
       alert("전화번호와 비밀번호를 입력해주세요.");
       return;
     }
-    login(
-      { phoneNumber, password },
-      {
-        onError: () => {
-          setIsLoginFailed(true);
-        },
-      },
-    );
+
+    try {
+      await login({ phoneNumber, password });
+      router.push("/");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인 정보가 올바르지 않습니다.");
+      setIsLoginFailed(true);
+    }
   };
 
   return (
@@ -54,7 +57,7 @@ export default function LoginPage() {
 
             {isLoginFailed && (
               <div className="flex flex-row items-center justify-center gap-1">
-                <Icon name="Warning" className="text-negative h-3.5 w-3.5" />
+                <ErrorIcon className="text-negative h-3.5 w-3.5" />
                 <span className="text-body2-m text-negative">
                   아이디 또는 비밀번호가 일치하지 않습니다.
                 </span>

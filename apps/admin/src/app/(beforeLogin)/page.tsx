@@ -2,29 +2,38 @@
 
 import { useState } from "react";
 
-import { Button, Icon, InputField } from "@shared";
+import { useRouter } from "next/navigation";
 
-import { useLogin } from "../../hooks/useLogin";
+import { Button, InputField, Logo } from "@shared";
+
+import { useLogin } from "../../services/auth/useLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const { mutate: login, isPending: isLoading } = useLogin();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
-      // TODO: 디자인 추가 후 수정 예정
       alert("이메일과 비밀번호를 입력해주세요.");
       return;
     }
-    login({ email, password });
+
+    try {
+      await login({ email, password });
+      router.push("/");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인 정보가 올바르지 않습니다.");
+    }
   };
 
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="bg-brand-white shadow-default flex w-fit flex-col items-center gap-20 rounded-3xl px-20 py-14">
-        <Icon name="Logo" className="w-34" />
+        <Logo type="admin" />
         <div className="flex flex-col gap-7">
           <InputField
             label="이메일"

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { Icon, MainBox, bytesToGB } from "@shared";
+import { DaboIcon, MainBox, bytesToGB } from "@shared";
 import {
   useGetFamilyCurrentUsage,
   useGetFamilyCustomersUsage,
@@ -146,7 +146,7 @@ const UsageDashboard = () => {
             </span>
           </div>
         </div>
-        <Icon className="-mt-35 -mr-2 ml-auto block" name="Bomi" />
+        <DaboIcon usage={usagePercent} className="-mt-35 -mr-2 ml-auto block" />
         <div className="mt-6">
           <ProgressBar value={usagePercent} className="h-4" />
         </div>

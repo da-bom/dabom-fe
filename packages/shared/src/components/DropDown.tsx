@@ -1,22 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
+import { ChevronIcon } from "../assets/icons";
 import { cn } from "../utils/cn";
-import Icon from "./Icon";
 
 const DropDown = ({
+  isOpen,
+  setIsOpen,
   options,
   selectedOption,
   setSelectedOption,
   size = "lg",
 }: {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   options: string[];
   selectedOption: string;
   setSelectedOption: (option: string) => void;
   size?: "sm" | "lg";
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,11 +33,11 @@ const DropDown = ({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  });
 
   return (
     <div
-      className={cn("relative", size == "sm" ? "w-20" : "w-82")}
+      className={cn("relative", size == "sm" ? "w-22" : "w-82")}
       ref={containerRef}
     >
       <button
@@ -47,12 +50,12 @@ const DropDown = ({
         <div
           className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         >
-          <Icon name="Chevron" className="-rotate-90 text-gray-800"></Icon>
+          <ChevronIcon className="rotate-90 text-gray-800" />
         </div>
       </button>
 
       {isOpen && (
-        <div className="bg-brand-white absolute z-50 mt-2 w-full overflow-hidden rounded-xl border border-gray-200 shadow-lg">
+        <div className="bg-brand-white absolute z-50 mt-2 w-full rounded-xl border border-gray-200 shadow-lg">
           {options.map((option) => (
             <button
               type="button"

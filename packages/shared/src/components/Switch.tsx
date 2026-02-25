@@ -1,5 +1,5 @@
+import { RefreshIcon } from "../assets/icons";
 import { cn } from "../utils/cn";
-import Icon from "./Icon";
 
 interface SwitchProps {
   children: React.ReactNode;
@@ -23,8 +23,7 @@ const Switch = ({ children, type, size, onClick }: Readonly<SwitchProps>) => {
       onClick={onClick}
     >
       <div className="text-brand-dark">{children}</div>
-      <Icon
-        name="Change"
+      <RefreshIcon
         className={type === "gray" ? "text-gray-800" : "text-primary"}
         {...(size === "sm" && { width: 11, height: 11 })}
         {...(size === "lg" && { width: 13, height: 13 })}
