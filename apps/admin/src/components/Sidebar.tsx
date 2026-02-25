@@ -2,8 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Logo } from "@shared";
+import { Logo, LogoutIcon } from "@shared";
 import { MENU } from "src/constants/MENU";
 import { logout } from "src/services/auth/useLogout";
 

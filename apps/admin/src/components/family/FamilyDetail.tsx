@@ -18,7 +18,7 @@ const FamilyDetail = ({ selectedFam }: { selectedFam: number | undefined }) => {
   if (!familyDetail) return <div>가족 정보 없음</div>;
 
   return (
-    <div className="flex h-full flex-col justify-between p-4">
+    <div className="flex h-full flex-col gap-4 p-4">
       <div className="flex items-center gap-2">
         <Badge size="lg" color="outline">
           FAM-{familyDetail.familyId}
