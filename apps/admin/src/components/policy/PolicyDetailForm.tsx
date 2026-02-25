@@ -4,9 +4,15 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
-import ChevronIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import CheckIcon from "@mui/icons-material/CheckCircle";
-import { Button, DropDown, MainBox, TextField, UnpublishedIcon } from "@shared";
+import {
+  Button,
+  CheckIcon,
+  ChevronIcon,
+  DropDown,
+  MainBox,
+  TextField,
+  UnpublishedIcon,
+} from "@shared";
 import { PolicyDetail } from "src/services/policy/schema";
 import { useUpdatePolicy } from "src/services/policy/useUpdatePolicy";
 

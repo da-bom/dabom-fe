@@ -1,12 +1,10 @@
 "use client";
 
-import PersonIcon from "@mui/icons-material/PeopleOutlined";
-import { Badge, Button, SubBox, formatSize } from "@shared";
+import { Badge, Button, PersonIcon, SubBox, Table, formatSize } from "@shared";
 import dayjs from "dayjs";
 import { useGetFamilyDetail } from "src/services/family/useGetFamilyDetail";
 import { formatFamily } from "src/utils/formatFamily";
 
-import Table from "../Table";
 import Error from "./Error";
 
 const FamilyDetail = ({ selectedFam }: { selectedFam: number | undefined }) => {

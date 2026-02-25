@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-import { MainBox } from "@shared";
-import Table from "src/components/Table";
+import { MainBox, Table } from "@shared";
 import FilterSegment from "src/components/policy/FilterSegment";
 import { useGetPolicy } from "src/services/policy/useGetPolicy";
 import { FilterType } from "src/types/FilterType";

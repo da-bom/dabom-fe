@@ -1,6 +1,6 @@
 "use client";
 
-import TableChartIcon from "@mui/icons-material/TableChartOutlined";
+import { TableChartIcon } from "@icons";
 import { FamilySearchRequest } from "src/services/family/schema";
 import { useGetFamilies } from "src/services/family/useGetFamilies";
 
