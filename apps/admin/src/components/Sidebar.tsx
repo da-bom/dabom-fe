@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Logo } from "@shared";
