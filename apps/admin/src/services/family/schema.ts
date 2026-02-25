@@ -24,7 +24,7 @@ export const FamilySearchRequestSchema = z.object({
 
 export type FamilySearchRequest = z.input<typeof FamilySearchRequestSchema>;
 
-const Customer = z.object({
+const ListCustomerSchema = z.object({
   customerId: z.number(),
   name: z.string(),
 });
@@ -32,7 +32,7 @@ const Customer = z.object({
 export const FamilySchema = z.object({
   familyId: z.number(),
   familyName: z.string(),
-  customers: z.array(Customer),
+  customers: z.array(ListCustomerSchema),
   createdAt: z.string(),
 });
 
@@ -50,5 +50,27 @@ export const FamilyResponseSchema = z.object({
   sort: z.any(),
 });
 
+export const FamilyCustomerSchema = z.object({
+  customerId: z.number(),
+  name: z.string(),
+  role: z.string(),
+  monthlyLimitBytes: z.number().nullable(),
+  monthlyUsedBytes: z.number(),
+});
+
+export const FamilyDetailDataSchema = z.object({
+  familyId: z.number(),
+  familyName: z.string(),
+  createdById: z.number(),
+  customers: z.array(FamilyCustomerSchema),
+  totalQuotaBytes: z.number(),
+  usedBytes: z.number(),
+  usedPercent: z.number(),
+  currentMonth: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export type Family = z.infer<typeof FamilySchema>;
 export type FamilyResponse = z.infer<typeof FamilyResponseSchema>;
+export type FamilyCustomer = z.infer<typeof FamilyCustomerSchema>;

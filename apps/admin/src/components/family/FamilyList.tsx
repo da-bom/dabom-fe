@@ -17,8 +17,6 @@ const FamilyList = ({
 }) => {
   const { data, isLoading } = useGetFamilies(params);
 
-  console.log("data", data);
-
   const familyList = data?.content || [];
   const totalElements = data?.numberOfElements || 0;
 

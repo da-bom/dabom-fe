@@ -14,7 +14,7 @@ const FamilyPage = () => {
 
   const [params, setParams] = useState<FamilySearchRequest>({
     page: 0,
-    size: 20,
+    size: 10,
     filters: {},
     sort: [{ field: "createdAt", direction: "desc" }],
   });
@@ -23,7 +23,7 @@ const FamilyPage = () => {
     setSelectedFam(undefined);
     setParams({
       page: 0,
-      size: 20,
+      size: 10,
       filters: {},
       sort: [{ field: "createdAt", direction: "desc" }],
     });
@@ -45,7 +45,6 @@ const FamilyPage = () => {
       </MainBox>
       <div className="flex h-full gap-5">
         <MainBox className="w-86 p-4">
-          {/* 4. FamilyList에 params 전달 */}
           <FamilyList
             params={params}
             selectedFam={selectedFam}
@@ -53,10 +52,7 @@ const FamilyPage = () => {
           />
         </MainBox>
         <MainBox className="w-full flex-1">
-          <FamilyDetail
-            selectedFam={selectedFam}
-            setSelectedFam={setSelectedFam}
-          />
+          <FamilyDetail selectedFam={selectedFam} />
         </MainBox>
       </div>
     </div>
