@@ -7,15 +7,14 @@ import { useRouter } from "next/navigation";
 import ChevronIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import CheckIcon from "@mui/icons-material/CheckCircle";
 import { Button, DropDown, MainBox, TextField, UnpublishedIcon } from "@shared";
+import { PolicyDetail } from "src/services/policy/schema";
 import { useUpdatePolicy } from "src/services/policy/useUpdatePolicy";
-
-import { PolicyDetailType } from "@shared/types/policyType";
 
 import DefaultRuleFeild from "./DefaultRuleFeild";
 import StatusFeild from "./StatusFeild";
 
 interface Props {
-  initialData: PolicyDetailType;
+  initialData: PolicyDetail;
   policyId: number;
 }
 
@@ -28,6 +27,8 @@ const PolicyDetailForm = ({ initialData, policyId }: Props) => {
     isActive: initialData.isActive,
   });
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log("ㅇㅇㅇㅇ", initialData);
 
   const { mutate: updatePolicy } = useUpdatePolicy();
 

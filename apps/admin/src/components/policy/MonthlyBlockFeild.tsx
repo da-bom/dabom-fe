@@ -1,15 +1,14 @@
 import { useState } from "react";
 
 import { DropDown, formatSize, formatToBytes } from "@shared";
-
-import { MONTHLY_LIMIT } from "@shared/types/policyType";
+import { MonthlyLimit } from "src/services/policy/schema";
 
 const MonthlyBlockField = ({
   rules,
   onRuleChange,
 }: {
-  rules: MONTHLY_LIMIT;
-  onRuleChange: (newRules: MONTHLY_LIMIT) => void;
+  rules: MonthlyLimit;
+  onRuleChange: (newRules: MonthlyLimit) => void;
 }) => {
   const initial = formatSize(rules.limitBytes);
   const [localValue, setLocalValue] = useState(initial.value);
@@ -19,7 +18,10 @@ const MonthlyBlockField = ({
   const handleUpdate = (val: number, unit: string) => {
     setLocalValue(val);
     setLocalUnit(unit);
-    onRuleChange({ ...rules, limitBytes: formatToBytes(val, unit) });
+    onRuleChange({
+      ...rules,
+      limitBytes: formatToBytes(val, unit),
+    });
   };
 
   return (

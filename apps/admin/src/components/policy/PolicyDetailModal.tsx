@@ -2,9 +2,8 @@
 
 import { useParams } from "next/navigation";
 
+import { PolicyType } from "src/services/policy/schema";
 import { useGetPolicyDetail } from "src/services/policy/useGetPolicyDetail";
-
-import { RuleType } from "@shared/types/policyType";
 
 import PolicyDetailForm from "./PolicyDetailForm";
 
@@ -22,7 +21,7 @@ const PolicyDetailModal = () => {
     id: data.id,
     name: data.name,
     description: data.description,
-    policyType: data.policyType as RuleType,
+    policyType: data.policyType as PolicyType,
     defaultRules: data.defaultRules,
     requiredRole: data.requiredRole,
     isActive: data.isActive,

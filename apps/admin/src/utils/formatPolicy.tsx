@@ -1,30 +1,29 @@
 import Link from "next/link";
 
 import { Button, cn, formatSize } from "@shared";
-
 import {
-  APP_BLOCK,
-  MONTHLY_LIMIT,
+  AppBlock,
+  DefaultRules,
+  MonthlyLimit,
+  Policy,
   PolicyType,
-  TIME_BLOCK,
-} from "@shared/types/policyType";
+  TimeBlock,
+} from "src/services/policy/schema";
 
-const formatDefaultRule = (
-  rules: PolicyType["defaultRules"],
-  type: PolicyType["policyType"],
-): string => {
+const formatDefaultRule = (type: PolicyType, rules: DefaultRules): string => {
   switch (type) {
     case "MONTHLY_LIMIT":
-      return formatSize((rules as MONTHLY_LIMIT).limitBytes).total;
+      return formatSize((rules as MonthlyLimit).limitBytes).total;
 
     case "TIME_BLOCK":
-      return `${(rules as TIME_BLOCK).start} ~ ${(rules as TIME_BLOCK).end}`;
+      const t = rules as TimeBlock;
+      return `${t.start} ~ ${t.end}`;
 
     case "MANUAL_BLOCK":
       return "-";
 
     case "APP_BLOCK":
-      const apps = (rules as APP_BLOCK).apps;
+      const apps = (rules as AppBlock).apps;
       return apps?.length > 0
         ? `${apps[0]} 외 ${apps.length - 1}개`
         : "차단 앱 없음";
@@ -34,7 +33,7 @@ const formatDefaultRule = (
   }
 };
 
-export const formatPolicy = ({ policies }: { policies: PolicyType[] }) => {
+export const formatPolicy = ({ policies }: { policies: Policy[] }) => {
   return policies.map((p) => {
     const isDeactive = !p.isActive;
 
@@ -49,7 +48,7 @@ export const formatPolicy = ({ policies }: { policies: PolicyType[] }) => {
       cells: [
         cell(p.name),
         cell(p.requiredRole),
-        cell(formatDefaultRule(p.defaultRules, p.policyType)),
+        cell(formatDefaultRule(p.policyType, p.defaultRules)),
         cell(
           p.isActive ? (
             <span className="text-primary">활성화</span>

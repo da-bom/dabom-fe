@@ -1,12 +1,13 @@
 import { http } from "@shared";
 import { useQuery } from "@tanstack/react-query";
 
-import { PolicyDetailType } from "@shared/types/policyType";
+import { PolicyDetail, PolicyDetailSchema } from "./schema";
 
-export const getPolicyDetail = async (policyId: number) => {
-  return (await http.get<PolicyDetailType>(
-    `/policies/${policyId}`,
-  )) as unknown as PolicyDetailType;
+export const getPolicyDetail = async (
+  policyId: number,
+): Promise<PolicyDetail> => {
+  const response = await http.get(`/policies/${policyId}`);
+  return PolicyDetailSchema.parse(response);
 };
 
 export const useGetPolicyDetail = (policyId: number) => {
