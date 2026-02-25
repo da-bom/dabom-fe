@@ -11,13 +11,9 @@ export const getFamilies = async (params: FamilySearchRequest) => {
   const validatedParams = FamilySearchRequestSchema.parse(params);
   const response = await http.post("/families", validatedParams);
 
-  try {
-    const parsed = FamilyResponseSchema.parse(response);
-    return parsed;
-  } catch (err) {
-    throw err;
-  }
+  return FamilyResponseSchema.parse(response);
 };
+
 export const useGetFamilies = (params: FamilySearchRequest) => {
   return useQuery({
     queryKey: ["families", params ?? "all"],

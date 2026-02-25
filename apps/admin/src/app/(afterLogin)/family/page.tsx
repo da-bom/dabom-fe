@@ -12,21 +12,20 @@ import FamilyList from "@admin/components/family/FamilyList";
 const FamilyPage = () => {
   const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);
 
-  const [params, setParams] = useState<FamilySearchRequest>({
+  const INITIAL_FAMILY_SEARCH_PARAMS: FamilySearchRequest = {
     page: 0,
     size: 10,
     filters: {},
     sort: [{ field: "createdAt", direction: "desc" }],
-  });
+  };
+
+  const [params, setParams] = useState<FamilySearchRequest>(
+    INITIAL_FAMILY_SEARCH_PARAMS,
+  );
 
   const handleReset = () => {
     setSelectedFam(undefined);
-    setParams({
-      page: 0,
-      size: 10,
-      filters: {},
-      sort: [{ field: "createdAt", direction: "desc" }],
-    });
+    setParams(INITIAL_FAMILY_SEARCH_PARAMS);
   };
 
   return (
