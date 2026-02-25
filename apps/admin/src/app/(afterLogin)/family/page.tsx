@@ -4,10 +4,9 @@ import { useState } from "react";
 
 import RefreshIcon from "@mui/icons-material/CachedOutlined";
 import { MainBox, SubBox } from "@shared";
+import FamilyDetail from "src/components/family/FamilyDetail";
+import FamilyList from "src/components/family/FamilyList";
 import { FamilySearchRequest } from "src/services/family/schema";
-
-import FamilyDetail from "@admin/components/family/FamilyDetail";
-import FamilyList from "@admin/components/family/FamilyList";
 
 const FamilyPage = () => {
   const [selectedFam, setSelectedFam] = useState<number | undefined>(undefined);
