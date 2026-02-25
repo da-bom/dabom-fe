@@ -28,8 +28,6 @@ const PolicyDetailForm = ({ initialData, policyId }: Props) => {
   });
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log("ㅇㅇㅇㅇ", initialData);
-
   const { mutate: updatePolicy } = useUpdatePolicy();
 
   const handleSave = () => {

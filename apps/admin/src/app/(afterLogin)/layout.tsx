@@ -1,4 +1,9 @@
+"use client";
+
+import { useState } from "react";
+
 import "@globalstyles";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Header from "@admin/components/Header";
 import Sidebar from "@admin/components/Sidebar";
@@ -8,13 +13,16 @@ export default function AfterLoginLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [queryClient] = useState(() => new QueryClient());
   return (
-    <div className="flex h-screen w-full overflow-hidden">
-      <Sidebar />
-      <div className="flex w-full flex-col gap-5 p-5">
-        <Header />
-        {children}
+    <QueryClientProvider client={queryClient}>
+      <div className="flex h-screen w-full overflow-hidden">
+        <Sidebar />
+        <div className="flex w-full flex-col gap-5 p-5">
+          <Header />
+          {children}
+        </div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 }
