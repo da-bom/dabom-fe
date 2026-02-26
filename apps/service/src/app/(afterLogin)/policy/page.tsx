@@ -3,8 +3,8 @@
 import React, { useCallback, useState, useSyncExternalStore } from 'react';
 
 import { gbToBytes } from '@shared';
-import { useGetFamilyPolicies } from 'src/services/policy/useGetFamilyPolicies';
-import { useUpdatePolicy } from 'src/services/policy/useUpdatePolicy';
+import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
+import { useUpdatePolicy } from 'src/api/policy/useUpdatePolicy';
 
 import { CustomerDetail } from '@shared/type/familyType';
 
@@ -117,7 +117,7 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
       updatePolicy({
         updateInfo: {
           customerId: Number(id),
-          type: 'MONTHLY_LIMIT',
+          type: ['MONTHLY_LIMIT'],
           value: { limitBytes: newBytes },
           isActive: true,
         },
@@ -145,7 +145,7 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
       updatePolicy({
         updateInfo: {
           customerId: Number(id),
-          type: 'TIME_BLOCK',
+          type: ['TIME_BLOCK'],
           isActive: false,
         },
       });
@@ -183,7 +183,7 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
     updatePolicy({
       updateInfo: {
         customerId: Number(targetId),
-        type: 'TIME_BLOCK',
+        type: ['TIME_BLOCK'],
         value: { start: updatedStart, end: updatedEnd, timezone: 'Asia/Seoul' },
         isActive: true,
       },

@@ -5,8 +5,8 @@ import { useSyncExternalStore } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { DaboIcon, MainBox, bytesToGB } from '@shared';
-import { useGetFamilyUsage } from 'src/services/family/useGetFamilyUsage';
-import { useSSE } from 'src/services/family/useUsageSSE';
+import { useGetFamilyUsage } from 'src/api/family/useGetFamilyUsage';
+import { useSSE } from 'src/api/family/useUsageSSE';
 
 import MonthNavigator from '@service/components/MonthNavigator';
 import ProgressBar from '@service/components/ProgressBar';
