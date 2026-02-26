@@ -3,8 +3,8 @@
 import React, { useCallback, useState, useSyncExternalStore } from 'react';
 
 import { gbToBytes } from '@shared';
-import { useGetFamilyPolicies } from 'src/services/policy/useGetFamilyPolicies';
-import { useUpdatePolicy } from 'src/services/policy/useUpdatePolicy';
+import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
+import { useUpdatePolicy } from 'src/api/policy/useUpdatePolicy';
 
 import { CustomerDetail } from '@shared/type/familyType';
 
