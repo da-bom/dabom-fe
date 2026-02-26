@@ -48,12 +48,19 @@ export const ServiceUsageResponseSchema = z.object({
 
 export const UsageSSEDataSchema = z.object({
   familyId: z.number(),
-  totalUsageLimitBytes: z.number(),
+  totalUsedBytes: z.number(),
   totalLimitBytes: z.number(),
   remainingBytes: z.number(),
+});
+
+export const UsageFamilySSEDataSchema = z.object({
+  familyId: z.number(),
+  customerId: z.number(),
+  monthlyUsedBytes: z.number(),
 });
 
 export type UsageCustomer = z.infer<typeof UsageCustomerSchema>;
 export type FamilyUsageData = z.infer<typeof FamilyUsageDataSchema>;
 export type ServiceUsageResponse = z.infer<typeof ServiceUsageResponseSchema>;
 export type UsageSSEData = z.infer<typeof UsageSSEDataSchema>;
+export type UsageFamilySSEData = z.infer<typeof UsageFamilySSEDataSchema>;

@@ -4,19 +4,24 @@ import { useEffect, useState } from 'react';
 
 import { sseClient } from '@shared';
 
-import { UsageSSEData, UsageSSEDataSchema } from './scheme';
+import {
+  UsageFamilySSEData,
+  UsageFamilySSEDataSchema,
+  UsageSSEData,
+  UsageSSEDataSchema,
+} from './scheme';
 
 export const connectUsageSSE = (
   onMessage: (eventName: string, rawData: string) => void,
   signal: AbortSignal,
 ) => {
-  const ENDPOINT = '/families/usage/sse';
-
+  const ENDPOINT = '/notification-proxy/families/usage/sse';
   return sseClient.connect(ENDPOINT, onMessage, signal);
 };
 
 export const useSSE = (enabled: boolean) => {
-  const [realtimeData, setRealtimeData] = useState<UsageSSEData | null>(null);
+  const [totalRealtime, setTotalRealtime] = useState<UsageSSEData | null>(null);
+  const [memberRealtime, setMemberRealtime] = useState<UsageFamilySSEData | null>(null);
 
   useEffect(() => {
     if (!enabled || globalThis.window === undefined) return;
@@ -26,8 +31,16 @@ export const useSSE = (enabled: boolean) => {
     connectUsageSSE((eventName, rawData) => {
       try {
         const parsedData = JSON.parse(rawData);
-        const validatedData = UsageSSEDataSchema.parse(parsedData);
-        setRealtimeData(validatedData);
+
+        if (eventName === 'usage-updated') {
+          const validated = UsageSSEDataSchema.parse(parsedData);
+          setTotalRealtime(validated);
+        }
+
+        if (eventName === 'usage-update-by-member') {
+          const validated = UsageFamilySSEDataSchema.parse(parsedData);
+          setMemberRealtime(validated);
+        }
       } catch (error) {
         console.error('SSE 파싱 에러:', error);
       }
@@ -38,5 +51,5 @@ export const useSSE = (enabled: boolean) => {
     };
   }, [enabled]);
 
-  return realtimeData;
+  return { totalRealtime, memberRealtime };
 };
