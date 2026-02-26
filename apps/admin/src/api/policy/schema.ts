@@ -38,7 +38,8 @@ export const DefaultRulesSchema = z.union([
 // [정책 수정] request
 export const PolicyUpdateRequestSchema = z.object({
   description: z.string().min(1, '설명을 입력해주세요.'),
-  requiredRole: z.enum(['OWNER', 'ADMIN', 'MEMBER']),
+  requireRole: z.enum(['OWNER', 'ADMIN', 'MEMBER']),
+  type: z.any(),
   defaultRules: DefaultRulesSchema,
   isActive: z.boolean(),
   overWrite: z.boolean(),

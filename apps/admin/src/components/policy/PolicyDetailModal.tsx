@@ -34,6 +34,7 @@ const PolicyDetailContent = ({ data, policyId }: { data: PolicyDetail; policyId:
 
   const [isOpen, setIsOpen] = useState(false);
   const [newData, setNewData] = useState({
+    type: data.type,
     description: data.description,
     defaultRules: data.defaultRules,
     requiredRole: data.requireRole ?? 'MEMBER',
@@ -45,8 +46,9 @@ const PolicyDetailContent = ({ data, policyId }: { data: PolicyDetail; policyId:
       {
         policyId,
         data: {
+          type: newData.type,
           description: newData.description,
-          requiredRole: newData.requiredRole,
+          requireRole: newData.requiredRole,
           isActive: newData.isActive,
           defaultRules: newData.defaultRules,
           overWrite: true,
