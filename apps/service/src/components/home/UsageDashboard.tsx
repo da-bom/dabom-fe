@@ -80,6 +80,27 @@ const UsageDashboard = () => {
       ? 0
       : Math.min(Math.round((displayTotalUsedBytes / displayTotalLimitBytes) * 100), 100);
 
+  const getDaboStatus = () => {
+    if (!isCurrentMonth) return usagePercent;
+
+    const today = now.getDate();
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const dateRatio = today / lastDay;
+
+    if (displayTotalLimitBytes === 0) return 0;
+
+    const actualUsageRatio = displayTotalUsedBytes / displayTotalLimitBytes;
+    const relativeUsage = actualUsageRatio / dateRatio;
+
+    if (relativeUsage <= 0.5) return 90;
+    if (relativeUsage <= 0.9) return 60;
+    if (relativeUsage <= 1.1) return 40;
+    if (relativeUsage <= 1.5) return 10;
+    return 0;
+  };
+
+  const daboUsageValue = getDaboStatus();
+
   const displayDate = `${year}년 ${month}월`;
 
   const updateUrl = (nextYear: number, nextMonth: number, nextView: 'list' | 'chart') => {
@@ -126,7 +147,7 @@ const UsageDashboard = () => {
             <span className="text-body2-m text-gray-600">/ {totalLimitGB}GB</span>
           </div>
         </div>
-        <DaboIcon usage={usagePercent} className="-mt-35 -mr-2 ml-auto block" />
+        <DaboIcon usage={daboUsageValue} className="-mt-35 -mr-2 ml-auto block" />
         <div className="mt-6">
           <ProgressBar value={usagePercent} className="h-4" />
         </div>
