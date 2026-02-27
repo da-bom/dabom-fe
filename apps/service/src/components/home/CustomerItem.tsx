@@ -22,10 +22,7 @@ const CustomerItem = ({ customer }: { customer: CustomerListType }) => {
       </div>
 
       <div className="flex flex-col items-end gap-1 pt-1">
-        <div className="text-body2-d">
-          <span>{bytesToGB(customer.monthlyUsedBytes)}GB</span>
-          <span>/{bytesToGB(customer.monthlyLimitBytes)}GB</span>
-        </div>
+        <span className="text-body2-d">{bytesToGB(customer.monthlyUsedBytes)}GB</span>
 
         {showWarning && (
           <div className="flex items-center gap-1">
