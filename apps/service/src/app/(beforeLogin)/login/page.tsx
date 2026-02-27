@@ -13,9 +13,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [isLoginFailed, setIsLoginFailed] = useState(false);
 
-  const { mutate: login, isPending: isLoading } = useLogin();
+  const { mutateAsync: login, isPending: isLoading } = useLogin();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!phoneNumber || !password) {
       alert('전화번호와 비밀번호를 입력해주세요.');
       return;
@@ -23,10 +25,9 @@ export default function LoginPage() {
 
     try {
       await login({ phoneNumber, password });
-      router.push('/');
+      router.push('/home');
     } catch (error) {
       console.error('로그인 실패:', error);
-      alert('로그인 정보가 올바르지 않습니다.');
       setIsLoginFailed(true);
     }
   };
@@ -34,7 +35,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen justify-center">
       <main className="flex flex-col justify-center">
-        <form onSubmit={handleLogin} className="flex flex-col items-center">
+        <form onSubmit={(e) => handleLogin(e)} className="flex flex-col items-center">
           <div className="flex flex-col gap-10">
             <InputField
               label="전화번호"

@@ -9,47 +9,38 @@ export const UsageCustomerSchema = z.object({
     .nullable()
     .optional()
     .transform((val) => val ?? 0),
-  isBlocked: z.boolean(),
+  isBlocked: z.boolean().optional().default(false),
   blockReason: z
     .string()
     .nullable()
     .optional()
     .transform((val) => val ?? ''),
-  isMe: z.boolean(),
+  isMe: z.boolean().optional().default(false),
 });
 
-export const FamilyUsageDataSchema = z.object({
+export const FamilyUsageCurrentSchema = z.object({
   familyId: z.number(),
-  familyName: z
-    .string()
-    .nullable()
-    .optional()
-    .transform((val) => val ?? '다봄 가족'),
+  familyName: z.string(),
+  totalQuotaBytes: z.number(),
+  totalUsedBytes: z.number(),
+});
+
+export const FamilyUsageMonthlySchema = z.object({
+  familyId: z.number(),
+  year: z.number(),
+  month: z.number(),
+  customers: z.array(UsageCustomerSchema),
   totalQuotaBytes: z
     .number()
     .nullable()
     .optional()
     .transform((val) => val ?? 0),
-  year: z.number(),
-  month: z.number(),
-  remainingBytes: z
-    .number()
-    .nullable()
-    .optional()
-    .transform((val) => val ?? 0),
-  customers: z.array(UsageCustomerSchema),
-});
-
-export const ServiceUsageResponseSchema = z.object({
-  success: z.boolean(),
-  data: FamilyUsageDataSchema,
-  timestamp: z.string().optional(),
 });
 
 export const UsageSSEDataSchema = z.object({
   familyId: z.number(),
   totalUsedBytes: z.number(),
-  totalLimitBytes: z.number(),
+  totalQuotaBytes: z.number(),
   remainingBytes: z.number(),
 });
 
@@ -60,7 +51,7 @@ export const UsageFamilySSEDataSchema = z.object({
 });
 
 export type UsageCustomer = z.infer<typeof UsageCustomerSchema>;
-export type FamilyUsageData = z.infer<typeof FamilyUsageDataSchema>;
-export type ServiceUsageResponse = z.infer<typeof ServiceUsageResponseSchema>;
+export type FamilyUsageCurrent = z.infer<typeof FamilyUsageCurrentSchema>;
+export type FamilyUsageMonthly = z.infer<typeof FamilyUsageMonthlySchema>;
 export type UsageSSEData = z.infer<typeof UsageSSEDataSchema>;
 export type UsageFamilySSEData = z.infer<typeof UsageFamilySSEDataSchema>;

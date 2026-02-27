@@ -29,6 +29,8 @@ export const useSSE = (enabled: boolean) => {
     const abortController = new AbortController();
 
     connectUsageSSE((eventName, rawData) => {
+      if (!rawData || !rawData.startsWith('{')) return;
+
       try {
         const parsedData = JSON.parse(rawData);
 
@@ -42,7 +44,7 @@ export const useSSE = (enabled: boolean) => {
           setMemberRealtime(validated);
         }
       } catch (error) {
-        console.error('SSE 파싱 에러:', error);
+        console.error('SSE 파싱/검증 에러:', error);
       }
     }, abortController.signal).catch((error) => console.error(error));
 

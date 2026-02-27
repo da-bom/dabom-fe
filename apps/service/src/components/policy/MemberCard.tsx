@@ -211,7 +211,7 @@ export default function MemberCard({
             <div className="flex w-full flex-col gap-4">
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <TimeIcon />
+                  <TimeIcon className="text-primary" />
                   <span className="text-body1-m">시간 제한</span>
                 </div>
 

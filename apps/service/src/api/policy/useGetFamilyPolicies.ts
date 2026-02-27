@@ -4,14 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import { ApiErrorResponse } from '@shared/type/error';
 import { CustomerDetail } from '@shared/type/familyType';
 
-import { FamilyDetail, FamilyPoliciesDataSchema } from './scheme';
+import { FamilyDetail, FamilyPoliciesDataSchema, ServiceCustomerDetail } from './scheme';
 
 export const getFamilyPolicies = async (): Promise<FamilyDetail> => {
   const response = await http.get('/families/policies');
   const familyData = FamilyPoliciesDataSchema.parse(response);
 
-  const mappedCustomers: CustomerDetail[] = familyData.customers.map((c) => {
+  const mappedCustomers: ServiceCustomerDetail[] = familyData.customers.map((c) => {
     const monthlyPolicy = c.policies.find((p) => p.type === 'MONTHLY_LIMIT');
+    const timeBlockPolicy = c.policies.find((p) => p.type === 'TIME_BLOCK');
 
     return {
       customerId: c.customerId,
@@ -20,6 +21,12 @@ export const getFamilyPolicies = async (): Promise<FamilyDetail> => {
       role: c.role,
       monthlyUsedBytes: c.usedBytes,
       monthlyLimitBytes: monthlyPolicy?.rules?.limitBytes ?? 0,
+      timeLimit: timeBlockPolicy?.isActive
+        ? {
+            start: timeBlockPolicy.rules?.start ?? '00:00',
+            end: timeBlockPolicy.rules?.end ?? '23:59',
+          }
+        : null,
     };
   });
 
