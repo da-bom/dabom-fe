@@ -3,10 +3,9 @@
 import React, { useCallback, useState, useSyncExternalStore } from 'react';
 
 import { gbToBytes } from '@shared';
+import { ServiceCustomerDetail } from 'src/api/policy/scheme';
 import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
 import { useUpdatePolicy } from 'src/api/policy/useUpdatePolicy';
-
-import { CustomerDetail } from '@shared/type/familyType';
 
 import MemberCard from '@service/components/policy/MemberCard';
 import TimeSettingBottomSheet from '@service/components/policy/TimeSettingBottomSheet';
@@ -49,11 +48,13 @@ export default function PolicyManagementPage() {
     );
   }
 
-  return <PolicyManagementList customers={familyDetail.customers} />;
+  const listKey = `policy-list-${familyDetail.customers.length}-${familyDetail.customers.map((c) => c.customerId).join('-')}`;
+
+  return <PolicyManagementList key={listKey} customers={familyDetail.customers} />;
 }
 
 interface PolicyManagementListProps {
-  readonly customers: CustomerDetail[];
+  readonly customers: ServiceCustomerDetail[];
 }
 
 function PolicyManagementList({ customers }: PolicyManagementListProps) {
@@ -85,10 +86,7 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
       initial[c.customerId.toString()] = {
         customerId: c.customerId,
         limitBytes: c.monthlyLimitBytes,
-        timeLimit: {
-          start: '23:00',
-          end: '07:00',
-        },
+        timeLimit: c.timeLimit || null,
       };
     });
     return initial;

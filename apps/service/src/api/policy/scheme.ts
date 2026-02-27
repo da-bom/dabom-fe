@@ -72,11 +72,15 @@ export type FamilyPoliciesData = z.infer<typeof FamilyPoliciesDataSchema>;
 export type UpdatePolicyRequest = z.infer<typeof UpdatePolicyRequestSchema>;
 export type UpdatePolicyResponse = z.infer<typeof UpdatePolicyResponseSchema>;
 
+export interface ServiceCustomerDetail extends CustomerDetail {
+  timeLimit: { start: string; end: string } | null;
+}
+
 export interface FamilyDetail {
   familyId: number;
   familyName: string;
   createdById: number;
-  customers: CustomerDetail[];
+  customers: ServiceCustomerDetail[];
   totalQuotaBytes: number;
   currentMonth: string;
   createdAt: string;
