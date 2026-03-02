@@ -16,7 +16,7 @@ export default function LimitInput({ value, onChange, disabled = false }: LimitI
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
-        className="text-body1-m h-6 w-5 text-center outline-none"
+        className="text-body1-m h-6 w-full text-center outline-none"
       />
     </div>
   );
