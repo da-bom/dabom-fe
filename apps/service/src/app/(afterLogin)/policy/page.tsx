@@ -26,7 +26,7 @@ export interface CustomerState {
     start: string;
     end: string;
   } | null;
-  // isBlocked: boolean;
+  isBlocked: boolean;
 }
 
 export default function PolicyManagementPage() {
@@ -88,6 +88,7 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
         customerId: c.customerId,
         limitBytes: c.monthlyLimitBytes,
         timeLimit: c.timeLimit || null,
+        isBlocked: c.isBlocked || false,
       };
     });
     return initial;
@@ -137,17 +138,24 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
         },
       }));
 
-      if (!isCurrentlyOn) {
-        return;
+      if (isCurrentlyOn) {
+        updatePolicy({
+          updateInfo: {
+            customerId: Number(id),
+            type: 'TIME_BLOCK',
+            isActive: false,
+          },
+        });
+      } else {
+        updatePolicy({
+          updateInfo: {
+            customerId: Number(id),
+            type: 'TIME_BLOCK',
+            value: { start: '00:00', end: '23:59', timezone: 'Asia/Seoul' },
+            isActive: true,
+          },
+        });
       }
-
-      updatePolicy({
-        updateInfo: {
-          customerId: Number(id),
-          type: 'TIME_BLOCK',
-          isActive: false,
-        },
-      });
     },
 
     onTimeClick: (id: string, type: 'start' | 'end') => {
@@ -158,25 +166,26 @@ function PolicyManagementList({ customers }: PolicyManagementListProps) {
       });
     },
 
-    // onToggleBlock: (id: string) => {
-    //   const currentState = memberStates[id];
-    //   if (!currentState) return;
+    onToggleBlock: (id: string) => {
+      const currentState = memberStates[id];
+      if (!currentState) return;
 
-    //   const newIsBlocked = !currentState.isBlocked;
+      const newIsBlocked = !currentState.isBlocked;
 
-    //   setMemberStates((prev) => ({
-    //     ...prev,
-    //     [id]: { ...prev[id], isBlocked: newIsBlocked },
-    //   }));
+      setMemberStates((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], isBlocked: newIsBlocked },
+      }));
 
-    //   updatePolicy({
-    //     updateInfo: {
-    //       customerId: Number(id),
-    //       type: 'MANUAL_BLOCK',
-    //       isActive: newIsBlocked,
-    //     },
-    //   });
-    // },
+      updatePolicy({
+        updateInfo: {
+          customerId: Number(id),
+          type: 'MANUAL_BLOCK',
+          value: { reason: 'MANUAL' },
+          isActive: newIsBlocked,
+        },
+      });
+    },
   };
 
   const handleSaveTime = async (newTime: string) => {

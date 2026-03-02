@@ -2,7 +2,6 @@ import { QUERY_TIME, http } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 
 import { ApiErrorResponse } from '@shared/type/error';
-import { CustomerDetail } from '@shared/type/familyType';
 
 import { FamilyDetail, FamilyPoliciesDataSchema, ServiceCustomerDetail } from './scheme';
 

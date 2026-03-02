@@ -4,11 +4,13 @@ import React, { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import {
+  ChevronIcon,
   DoNotIcon,
   ErrorOutlineIcon,
   TimeIcon,
   bytesToGB,
   cn,
+  formatPhoneNumber,
   formatSize,
   gbToBytes,
 } from '@shared';
@@ -128,7 +130,7 @@ export default function MemberCard({
           <div className="flex flex-col">
             <span className="text-body1-m">{customer.name}</span>
             <span className="text-caption-m text-gray-800">
-              {customer.phoneNumber || '010-****-1234'}
+              {formatPhoneNumber(customer.phoneNumber) || '010-****-1234'}
             </span>
           </div>
 
@@ -164,9 +166,30 @@ export default function MemberCard({
             {/* 데이터 사용 차단 */}
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-2">
+                <DoNotIcon className="text-primary" />
                 <span className="text-body1-m">데이터 사용 차단</span>
               </div>
-              {/* 입력 추가 */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!isEditingByOther) handlers.onToggleBlock?.(idStr);
+                }}
+                role="switch"
+                disabled={isEditingByOther}
+                aria-checked={state.isBlocked}
+                className={cn(
+                  'flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out',
+                  state.isBlocked ? 'bg-primary' : 'bg-gray-500',
+                )}
+              >
+                <div
+                  className={cn(
+                    'bg-brand-white h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out',
+                    state.isBlocked ? 'translate-x-3' : 'translate-x-0',
+                  )}
+                />
+              </button>
             </div>
 
             <div className="mx-0 border-t border-gray-100" />
@@ -257,7 +280,7 @@ export default function MemberCard({
                 </div>
               ) : (
                 state.timeLimit && (
-                  <div className="bg-background-sub flex h-20 w-full flex-col items-center justify-center gap-2 rounded-lg">
+                  <div className="bg-background-sub flex h-16 w-full flex-col items-center justify-center gap-2 rounded-lg">
                     <div className="flex items-center justify-center">
                       <button
                         type="button"
@@ -296,7 +319,8 @@ export default function MemberCard({
 
             <button type="button" className="flex w-full justify-end gap-1" onClick={() => {}}>
               <span className="text-body2-m">더보기</span>
-              <div className="rotate h-3 w-1.75">{/* 여기에 아이콘 */}</div>
+              {/* 아이콘 추후 조절 */}
+              <ChevronIcon />
             </button>
           </div>
         </div>
