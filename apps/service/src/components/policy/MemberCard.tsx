@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import {
+  Badge,
   ChevronIcon,
   DoNotIcon,
   ErrorOutlineIcon,
@@ -145,8 +146,15 @@ export default function MemberCard({
         aria-controls={`detail-${idStr}`}
       >
         <div className="flex w-full items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-body1-m">{customer.name}</span>
+          <div className="flex flex-col items-start">
+            <div className="flex items-center gap-1">
+              <span className="text-body1-m">{customer.name}</span>
+              {state.isBlocked && (
+                <Badge color="negative" className="h-4.25 px-2">
+                  데이터 차단
+                </Badge>
+              )}
+            </div>
             <span className="text-caption-m text-gray-800">
               {formatPhoneNumber(customer.phoneNumber) || '010-****-1234'}
             </span>
@@ -162,7 +170,10 @@ export default function MemberCard({
 
             <div className="h-1 w-20 overflow-hidden rounded-full bg-gray-100">
               <div
-                className="bg-primary h-full transition-all duration-300"
+                className={cn(
+                  'h-full transition-all duration-300',
+                  state.isBlocked ? 'bg-gray-800' : 'bg-primary',
+                )}
                 style={{ width: `${usagePercent}%` }}
               />
             </div>
@@ -223,16 +234,18 @@ export default function MemberCard({
                   <LimitInput
                     value={localLimit}
                     onChange={handleInputChange}
-                    disabled={isEditingByOther}
+                    disabled={isEditingByOther || state.isBlocked}
                   />
                   <span className="text-body1-m">GB</span>
                 </div>
               </div>
 
-              {isEditingByOther ? (
+              {isEditingByOther || state.isBlocked ? (
                 <div className="bg-background-sub flex h-12.5 w-full items-center justify-center gap-2 rounded-lg">
                   <DoNotIcon />
-                  <span className="text-caption-m text-gray-800">다른 가족이 수정 중이에요.</span>
+                  <span className="text-caption-m text-gray-800">
+                    {state.isBlocked ? '데이터 차단 중이에요.' : '다른 가족이 수정 중이에요.'}
+                  </span>
                 </div>
               ) : (
                 <div className="flex w-full flex-col">
@@ -256,6 +269,7 @@ export default function MemberCard({
                       step="1"
                       value={localLimit}
                       onChange={handleSliderChange}
+                      disabled={isEditingByOther || state.isBlocked}
                       className="col-start-1 row-start-1 h-full w-full cursor-pointer touch-none opacity-0"
                       aria-label="데이터 한도 설정"
                     />
@@ -280,7 +294,7 @@ export default function MemberCard({
                   type="button"
                   onClick={() => !isEditingByOther && handlers.onToggleTime(idStr)}
                   role="switch"
-                  disabled={isEditingByOther}
+                  disabled={isEditingByOther || state.isBlocked}
                   aria-checked={!state.timeLimit}
                   className={cn(
                     'flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out',
@@ -296,10 +310,12 @@ export default function MemberCard({
                 </button>
               </div>
 
-              {isEditingByOther ? (
+              {isEditingByOther || state.isBlocked ? (
                 <div className="bg-background-sub flex h-12.25 w-full items-center justify-center gap-2 rounded-lg">
                   <DoNotIcon />
-                  <span className="text-caption-m text-gray-800">다른 가족이 수정 중이에요.</span>
+                  <span className="text-caption-m text-gray-800">
+                    {state.isBlocked ? '데이터 차단 중이에요.' : '다른 가족이 수정 중이에요.'}
+                  </span>
                 </div>
               ) : (
                 state.timeLimit && (
@@ -326,7 +342,7 @@ export default function MemberCard({
                   </div>
                 )
               )}
-              {!isEditingByOther && !state.timeLimit && (
+              {!isEditingByOther && !state.isBlocked && !state.timeLimit && (
                 <div className="bg-background-sub flex h-12 w-full items-center justify-center rounded-lg">
                   <span className="text-caption-m text-gray-800">
                     시간 제한이 설정되지 않았습니다.
