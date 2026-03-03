@@ -3,7 +3,7 @@
 import { Pie } from 'react-chartjs-2';
 
 import { bytesToGB } from '@shared';
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip, TooltipItem } from 'chart.js';
 import { CHART_COLOR } from 'src/app/(afterLogin)/home/contents';
 import { CustomerListType } from 'src/types/dataUsage';
 
@@ -12,9 +12,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface Props {
   customers: CustomerListType[];
   totalUsageGB: number;
+  totalQuotaBytes: number;
 }
 
-const UsageChart = ({ customers, totalUsageGB }: Props) => {
+const UsageChart = ({ customers, totalUsageGB, totalQuotaBytes }: Props) => {
   if (!customers || customers.length === 0) {
     return (
       <div className="flex w-full items-center justify-center p-8 text-gray-400">
@@ -24,40 +25,32 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
   }
 
   const isEmpty = totalUsageGB === 0;
+  const totalQuotaGB = bytesToGB(totalQuotaBytes);
+  const remainingTotalGB = Math.max(0, totalQuotaGB - totalUsageGB);
 
-  const totalLimitGB = customers.reduce((acc, c) => acc + bytesToGB(c.monthlyLimitBytes), 0);
-  const separatorValue = totalLimitGB * 0.005;
-
-  const chartData = customers.flatMap((customer, index) => {
+  const memberSlices = customers.map((customer, index) => {
     const idx = index % CHART_COLOR.COLORS.length;
     const usedGB = bytesToGB(customer.monthlyUsedBytes);
-    const limitGB = bytesToGB(customer.monthlyLimitBytes);
-    const remainingGB = Math.max(0, limitGB - usedGB);
 
-    return [
-      {
-        id: `${customer.customerId}-used`,
-        name: `${customer.name} (사용)`,
-        value: usedGB,
-        color: CHART_COLOR.COLORS[idx],
-        isSeparator: false,
-      },
-      {
-        id: `${customer.customerId}-remaining`,
-        name: `${customer.name} (잔여)`,
-        value: remainingGB,
-        color: '#EAEAEA',
-        isSeparator: false,
-      },
-      {
-        id: `${customer.customerId}-sep`,
-        name: 'separator',
-        value: separatorValue,
-        color: '#FEFEFE',
-        isSeparator: true,
-      },
-    ];
+    return {
+      id: customer.customerId,
+      name: customer.name,
+      value: usedGB,
+      color: CHART_COLOR.COLORS[idx],
+      isRemaining: false,
+    };
   });
+
+  const chartData = [
+    ...memberSlices,
+    {
+      id: 'total-remaining',
+      name: '전체 잔여 용량',
+      value: remainingTotalGB,
+      color: '#ffffff',
+      isRemaining: true,
+    },
+  ];
 
   const data = {
     labels: chartData.map((c) => c.name),
@@ -80,18 +73,16 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
       },
       tooltip: {
         enabled: !isEmpty,
-        filter: (tooltipItem: import('chart.js').TooltipItem<'pie'>) => {
-          return !chartData[tooltipItem.dataIndex].isSeparator;
-        },
         callbacks: {
-          label: (context: import('chart.js').TooltipItem<'pie'>) => {
-            return ` ${context.label}: ${context.parsed.toFixed(1)}GB`;
+          label: (context: TooltipItem<'pie'>) => {
+            const val = context.parsed;
+            return ` ${context.label}: ${val.toFixed(1)}GB`;
           },
         },
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         titleColor: '#000',
         bodyColor: '#000',
-        borderColor: '#e5e7eb',
+        borderColor: '#ffffff',
         borderWidth: 1,
         padding: 12,
         displayColors: false,
