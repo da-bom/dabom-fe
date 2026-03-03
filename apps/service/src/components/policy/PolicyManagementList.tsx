@@ -1,0 +1,217 @@
+'use client';
+
+import React, { useCallback, useState } from 'react';
+
+import { gbToBytes } from '@shared';
+import { ServiceCustomerDetail } from 'src/api/policy/scheme';
+import { useUpdatePolicy } from 'src/api/policy/useUpdatePolicy';
+import { UserRole, getCurrentUserRole } from 'src/utils/auth';
+
+import MemberCard from '@service/components/policy/MemberCard';
+import TimeSettingBottomSheet from '@service/components/policy/TimeSettingBottomSheet';
+
+export interface CustomerState {
+  customerId: number;
+  limitBytes: number;
+  timeLimit: {
+    start: string;
+    end: string;
+  } | null;
+  isBlocked: boolean;
+}
+
+interface PolicyManagementListProps {
+  readonly customers: ServiceCustomerDetail[];
+}
+
+const DEFAULT_TIME_LIMIT = { start: '00:00', end: '23:00' };
+
+export default function PolicyManagementList({ customers }: PolicyManagementListProps) {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { mutate: updatePolicy } = useUpdatePolicy();
+
+  const [currentUserRole] = useState<UserRole>(getCurrentUserRole);
+
+  const [memberStates, setMemberStates] = useState<Record<string, CustomerState>>(() => {
+    const initial: Record<string, CustomerState> = {};
+    customers.forEach((c) => {
+      initial[c.customerId.toString()] = {
+        customerId: c.customerId,
+        limitBytes: c.monthlyLimitBytes,
+        timeLimit: c.timeLimit || null,
+        isBlocked: c.isBlocked || false,
+      };
+    });
+    return initial;
+  });
+
+  const [sheetConfig, setSheetConfig] = useState<{
+    isOpen: boolean;
+    targetId: string | null;
+    type: 'start' | 'end';
+  }>({
+    isOpen: false,
+    targetId: null,
+    type: 'start',
+  });
+
+  const handlers = {
+    onSelect: (id: string) => setSelectedId((prev) => (prev === id ? null : id)),
+
+    onLimitChange: (id: string, newGB: number) => {
+      const newBytes = gbToBytes(newGB);
+
+      setMemberStates((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], limitBytes: newBytes },
+      }));
+      updatePolicy({
+        updateInfo: {
+          customerId: Number(id),
+          type: 'MONTHLY_LIMIT',
+          value: { limitBytes: newBytes },
+          isActive: true,
+        },
+      });
+    },
+
+    onToggleTime: (id: string) => {
+      const currentTarget = memberStates[id];
+      if (!currentTarget) return;
+
+      const isCurrentlyOn = !!currentTarget.timeLimit;
+
+      setMemberStates((prev) => ({
+        ...prev,
+        [id]: {
+          ...prev[id],
+          timeLimit: isCurrentlyOn ? null : DEFAULT_TIME_LIMIT,
+        },
+      }));
+
+      if (isCurrentlyOn) {
+        updatePolicy({
+          updateInfo: {
+            customerId: Number(id),
+            type: 'TIME_BLOCK',
+            isActive: false,
+          },
+        });
+      } else {
+        updatePolicy({
+          updateInfo: {
+            customerId: Number(id),
+            type: 'TIME_BLOCK',
+            value: { ...DEFAULT_TIME_LIMIT, timezone: 'Asia/Seoul' },
+            isActive: true,
+          },
+        });
+      }
+    },
+
+    onTimeClick: (id: string, type: 'start' | 'end') => {
+      setSheetConfig({
+        isOpen: true,
+        targetId: id,
+        type,
+      });
+    },
+
+    onToggleBlock: (id: string) => {
+      const currentState = memberStates[id];
+      if (!currentState) return;
+
+      const newIsBlocked = !currentState.isBlocked;
+
+      setMemberStates((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], isBlocked: newIsBlocked },
+      }));
+
+      updatePolicy({
+        updateInfo: {
+          customerId: Number(id),
+          type: 'MANUAL_BLOCK',
+          value: { reason: 'MANUAL' },
+          isActive: newIsBlocked,
+        },
+      });
+    },
+  };
+
+  const handleSaveTime = async (newTime: string) => {
+    const { targetId, type } = sheetConfig;
+    if (!targetId) return;
+
+    const currentState = memberStates[targetId];
+    const currentLimit = currentState.timeLimit || DEFAULT_TIME_LIMIT;
+    const updatedStart = type === 'start' ? newTime : currentLimit.start;
+    const updatedEnd = type === 'end' ? newTime : currentLimit.end;
+
+    setMemberStates((prev) => ({
+      ...prev,
+      [targetId]: {
+        ...currentState,
+        timeLimit: { start: updatedStart, end: updatedEnd },
+      },
+    }));
+
+    updatePolicy({
+      updateInfo: {
+        customerId: Number(targetId),
+        type: 'TIME_BLOCK',
+        value: { start: updatedStart, end: updatedEnd, timezone: 'Asia/Seoul' },
+        isActive: true,
+      },
+    });
+  };
+
+  const handleCloseSheet = useCallback(() => {
+    setSheetConfig((prev) => ({ ...prev, isOpen: false }));
+  }, []);
+
+  const activeCustomerState = sheetConfig.targetId ? memberStates[sheetConfig.targetId] : null;
+  const initialTimeForSheet =
+    (sheetConfig.type === 'start'
+      ? activeCustomerState?.timeLimit?.start
+      : activeCustomerState?.timeLimit?.end) ?? '00:00';
+
+  return (
+    <section className="flex min-h-screen w-full justify-center">
+      <div className="mt-4 w-full px-4 pb-20">
+        <div className="mb-5.5 flex flex-col gap-1">
+          <div className="text-body1-d">가족 관리</div>
+          <div className="text-body2-m">데이터 사용 정책을 변경할 구성원을 선택하세요.</div>
+        </div>
+
+        <ul className="flex flex-col gap-4">
+          {customers.map((customer) => {
+            const customerIdStr = customer.customerId.toString();
+            return (
+              <MemberCard
+                key={customer.customerId}
+                customer={{
+                  ...customer,
+                  phoneNumber: String(customer.phoneNumber) || '정보 없음',
+                }}
+                state={memberStates[customerIdStr]}
+                isSelected={selectedId === customerIdStr}
+                isEditingByOther={false}
+                handlers={handlers}
+              />
+            );
+          })}
+        </ul>
+
+        <TimeSettingBottomSheet
+          key={`${sheetConfig.targetId}-${sheetConfig.type}-${initialTimeForSheet}`}
+          isOpen={sheetConfig.isOpen}
+          onClose={handleCloseSheet}
+          title={sheetConfig.type === 'start' ? '시작 시간 설정' : '종료 시간 설정'}
+          initialTime={initialTimeForSheet}
+          onSave={handleSaveTime}
+        />
+      </div>
+    </section>
+  );
+}
