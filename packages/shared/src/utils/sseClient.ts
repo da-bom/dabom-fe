@@ -1,6 +1,6 @@
 const getFinalUrl = (url: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_NOTIFICATION_API_BASE_URL;
-  return `${baseUrl}${url}`;
+  const baseUrl = process.env.NEXT_PUBLIC_NOTIFICATION_API_BASE_URL || '';
+  return `${baseUrl.replace(/\/$/, '')}${url}`;
 };
 
 const processLines = (
