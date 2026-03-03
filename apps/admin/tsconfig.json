@@ -1,0 +1,29 @@
+{
+  "extends": "../../packages/shared/src/configs/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shared": ["../../packages/shared/src/index.ts"],
+      "@shared/types/*": ["../../packages/shared/src/types/*"],
+      "@shared/data/*": ["../../packages/shared/src/data/*"],
+      "@icons": ["../../packages/shared/src/assets/icons/index.ts"],
+      "@globalstyles": ["../../packages/shared/src/styles/globals.css"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/shared/src/**/*",
+    "../../packages/shared/src/components/InputField.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

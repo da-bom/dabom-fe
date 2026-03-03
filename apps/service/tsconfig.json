@@ -1,0 +1,31 @@
+{
+  "extends": "../../packages/shared/src/configs/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@service/components/*": ["./src/components/*"],
+      "@shared": ["../../packages/shared/src/index.ts"],
+      "@shared/type/*": ["../../packages/shared/src/types/*"],
+      "@shared/data/*": ["../../packages/shared/src/data/*"],
+      "@icons": ["../../packages/shared/src/assets/icons/index.ts"],
+      "@globalstyles": ["../../packages/shared/src/styles/globals.css"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/shared/src/**/*",
+    "home",
+    "src/app/(afterLogin)/home"
+  ],
+  "exclude": ["node_modules"]
+}

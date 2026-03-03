@@ -1,0 +1,56 @@
+name: Auto Assign Reviewer
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+    branches: [main, develop]
+
+jobs:
+  assign-reviewer:
+    runs-on: ubuntu-latest
+    # Draft PR은 건너뛰기
+    if: github.event.pull_request.draft == false
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Auto Assign Reviewer
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // ============================================================
+            // 리뷰어 목록 설정
+            // scripts/github-config.env의 REVIEWERS 값과 동기화하세요
+            // ============================================================
+            const reviewers = ['tray0244', 'yezzan9'];
+
+            const prAuthor = context.payload.pull_request.user.login;
+            const prNumber = context.payload.pull_request.number;
+
+            // PR 작성자를 제외한 리뷰어 후보
+            const candidates = reviewers.filter(r => r.toLowerCase() !== prAuthor.toLowerCase());
+
+            if (candidates.length === 0) {
+              console.log('⚠️ 할당 가능한 리뷰어가 없습니다.');
+              return;
+            }
+
+            // 랜덤으로 1명 선택
+            const selectedReviewer = candidates[Math.floor(Math.random() * candidates.length)];
+
+            console.log(`📌 PR #${prNumber} - 리뷰어 할당: ${selectedReviewer}`);
+
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                reviewers: [selectedReviewer]
+              });
+
+              console.log(`✅ 리뷰어 할당 완료: ${selectedReviewer}`);
+            } catch (error) {
+              console.log(`❌ 리뷰어 할당 실패: ${error.message}`);
+              // 실패해도 워크플로우는 성공으로 처리 (리뷰어가 collaborator가 아닐 수 있음)
+            }
