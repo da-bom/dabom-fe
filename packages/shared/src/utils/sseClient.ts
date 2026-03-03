@@ -1,24 +1,6 @@
 const getFinalUrl = (url: string) => {
-  if (url.startsWith('http')) return url;
-
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const notiBaseUrl = process.env.NEXT_PUBLIC_NOTIFICATION_API_BASE_URL;
-
-  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-
-  const isNotiPath =
-    url.includes('notification') ||
-    url.includes('usage/sse') ||
-    url.startsWith('/notification-proxy');
-
-  const baseUrl = isNotiPath ? notiBaseUrl : apiBaseUrl;
-  if (!baseUrl) return cleanUrl;
-
-  const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-
-  const finalPath = cleanUrl.replace('/notification-proxy', '');
-
-  return `${cleanBaseUrl}${finalPath}`;
+  const baseUrl = process.env.NEXT_PUBLIC_NOTIFICATION_API_BASE_URL || '';
+  return `${baseUrl.replace(/\/$/, '')}${url}`;
 };
 
 const processLines = (
