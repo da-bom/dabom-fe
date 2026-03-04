@@ -1,10 +1,10 @@
 const CACHE_NAME = 'dabom-v1';
 
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
+globalThis.addEventListener('install', (event) => {
+  globalThis.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+globalThis.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((names) =>
       Promise.all(
@@ -12,10 +12,10 @@ self.addEventListener('activate', (event) => {
       ),
     ),
   );
-  self.clients.claim();
+  globalThis.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
+globalThis.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
