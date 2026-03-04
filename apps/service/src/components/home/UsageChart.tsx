@@ -3,7 +3,7 @@
 import { Pie } from 'react-chartjs-2';
 
 import { bytesToGB } from '@shared';
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip, TooltipItem } from 'chart.js';
 import { CHART_COLOR } from 'src/app/(afterLogin)/home/contents';
 import { CustomerListType } from 'src/types/dataUsage';
 
@@ -12,9 +12,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface Props {
   customers: CustomerListType[];
   totalUsageGB: number;
+  totalQuotaBytes: number;
 }
 
-const UsageChart = ({ customers, totalUsageGB }: Props) => {
+const UsageChart = ({ customers, totalUsageGB, totalQuotaBytes }: Props) => {
   if (!customers || customers.length === 0) {
     return (
       <div className="flex w-full items-center justify-center p-8 text-gray-400">
@@ -24,26 +25,41 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
   }
 
   const isEmpty = totalUsageGB === 0;
+  const totalQuotaGB = bytesToGB(totalQuotaBytes);
+  const remainingTotalGB = Math.max(0, totalQuotaGB - totalUsageGB);
 
-  const chartData = customers.map((customer, index) => {
+  const memberSlices = customers.map((customer, index) => {
     const idx = index % CHART_COLOR.COLORS.length;
+    const usedGB = bytesToGB(customer.monthlyUsedBytes);
+
     return {
       id: customer.customerId,
       name: customer.name,
-      usageGB: bytesToGB(customer.monthlyUsedBytes),
+      value: usedGB,
       color: CHART_COLOR.COLORS[idx],
-      isMe: customer.isMe || false,
+      isRemaining: false,
     };
   });
+
+  const chartData = [
+    ...memberSlices,
+    {
+      id: 'total-remaining',
+      name: '전체 잔여 용량',
+      value: remainingTotalGB,
+      color: '#ffffff',
+      isRemaining: true,
+    },
+  ];
 
   const data = {
     labels: chartData.map((c) => c.name),
     datasets: [
       {
-        data: chartData.map((c) => c.usageGB),
+        data: chartData.map((c) => c.value),
         backgroundColor: chartData.map((c) => c.color),
         borderWidth: 0,
-        hoverOffset: 4,
+        hoverOffset: 0,
       },
     ],
   };
@@ -58,14 +74,15 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
       tooltip: {
         enabled: !isEmpty,
         callbacks: {
-          label: function (context: import('chart.js').TooltipItem<'pie'>) {
-            return `${context.parsed.toFixed(1)}GB`;
+          label: (context: TooltipItem<'pie'>) => {
+            const val = context.parsed;
+            return ` ${context.label}: ${val.toFixed(1)}GB`;
           },
         },
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         titleColor: '#000',
         bodyColor: '#000',
-        borderColor: '#e5e7eb',
+        borderColor: '#ffffff',
         borderWidth: 1,
         padding: 12,
         displayColors: false,
@@ -78,6 +95,12 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
     cutout: '35%',
   };
 
+  const legendData = customers.map((customer, index) => ({
+    id: customer.customerId,
+    name: customer.name,
+    color: CHART_COLOR.COLORS[index % CHART_COLOR.COLORS.length],
+  }));
+
   return (
     <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center gap-5 duration-500">
       <div className="relative flex aspect-square w-full items-center justify-center">
@@ -85,7 +108,7 @@ const UsageChart = ({ customers, totalUsageGB }: Props) => {
       </div>
 
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-        {chartData.map((c) => (
+        {legendData.map((c) => (
           <div key={c.id} className="flex items-center gap-2">
             <div className="h-3 w-3 rounded-full" style={{ backgroundColor: c.color }} />
             <span className="text-caption-m">{c.name}</span>

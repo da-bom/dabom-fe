@@ -22,6 +22,7 @@ const processLines = (
 
     if (trimmedLine.startsWith('data:')) {
       const rawData = trimmedLine.substring(5).trim();
+      console.log('[SSE 데이터]:', rawData);
       if (rawData) {
         onMessage(eventName, rawData);
         eventName = 'message';
@@ -47,7 +48,8 @@ const processSSEStream = async (
       break;
     }
 
-    buffer += decoder.decode(value, { stream: true });
+    const decodedValue = decoder.decode(value, { stream: true });
+    buffer += decodedValue;
     const lines = buffer.split('\n');
     buffer = lines.pop() || '';
 
@@ -77,12 +79,17 @@ export const sseClient = {
           Accept: 'text/event-stream',
           'Cache-Control': 'no-cache',
           Connection: 'keep-alive',
+          'Accept-Version': '1.0',
           ...(token && { Authorization: `Bearer ${token}` }),
         },
         signal,
       });
 
+      console.log('[SSE 엔진] 응답 수신. Status:', response.status);
+
       if (!response.ok || !response.body) {
+        const errorBody = await response.text().catch(() => 'no body');
+        console.error('[SSE 엔진] 연결 실패 디테일:', errorBody);
         throw new Error(`SSE 연결 실패: HTTP ${response.status}`);
       }
 

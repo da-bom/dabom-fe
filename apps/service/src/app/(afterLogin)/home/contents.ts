@@ -1,4 +1,14 @@
 export const CHART_COLOR = {
-  WARNING_THRESHOLD: 0.8,
-  COLORS: ['#E0E7FF', '#FFF1F2', '#F5E6FF', '#FFF7ED'],
+  COLORS: [
+    '#F6B1C3',
+    '#F9E0B8',
+    '#D5DFE8',
+    '#EEF2F7',
+    '#E2ECE6',
+    '#E8E1EC',
+    '#F1E6DE',
+    '#E4E4E4',
+    '#DDE5DD',
+    '#E9EDF1',
+  ],
 } as const;
