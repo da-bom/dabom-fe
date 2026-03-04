@@ -30,7 +30,9 @@ globalThis.addEventListener('fetch', (event) => {
           response.headers.get('Cache-Control') !== 'no-store'
         ) {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          caches.open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, clone))
+            .catch(error => console.error('SW: Caching failed', error));
         }
         return response;
       })
