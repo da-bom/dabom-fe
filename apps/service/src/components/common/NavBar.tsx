@@ -8,8 +8,9 @@ import {
   Face as FaceIcon,
   Home as HomeIcon,
   PersonOutlined as PersonIcon,
-  SendOutlined as SendMoneyIcon,
+  Send as SendMoneyIcon,
 } from '@mui/icons-material';
+import { cn } from '@shared';
 
 const navItems = [
   { label: '미션', href: '/mission', icon: ExtensionIcon },
@@ -39,18 +40,21 @@ const NavBar = () => {
                 key={item.href}
                 href={item.href}
                 className="flex flex-col items-center justify-center gap-2"
+                aria-current={isActive ? 'page' : undefined}
               >
                 <div className="flex h-4 w-4 items-center justify-center">
                   {Icon && (
                     <Icon
                       sx={{
                         fontSize: 16,
-                        color: isActive ? 'var(--color-brand-black)' : 'var(--color-gray-700)',
+                        color: isActive ? 'var(--color-primary)' : 'var(--color-gray-700)',
                       }}
                     />
                   )}
                 </div>
-                <span className="text-caption-m text-gray-700"> {item.label} </span>
+                <span className={cn('text-caption-m', isActive ? 'text-primary' : 'text-gray-700')}>
+                  {item.label}
+                </span>
               </Link>
             );
           })}

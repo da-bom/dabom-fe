@@ -57,6 +57,7 @@ const Header = ({
           <button
             type="button"
             onClick={handleBack}
+            aria-label="뒤로 가기"
             className="flex cursor-pointer items-center justify-center"
           >
             <ChevronIcon width={7} height={12} className="rotate-180" />
@@ -68,12 +69,13 @@ const Header = ({
         <Logo type="default" width={69} height={16} />
       </div>
 
-      <div className="flex cursor-pointer items-center justify-center">
+      <div className="flex items-center justify-center">
         {shouldShowNoti && (
           <button
             type="button"
             onClick={handleNotiClick}
-            className="flex items-center justify-center"
+            aria-label="알림 보기"
+            className="flex cursor-pointer items-center justify-center"
           >
             <NotificationIcon width={13} height={16} />
           </button>
