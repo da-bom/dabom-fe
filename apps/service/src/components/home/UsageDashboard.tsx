@@ -154,7 +154,11 @@ const UsageDashboard = () => {
               <CustomerList customers={processedCustomers} />
             ) : (
               <div className="mx-auto aspect-square w-full max-w-70">
-                <UsageChart customers={processedCustomers} totalUsageGB={totalUsageGB} />
+                <UsageChart
+                  customers={processedCustomers}
+                  totalUsageGB={totalUsageGB}
+                  totalQuotaBytes={displayTotalLimitBytes}
+                />
               </div>
             )}
           </>

@@ -1,5 +1,6 @@
 export * from './utils/cn';
 export * from './utils/formatSize';
+export * from './utils/formatPhoneNumber';
 export * from './utils/sseClient';
 export * from './constants/time';
 export * from './utils/http';
