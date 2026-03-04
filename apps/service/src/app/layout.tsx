@@ -7,7 +7,7 @@ import ServiceWorkerRegistration from '@service/components/ServiceWorkerRegistra
 import { Providers } from './providers';
 
 export const viewport: Viewport = {
-  themeColor: '#F9A8D4',
+  themeColor: '#febedf',
 };
 
 export const metadata: Metadata = {
