@@ -62,11 +62,7 @@ const NavBar = () => {
 
         <Link
           href="/home"
-          className="absolute top-0 left-1/2 flex h-13 w-13 -translate-x-1/2 items-center justify-center rounded-full"
-          style={{
-            background:
-              'linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), var(--color-brand-dark)',
-          }}
+          className="bg-brand-dark absolute top-0 left-1/2 flex h-13 w-13 -translate-x-1/2 items-center justify-center rounded-full"
         >
           <HomeIcon width={17} height={19} className="text-white" />
         </Link>
