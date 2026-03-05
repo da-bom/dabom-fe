@@ -30,8 +30,6 @@ const FamilyItem = ({ id, customers, isSelected, setSelectedFam }: Readonly<Fami
           </span>
         </div>
       </div>
-
-      <div className="flex w-full flex-wrap"></div>
     </button>
   );
 };
