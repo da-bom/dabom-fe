@@ -22,7 +22,7 @@ const Badge = ({ children, className, color = 'primary', size = 'sm' }: BadgePro
 
   const sizes: Record<BadgeSize, string> = {
     sm: 'px-3 text-caption-d rounded-full',
-    lg: 'px-4 py-1 text-body2-d rounded-full',
+    lg: 'px-4  text-body2-d rounded-full',
   };
   return (
     <span

@@ -32,7 +32,7 @@ const SearchBox = () => {
       />
       <div className="self-stretch border border-gray-100" />
       <div className="flex w-fit items-center gap-2">
-        <span className="text-body3-d">데이터 사용량</span>
+        <span className="text-body3-d shrink-0">데이터 사용량</span>
         <input
           className="bg-background-base outline-brand-dark h-8 w-14 rounded-sm"
           type="number"
@@ -56,10 +56,8 @@ const SearchBox = () => {
             size="xs"
           />
         </MainBox>
-        <div className="flex flex-1 items-center">
-          <SearchIcon sx={{ width: 16 }} />
-          <input className="p-1 outline-none" placeholder="검색어 입력" />
-        </div>
+        <SearchIcon sx={{ width: 16 }} />
+        <input className="outline-brand-dark flex-1 p-1" placeholder="검색어 입력" />
         <button onClick={() => {}}>
           <CancelIcon className="cursor-pointer !text-gray-400" sx={{ width: 16 }} />
         </button>

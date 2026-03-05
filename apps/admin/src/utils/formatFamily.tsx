@@ -17,11 +17,11 @@ export const formatFamily = ({ customer }: { customer: FamilyCustomer[] }) => {
         </Switch>
       </div>,
       <span key={`name-${i.customerId}`}>{i.name}</span>,
-      <div key={`usage-${i.customerId}`} className="flex justify-center gap-1">
+      <div key={`usage-${i.customerId}`} className="flex min-w-50 justify-center gap-1">
         <span className="text-gray-700">{formatSize(i.monthlyUsedBytes).value} /</span>
         <input
           type="number"
-          className="w-13 rounded border-[1px] border-gray-600 px-4 text-center outline-none"
+          className="w-13 rounded border border-gray-600 px-4 text-center outline-none"
           // TODO: 한도가 없는 경우 UI 추가
           value={i.monthlyLimitBytes ? formatSize(i.monthlyLimitBytes).value : 0}
           onChange={() => {

@@ -26,7 +26,7 @@ const FamilyPage = () => {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col gap-5 overflow-hidden">
+    <div className="flex h-screen w-full flex-col gap-4 overflow-hidden">
       <div className="flex flex-col items-end gap-1">
         <button className="flex cursor-pointer items-center gap-1 px-1" onClick={handleReset}>
           <ResetIcon sx={{ width: 13 }} />
