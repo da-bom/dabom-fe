@@ -5,7 +5,7 @@ import React, { Suspense, useSyncExternalStore } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import { Face as FaceIcon } from '@mui/icons-material';
-import { MainBox, SubBox, bytesToGB, formatPhoneNumber } from '@shared';
+import { MainBox, bytesToGB, formatPhoneNumber } from '@shared';
 import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
 
 import PolicySimple from '@service/components/policy/PolicySimple';
@@ -72,8 +72,12 @@ function PolicyDetailContent() {
 
       <PolicySimple>
         <PolicySimple.Block isBlocked={customer.isBlocked} />
-        <PolicySimple.Limit text={`${limitGB}GB`} />
-        <PolicySimple.Time text={timeLimitText} />
+        <PolicySimple.Limit text={`${limitGB}GB`} disabled={customer.isBlocked} />
+        <PolicySimple.Time
+          text={timeLimitText}
+          isOn={!!customer.timeLimit}
+          disabled={customer.isBlocked}
+        />
       </PolicySimple>
     </div>
   );

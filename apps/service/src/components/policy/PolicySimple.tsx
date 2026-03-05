@@ -8,13 +8,16 @@ interface PolicyItemProps {
   icon: React.ReactNode;
   label: string;
   value: React.ReactNode;
+  disabled?: boolean;
 }
 
-const PolicyItem = ({ icon, label, value }: PolicyItemProps) => (
+const PolicyItem = ({ icon, label, value, disabled }: PolicyItemProps) => (
   <div className="flex h-6 w-full items-center justify-between">
     <div className="flex items-center gap-2">
       <div className="text-primary flex h-4 w-4 items-center justify-center">{icon}</div>
-      <span className="text-body1-m text-brand-black">{label}</span>
+      <span className={cn('text-body1-m', disabled ? 'text-gray-500' : 'text-brand-black')}>
+        {label}
+      </span>
     </div>
     <div className="flex items-center">{value}</div>
   </div>
@@ -52,19 +55,31 @@ const Block = ({ isBlocked, onToggle }: BlockProps) => (
   />
 );
 
-const Limit = ({ text }: { text: string }) => (
+const Limit = ({ text, disabled }: { text: string; disabled?: boolean }) => (
   <PolicyItem
     icon={<ErrorOutlineIcon />}
     label="데이터 사용 한도"
-    value={<span className="text-body1-m text-brand-black">{text}</span>}
+    disabled={disabled}
+    value={
+      <span className={cn('text-body1-m', disabled ? 'text-gray-500' : 'text-brand-black')}>
+        {disabled ? '-' : text}
+      </span>
+    }
   />
 );
 
-const Time = ({ text }: { text: string }) => (
+const Time = ({ text, isOn, disabled }: { text: string; isOn?: boolean; disabled?: boolean }) => (
   <PolicyItem
     icon={<TimeIcon />}
     label="시간 제한"
-    value={<span className="text-body1-m text-brand-black">{text}</span>}
+    disabled={disabled || !isOn}
+    value={
+      <span
+        className={cn('text-body1-m', disabled || !isOn ? 'text-gray-500' : 'text-brand-black')}
+      >
+        {disabled || !isOn ? '-' : text}
+      </span>
+    }
   />
 );
 
@@ -74,7 +89,7 @@ interface PolicySimpleProps {
 
 export default function PolicySimple({ children }: PolicySimpleProps) {
   return (
-    <MainBox className="flex h-36 w-[350px] flex-col items-start gap-5 rounded-2xl p-4">
+    <MainBox className="flex h-36 w-full flex-col items-start gap-5 rounded-2xl p-4">
       {children}
     </MainBox>
   );
