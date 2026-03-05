@@ -5,7 +5,7 @@ import { FamilySearchRequest } from 'src/api/family/schema';
 import { useGetFamilies } from 'src/api/family/useGetFamilies';
 
 import Error from '../common/Error';
-import FamilyItem from './ui/FamilyItem';
+import FamilyItem from './FamilyItem';
 
 const FamilyList = ({
   params,
