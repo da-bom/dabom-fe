@@ -158,7 +158,7 @@ export default function MemberCard({
       <button
         type="button"
         onClick={() => handlers.onSelect(idStr)}
-        className="flex w-full flex-col gap-4 p-4 text-left"
+        className="flex w-full flex-col p-4 text-left"
         aria-expanded={isSelected}
         aria-controls={`detail-${idStr}`}
       >
@@ -179,10 +179,8 @@ export default function MemberCard({
 
           <div className="flex flex-col items-end gap-1">
             <div className="text-caption-m">
-              <span className={isDanger ? 'text-negative' : 'text-brand-black'}>
-                {formattedUsed}{' '}
-              </span>
-              <span className="text-gray-800">/ {formattedTotal}</span>
+              <span className={isDanger ? 'text-negative' : 'text-gray-800'}>{formattedUsed} </span>
+              <span>/ {formattedTotal}</span>
             </div>
 
             <div className="h-1 w-20 overflow-hidden rounded-full bg-gray-100">
@@ -208,7 +206,7 @@ export default function MemberCard({
         <div className="overflow-hidden">
           <div className="mx-4 h-px bg-gray-400" />
 
-          <div className="flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-4 p-4">
             {!isOwner ? (
               <div className="flex flex-col gap-2">
                 <PolicyBlock isBlocked={!!state.isBlocked} />
@@ -265,6 +263,7 @@ export default function MemberCard({
                         데이터 사용 한도
                       </span>
                     </div>
+                    {/* 데이터 사용 한도 토글 */}
                     <button
                       type="button"
                       onClick={() => {
@@ -291,16 +290,17 @@ export default function MemberCard({
                         )}
                       />
                     </button>
-                    {/* 데이터 사용 한도 토글 */}
                   </div>
 
-                  <div className="bg-background-sub flex w-full flex-col items-center gap-3 rounded-lg p-2 pb-4">
+                  <div className="bg-background-sub flex w-full flex-col items-center gap-4 rounded-lg p-4">
                     <div className="flex w-full items-center justify-center gap-1">
-                      <LimitInput
-                        value={localLimit}
-                        onChange={handleInputChange}
-                        disabled={isLimitInputDisabled}
-                      />
+                      <div className="bg flex h-7 items-center justify-center border-gray-400 px-2">
+                        <LimitInput
+                          value={localLimit}
+                          onChange={handleInputChange}
+                          disabled={isLimitInputDisabled}
+                        />
+                      </div>
                       <span
                         className={cn(
                           'text-body1-m',
@@ -311,8 +311,8 @@ export default function MemberCard({
                       </span>
                     </div>
 
-                    <div className="flex w-full flex-col gap-1 px-2">
-                      <div className="grid h-4 w-full items-center">
+                    <div className="flex w-full flex-col gap-1">
+                      <div className="grid h-4 w-full items-center px-1">
                         <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
                         <div
                           className={cn(
@@ -347,7 +347,7 @@ export default function MemberCard({
                       </div>
                       <div
                         className={cn(
-                          'text-caption-m flex w-full justify-between',
+                          'text-caption-m flex w-full justify-between px-1',
                           isLimitInputDisabled ? 'text-gray-700' : 'text-gray-800',
                         )}
                       >
@@ -373,7 +373,7 @@ export default function MemberCard({
                       onClick={() => !isEditingByOther && handlers.onToggleTime(idStr)}
                       role="switch"
                       disabled={isDisabled}
-                      aria-checked={!state.timeLimit}
+                      aria-checked={!!state.timeLimit}
                       className={cn(
                         'flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out',
                         state.timeLimit
@@ -457,21 +457,17 @@ export default function MemberCard({
                 </div>
                 <div
                   className={cn(
-                    'flex items-center justify-center',
+                    'text-caption-m flex items-center justify-center',
                     isDisabled ? 'text-gray-700' : 'text-gray-800',
                   )}
                 >
                   터치하여 시간을 설정하세요.
                 </div>
-              </>
-            )}
 
-            {isOwner && (
-              <>
                 <div className="border-t border-gray-400" />
                 <button
                   type="button"
-                  className="flex w-full justify-end gap-1"
+                  className="flex w-full items-center justify-end gap-1"
                   onClick={(e) => {
                     e.stopPropagation();
                     window.location.href = `/policy/detail?customerId=${idStr}`;
