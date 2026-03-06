@@ -89,7 +89,6 @@ export default function MemberCard({
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const isDisabled = isEditingByOther || state.isBlocked;
-  const disabledMessage = state.isBlocked ? '데이터 차단 중이에요.' : '다른 가족이 수정 중이에요.';
 
   const updateLimit = (newGB: number) => {
     const clampedGB = Math.max(LIMIT.MIN, Math.min(newGB, LIMIT.MAX));
@@ -177,7 +176,7 @@ export default function MemberCard({
             <div className="h-1 w-20 overflow-hidden rounded-full bg-gray-100">
               <div
                 className={cn(
-                  'h-full transition-all duration-300',
+                  'h-full transition-colors duration-300',
                   state.isBlocked ? 'bg-gray-700' : 'bg-primary',
                 )}
                 style={{ width: `${usagePercent}%` }}
@@ -269,7 +268,7 @@ export default function MemberCard({
                       <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
                       <div
                         className={cn(
-                          'col-start-1 row-start-1 h-2 justify-self-start rounded-full transition-all duration-300',
+                          'col-start-1 row-start-1 h-2 justify-self-start rounded-full transition-colors duration-300',
                           isDisabled ? 'bg-gray-700' : 'bg-primary',
                         )}
                         style={{ width: `${sliderPercentage}%` }}
@@ -281,7 +280,7 @@ export default function MemberCard({
                       >
                         <div
                           className={cn(
-                            'bg-brand-white h-4 w-4 -translate-x-1/2 rounded-full border-2 shadow-sm transition-all duration-300',
+                            'bg-brand-white h-4 w-4 -translate-x-1/2 rounded-full border-2 shadow-sm transition-colors duration-300',
                             isDisabled ? 'border-gray-700' : 'border-primary',
                           )}
                         />
@@ -345,8 +344,13 @@ export default function MemberCard({
                   </div>
 
                   <div className="bg-background-sub flex h-14 w-full flex-col items-center justify-center gap-2 rounded-lg py-4">
-                    {!state.timeLimit && !isDisabled ? (
-                      <span className="text-caption-m text-gray-800">
+                    {!state.timeLimit ? (
+                      <span
+                        className={cn(
+                          'text-caption-m',
+                          isDisabled ? 'text-gray-500' : 'text-gray-800',
+                        )}
+                      >
                         시간 제한이 설정되지 않았습니다.
                       </span>
                     ) : (
@@ -368,7 +372,7 @@ export default function MemberCard({
                               isDisabled ? 'text-gray-500' : 'text-black',
                             )}
                           >
-                            {state.timeLimit?.start || '23:00'}
+                            {state.timeLimit.start}
                           </span>
                         </button>
                         <span className={cn('text-body1-m mx-2', isDisabled && 'text-gray-500')}>
@@ -392,7 +396,7 @@ export default function MemberCard({
                               isDisabled ? 'text-gray-500' : 'text-black',
                             )}
                           >
-                            {state.timeLimit?.end || '07:00'}
+                            {state.timeLimit.end}
                           </span>
                         </button>
                         <span className={cn('text-body1-m ml-2', isDisabled && 'text-gray-500')}>
