@@ -10,7 +10,7 @@ interface LimitInputProps {
 
 export default function LimitInput({ value, onChange, disabled = false }: LimitInputProps) {
   return (
-    <div className="flex h-6 w-9 items-center justify-center rounded border border-gray-400 px-2">
+    <div className="flex h-7 w-13.75 items-center justify-center rounded border border-gray-400 px-2">
       <input
         type="number"
         value={value}

@@ -13,7 +13,7 @@ import TimeSettingBottomSheet from '@service/components/policy/TimeSettingBottom
 
 export interface CustomerState {
   customerId: number;
-  limitBytes: number;
+  limitBytes: number | null;
   timeLimit: {
     start: string;
     end: string;
@@ -61,9 +61,9 @@ export default function PolicyManagementList({ customers }: PolicyManagementList
   const handlers = {
     onSelect: (id: string) => setSelectedId((prev) => (prev === id ? null : id)),
 
-    onLimitChange: (id: string, newGB: number) => {
+    onLimitChange: (id: string, newGB: number | null) => {
       if (!isOwner) return;
-      const newBytes = gbToBytes(newGB);
+      const newBytes = newGB === null ? null : gbToBytes(newGB);
 
       setMemberStates((prev) => ({
         ...prev,

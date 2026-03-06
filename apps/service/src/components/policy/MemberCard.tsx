@@ -21,7 +21,7 @@ import { PolicyBlock, PolicyLimit, PolicyTime } from './PolicySimple';
 
 export interface CustomerState {
   customerId: number;
-  limitBytes: number;
+  limitBytes: number | null;
   timeLimit: {
     start: string;
     end: string;
@@ -44,7 +44,7 @@ interface MemberCardProps {
 
   handlers: {
     onSelect: (id: string) => void;
-    onLimitChange: (id: string, newGB: number) => void | Promise<void>;
+    onLimitChange: (id: string, newGB: number | null) => void | Promise<void>;
     onToggleTime: (id: string) => void;
     onTimeClick: (id: string, type: 'start' | 'end') => void;
     onToggleBlock?: (id: string) => void;
@@ -66,29 +66,39 @@ export default function MemberCard({
     MAX: 70,
   } as const;
 
-  const currentLimitGBFromProp = Math.round(bytesToGB(state.limitBytes));
-  const [localLimit, setLocalLimit] = useState(Math.max(LIMIT.MIN, currentLimitGBFromProp));
+  const isUnlimited = state.limitBytes === null;
+  const currentLimitGBFromProp =
+    state.limitBytes === null ? null : Math.round(bytesToGB(state.limitBytes));
+
+  const [localLimit, setLocalLimit] = useState(() => {
+    if (currentLimitGBFromProp !== null) return Math.max(LIMIT.MIN, currentLimitGBFromProp);
+    return LIMIT.MIN;
+  });
 
   React.useEffect(() => {
-    setLocalLimit(Math.max(LIMIT.MIN, currentLimitGBFromProp));
+    if (currentLimitGBFromProp !== null) {
+      setLocalLimit(Math.max(LIMIT.MIN, currentLimitGBFromProp));
+    }
   }, [currentLimitGBFromProp]);
 
   const sliderPercentage = ((localLimit - LIMIT.MIN) / (LIMIT.MAX - LIMIT.MIN)) * 100;
 
   const formattedUsed = formatSize(customer.monthlyUsedBytes).total;
-  const displayedTotalBytes = gbToBytes(localLimit);
-  const formattedTotal = formatSize(displayedTotalBytes).total;
+  const displayedTotalBytes = isUnlimited ? null : gbToBytes(localLimit);
+  const formattedTotal = isUnlimited ? '무제한' : formatSize(displayedTotalBytes || 0).total;
 
-  const usagePercent =
-    displayedTotalBytes === 0
+  const usagePercent = isUnlimited
+    ? 0
+    : !displayedTotalBytes
       ? 0
       : Math.min((customer.monthlyUsedBytes / displayedTotalBytes) * 100, 100);
 
-  const isDanger = usagePercent >= 80;
+  const isDanger = !isUnlimited && usagePercent >= 80;
 
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const isDisabled = isEditingByOther || state.isBlocked;
+  const isLimitInputDisabled = isDisabled || isUnlimited;
 
   const updateLimit = (newGB: number) => {
     const clampedGB = Math.max(LIMIT.MIN, Math.min(newGB, LIMIT.MAX));
@@ -119,7 +129,9 @@ export default function MemberCard({
             position: 'bottom-center',
           },
         );
-        setLocalLimit(Math.max(LIMIT.MIN, currentLimitGBFromProp));
+        setLocalLimit(
+          currentLimitGBFromProp !== null ? Math.max(LIMIT.MIN, currentLimitGBFromProp) : LIMIT.MIN,
+        );
       }
     }, 500);
   };
@@ -200,7 +212,10 @@ export default function MemberCard({
             {!isOwner ? (
               <div className="flex flex-col gap-2">
                 <PolicyBlock isBlocked={!!state.isBlocked} />
-                <PolicyLimit text={`${localLimit}GB`} disabled={state.isBlocked} />
+                <PolicyLimit
+                  text={isUnlimited ? '무제한' : `${localLimit}GB`}
+                  disabled={state.isBlocked}
+                />
                 <PolicyTime
                   isOn={!!state.timeLimit}
                   text={`${state.timeLimit?.start || '00:00'} ~ ${state.timeLimit?.end || '00:00'}`}
@@ -239,72 +254,106 @@ export default function MemberCard({
                 </div>
 
                 <div className="mx-0 border-t border-gray-100" />
-
                 {/* 데이터 사용 한도 입력 */}
                 <div className="flex w-full flex-col gap-4">
                   <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-2">
                       <ErrorOutlineIcon
-                        width={13}
-                        height={13}
                         className={cn(isDisabled ? 'text-gray-700' : 'text-primary')}
                       />
                       <span className={cn('text-body1-m', isDisabled && 'text-gray-500')}>
                         데이터 사용 한도
                       </span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!isEditingByOther && !state.isBlocked) {
+                          handlers.onLimitChange(idStr, isUnlimited ? localLimit : null);
+                        }
+                      }}
+                      role="switch"
+                      disabled={isDisabled}
+                      aria-checked={!isUnlimited}
+                      className={cn(
+                        'flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out',
+                        !isUnlimited
+                          ? isDisabled
+                            ? 'bg-gray-700'
+                            : 'bg-primary-500'
+                          : 'bg-gray-500',
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          'bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out',
+                          !isUnlimited ? 'translate-x-3' : 'translate-x-0',
+                        )}
+                      />
+                    </button>
+                    {/* 데이터 사용 한도 토글 */}
+                  </div>
+
+                  <div className="bg-background-sub flex w-full flex-col items-center gap-3 rounded-lg p-2 pb-4">
+                    <div className="flex w-full items-center justify-center gap-1">
                       <LimitInput
                         value={localLimit}
                         onChange={handleInputChange}
-                        disabled={isDisabled}
+                        disabled={isLimitInputDisabled}
                       />
-                      <span className={cn('text-body1-m', isDisabled && 'text-gray-500')}>GB</span>
-                    </div>
-                  </div>
-
-                  <div className="flex w-full flex-col">
-                    <div className="grid h-4 w-full items-center">
-                      <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
-                      <div
+                      <span
                         className={cn(
-                          'col-start-1 row-start-1 h-2 justify-self-start rounded-full transition-colors duration-300',
-                          isDisabled ? 'bg-gray-700' : 'bg-primary',
+                          'text-body1-m',
+                          isLimitInputDisabled ? 'text-gray-500' : 'text-brand-black',
                         )}
-                        style={{ width: `${sliderPercentage}%` }}
-                      />
-
-                      <div
-                        className="pointer-events-none col-start-1 row-start-1 flex w-full items-center"
-                        style={{ marginLeft: `${sliderPercentage}%` }}
                       >
+                        GB
+                      </span>
+                    </div>
+
+                    <div className="flex w-full flex-col gap-1 px-2">
+                      <div className="grid h-4 w-full items-center">
+                        <div className="col-start-1 row-start-1 h-2 w-full rounded-full bg-gray-100" />
                         <div
                           className={cn(
-                            'bg-brand-white h-4 w-4 -translate-x-1/2 rounded-full border-2 shadow-sm transition-colors duration-300',
-                            isDisabled ? 'border-gray-700' : 'border-primary',
+                            'col-start-1 row-start-1 h-2 justify-self-start rounded-l-full transition-colors duration-300',
+                            isLimitInputDisabled ? 'bg-gray-700' : 'bg-primary',
                           )}
+                          style={{ width: `${sliderPercentage}%` }}
+                        />
+
+                        <div
+                          className="pointer-events-none col-start-1 row-start-1 flex w-full items-center"
+                          style={{ marginLeft: `${sliderPercentage}%` }}
+                        >
+                          <div
+                            className={cn(
+                              'bg-brand-white h-4 w-4 -translate-x-1/2 rounded-full border-2 shadow-sm transition-colors duration-300',
+                              isLimitInputDisabled ? 'border-gray-700' : 'border-primary',
+                            )}
+                          />
+                        </div>
+                        <input
+                          type="range"
+                          min={LIMIT.MIN}
+                          max={LIMIT.MAX}
+                          step="1"
+                          value={localLimit}
+                          onChange={handleSliderChange}
+                          disabled={isLimitInputDisabled}
+                          className="col-start-1 row-start-1 h-full w-full cursor-pointer touch-none opacity-0"
+                          aria-label="데이터 한도 설정"
                         />
                       </div>
-                      <input
-                        type="range"
-                        min={LIMIT.MIN}
-                        max={LIMIT.MAX}
-                        step="1"
-                        value={localLimit}
-                        onChange={handleSliderChange}
-                        disabled={isDisabled}
-                        className="col-start-1 row-start-1 h-full w-full cursor-pointer touch-none opacity-0"
-                        aria-label="데이터 한도 설정"
-                      />
-                    </div>
-                    <div
-                      className={cn(
-                        'text-caption-m flex w-full justify-between',
-                        isDisabled ? 'text-gray-700' : 'text-gray-800',
-                      )}
-                    >
-                      <span>{LIMIT.MIN}GB</span>
-                      <span>{LIMIT.MAX}GB</span>
+                      <div
+                        className={cn(
+                          'text-caption-m flex w-full justify-between',
+                          isLimitInputDisabled ? 'text-gray-700' : 'text-gray-800',
+                        )}
+                      >
+                        <span>{LIMIT.MIN}GB</span>
+                        <span>{LIMIT.MAX}GB</span>
+                      </div>
                     </div>
                   </div>
                 </div>
