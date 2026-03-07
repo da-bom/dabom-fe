@@ -2,17 +2,14 @@
 
 import { useState } from 'react';
 
-import { MainBox, Table } from '@shared';
+import { Table } from '@shared';
 import { useGetPolicy } from 'src/api/policy/useGetPolicy';
-import FilterSegment from 'src/components/policy/FilterSegment';
-import { FilterType } from 'src/types/FilterType';
 import { formatPolicy } from 'src/utils/formatPolicy';
 
 const PolicyPage = () => {
-  const [selectedFilter, setSelectedFilter] = useState<FilterType>('ALL');
   const [page, setPage] = useState(0);
 
-  const { data, isLoading } = useGetPolicy(selectedFilter, page);
+  const { data, isLoading } = useGetPolicy(page);
 
   if (isLoading) {
     return <div className="p-10 text-center">데이터 로드 중...</div>;
@@ -25,17 +22,12 @@ const PolicyPage = () => {
   const policyRows = formatPolicy({ policies: data });
 
   return (
-    <div className="flex h-screen flex-col gap-5">
-      <FilterSegment
-        selectedFilter={selectedFilter}
-        setSelectedFilter={(filter) => {
-          setSelectedFilter(filter);
-          setPage(0);
-        }}
+    <div className="mt-6 flex h-screen flex-col">
+      <Table
+        headers={['정책', '권한', '기본값', '상태', '관리']}
+        rows={policyRows}
+        className="rounded-md"
       />
-      <MainBox className="relative h-full p-4">
-        <Table headers={['정책', '권한', '기본값', '상태', '관리']} rows={policyRows} />
-      </MainBox>
     </div>
   );
 };
