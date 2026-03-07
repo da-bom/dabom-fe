@@ -8,7 +8,7 @@ import {
   Face as FaceIcon,
   Home as HomeIcon,
   PersonOutlined as PersonIcon,
-  Send as SendMoneyIcon,
+  StarBorder as StarIcon,
 } from '@mui/icons-material';
 import { cn } from '@shared';
 
@@ -16,7 +16,7 @@ const navItems = [
   { label: '미션', href: '/mission', icon: ExtensionIcon },
   { label: '가족', href: '/family', icon: FaceIcon },
   { label: '홈', href: '/home', isHome: true },
-  { label: '조르기', href: '/appeal', icon: SendMoneyIcon },
+  { label: '어필', href: '/appeal', icon: StarIcon },
   { label: 'MY', href: '/mypage', icon: PersonIcon },
 ];
 
