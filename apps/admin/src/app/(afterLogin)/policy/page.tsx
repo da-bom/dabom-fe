@@ -1,5 +1,7 @@
 'use client';
 
+import { Suspense } from 'react';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Table } from '@shared';
@@ -7,19 +9,17 @@ import { useGetPolicy } from 'src/api/policy/useGetPolicy';
 import Pagination from 'src/components/common/Pagination';
 import { formatPolicy } from 'src/utils/formatPolicy';
 
-const PolicyPage = () => {
+const PolicyContent = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const currentPage = Number(searchParams.get('page')) || 0;
-
   const { data, isLoading } = useGetPolicy(currentPage);
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', newPage.toString());
-
     router.push(`${pathname}?${params.toString()}`);
   };
 
@@ -42,4 +42,10 @@ const PolicyPage = () => {
   );
 };
 
-export default PolicyPage;
+export default function PolicyPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center">페이지 로드 중...</div>}>
+      <PolicyContent />
+    </Suspense>
+  );
+}
