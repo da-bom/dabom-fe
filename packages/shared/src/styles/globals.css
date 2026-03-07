@@ -14,6 +14,7 @@
   --color-primary-50: #fff5fa;
   --color-primary-100: #ffeaf5;
   --color-primary-200: #ffe0ef;
+  --color-primary-emergency: #ffc0c1;
   --color-primary-300: #febedf;
   --color-primary: #fd2e97;
   --color-primary-500: #e42988;
@@ -38,6 +39,7 @@
   --color-background-base: #f0f1f3;
 
   --color-negative: #ff383c;
+  --color-positive: #11af58;
 
   /* shadow */
   --shadow-default: 0 0 10px 0 rgba(0, 0, 0, 0.1);

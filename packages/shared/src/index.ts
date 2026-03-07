@@ -6,6 +6,7 @@ export * from './constants/time';
 export * from './constants/colors';
 export * from './utils/http';
 export * from './assets/icons';
+export * from './components/Badge';
 export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
 export { default as DaboIcon } from './components/DaboIcon';
