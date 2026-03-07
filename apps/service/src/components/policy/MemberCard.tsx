@@ -3,6 +3,8 @@
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
+import { useRouter } from 'next/navigation';
+
 import {
   Badge,
   ChevronIcon,
@@ -58,6 +60,7 @@ export default function MemberCard({
   isEditingByOther = false,
   handlers,
 }: MemberCardProps) {
+  const router = useRouter();
   const idStr = customer.customerId.toString();
 
   const LIMIT = {
@@ -258,7 +261,7 @@ export default function MemberCard({
                   className="flex w-full items-center justify-end gap-1"
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.location.href = `/family/detail?customerId=${idStr}`;
+                    router.push(`/family/detail?customerId=${idStr}`);
                   }}
                 >
                   <span className="text-body2-m">더보기</span>

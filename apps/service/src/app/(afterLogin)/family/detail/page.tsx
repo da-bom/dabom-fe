@@ -41,9 +41,7 @@ function PolicyDetailContent() {
       </div>
     );
   }
-  const customer = customerId
-    ? familyData.customers.find((c) => c.customerId.toString() === customerId)
-    : familyData.customers[0];
+  const customer = familyData.customers.find((c) => c.customerId.toString() === customerId);
 
   if (!customer) {
     return (
