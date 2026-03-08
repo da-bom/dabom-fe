@@ -6,7 +6,7 @@ const AWARD_DATA = [
     subtitle: '데이터',
     title: '100MB',
     description: '유효기간: 2026.12.20',
-    type: 'data',
+    buttonText: '데이터 사용하기',
     isUsed: false,
   },
   {
@@ -14,7 +14,7 @@ const AWARD_DATA = [
     subtitle: '메가커피',
     title: '아메리카노(ICE)',
     description: '유효기간: 2026.12.20',
-    type: 'gifticon',
+    buttonText: '기프티콘 보기',
     isUsed: false,
   },
   {
@@ -22,7 +22,7 @@ const AWARD_DATA = [
     subtitle: 'CU',
     title: '5,000원권',
     description: '유효기간: 2026.12.20',
-    type: 'gifticon',
+    buttonText: '기프티콘 보기',
     isUsed: true,
   },
 ];
@@ -33,12 +33,13 @@ const AwardPage = () => {
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
         {AWARD_DATA.map((item) => (
           <Card
+            className="h-45"
             key={item.id}
             subtitle={item.subtitle}
             title={item.title}
             description={item.description}
-            type={item.type}
-            disabled={!item.isUsed}
+            buttonText={item.buttonText}
+            disabled={item.isUsed}
           />
         ))}
       </div>
