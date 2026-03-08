@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { ChevronIcon, DaboIcon, EditIcon, MainBox, cn } from '@shared';
+import { ChevronIcon, EditIcon } from '@icons';
+import { DaboIcon, Grade, MainBox, cn } from '@shared';
 
 const ProgressBar = dynamic(() => import('@service/components/common/ProgressBar'), {
   ssr: false,
@@ -82,6 +83,7 @@ const MyPage = () => {
               </button>
             </div>
             <span className="text-h2-m">{data.name}</span>
+            <Grade grade="VVIP" />
           </div>
         </div>
 
