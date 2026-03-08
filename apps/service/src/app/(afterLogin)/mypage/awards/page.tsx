@@ -9,10 +9,10 @@ import GifticonModal from '@service/components/mypage/GiftModal';
 
 const AwardPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const handleCardClick = (index: number) => {
-    setSelectedIndex(index);
+  const handleCardClick = (id: number) => {
+    setSelectedId(id);
     setIsModalOpen(true);
   };
 
@@ -36,7 +36,7 @@ const AwardPage = () => {
       <GifticonModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        data={selectedIndex !== null ? GIFTICON[selectedIndex] : null}
+        data={selectedId !== null ? GIFTICON[selectedId] : null}
       />
     </div>
   );

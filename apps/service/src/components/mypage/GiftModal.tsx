@@ -4,7 +4,7 @@ import { ModalLayout } from '@shared';
 
 interface GifticonModalProps {
   isOpen: boolean;
-  onClose: (isOpen: boolean) => void;
+  onClose: () => void;
   data: {
     imgUrl: string;
     brand: string;
@@ -23,7 +23,7 @@ const GifticonModal = ({ isOpen, onClose, data }: GifticonModalProps) => {
   );
 
   return (
-    <ModalLayout isOpen={isOpen} onClose={() => onClose(false)}>
+    <ModalLayout isOpen={isOpen} onClose={onClose}>
       {!data ? (
         renderErrorView()
       ) : (
