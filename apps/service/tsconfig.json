@@ -5,6 +5,7 @@
     "paths": {
       "@service/components/*": ["./src/components/*"],
       "@service/utils/*": ["./src/utils/*"],
+      "@service/data/*": ["./src/data/*"],
       "@shared": ["../../packages/shared/src/index.ts"],
       "@shared/type/*": ["../../packages/shared/src/types/*"],
       "@shared/data/*": ["../../packages/shared/src/data/*"],

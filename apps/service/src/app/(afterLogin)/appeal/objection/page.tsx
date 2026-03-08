@@ -9,10 +9,10 @@ import { Button, DropDown } from '@shared';
 export default function ObjectionPage() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('데이터 한도 제한');
+  const [selectedOption, setSelectedOption] = useState('데이터 한도');
 
   // 예시 옵션 데이터
-  const options = ['데이터 한도 제한', '긴급 요청'];
+  const options = ['데이터 한도', '긴급 요청'];
 
   return (
     <main className="mx-auto mt-39.5 flex w-full flex-col items-center px-5">

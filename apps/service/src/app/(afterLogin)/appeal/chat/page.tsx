@@ -1,52 +1,57 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
 import { Block as BlockIcon, CheckCircle as CheckCircleIcon } from '@mui/icons-material';
-import { Badge } from '@shared';
+import { Badge, formatSize } from '@shared';
 
 import { AppealInputBar, ChatBubble, PolicySummaryCard } from '@service/components/appeal';
+import { mockNegotiations } from '@service/data/negotiations';
 import { getCurrentUserRole } from '@service/utils/auth';
+import { formatChatTime } from '@service/utils/formatTime';
 
 export default function AppealChatPage() {
   const searchParams = useSearchParams();
-  const selectedPolicy = searchParams.get('policy') || '데이터 한도 제한';
+  const negotiationId = Number(searchParams.get('id'));
+
+  // ObjectionPage에서 넘어온 새로운 입력값들
+  const selectedPolicy = searchParams.get('policy') || '데이터 한도';
+  const inputAmount = searchParams.get('amount');
+  const inputReason = searchParams.get('reason');
+
   const [inputValue, setInputValue] = useState('');
 
-  const [status, setStatus] = useState<'pending' | 'approved' | 'rejected'>('pending');
-  const rejectionReason = '너무 많다. 5만 해라.';
+  const initialData = useMemo(() => {
+    return mockNegotiations.find((n) => n.negotiationId === negotiationId) || mockNegotiations[0];
+  }, [negotiationId]);
+
+  const urlStatus = searchParams.get('status')?.toLowerCase() as
+    | 'pending'
+    | 'approved'
+    | 'rejected'
+    | 'cancelled';
+  const [status, setStatus] = useState<'pending' | 'approved' | 'rejected' | 'cancelled'>(
+    urlStatus ||
+      (initialData.status.toLowerCase() as 'pending' | 'approved' | 'rejected' | 'cancelled'),
+  );
+
+  const displayPolicyText = inputAmount
+    ? `정책: ${selectedPolicy}: ${inputAmount}GB`
+    : `정책: ${initialData.type === 'EMERGENCY' ? '긴급 요청' : '데이터 한도'}: ${formatSize(initialData.requestedBytes).total}`;
+
+  const displayReason = inputReason || initialData.reason;
 
   const userRole = getCurrentUserRole();
   const isOwner = userRole === 'OWNER';
-
-  const messages = [
-    {
-      senderName: '김철수',
-      message: '10은 너무 많지 않니 5만 해라.',
-      time: '2026. 02. 21 14:32',
-      isMe: false,
-    },
-    {
-      senderName: '나',
-      message: '네 알겠어요. 대신 다음에 필요해지면 또 보내주세요.',
-      time: '2026. 02. 21 14:32',
-      isMe: true,
-    },
-    {
-      senderName: '김철수',
-      message: '그래',
-      time: '2026. 02. 21 14:32',
-      isMe: false,
-    },
-  ];
 
   return (
     <div className="flex w-full flex-col">
       <main className="flex w-full flex-col items-center gap-4 px-5 pt-5 pb-24">
         <div className="sticky top-0 z-10 flex w-full flex-col items-center gap-4 pb-2">
-          {status !== 'pending' && (
+          {/* 상태 배지 */}
+          {status !== 'pending' && status !== 'cancelled' && (
             <Badge
               color={status === 'rejected' ? 'rejected' : 'approved'}
               size="md_fixed"
@@ -62,16 +67,16 @@ export default function AppealChatPage() {
           )}
 
           <PolicySummaryCard
-            policyText={`정책: ${selectedPolicy}`}
+            policyText={displayPolicyText}
             reasonText={
               status === 'rejected' ? (
                 <>
-                  요청 사유: 인강 들어야 해요.
+                  요청 사유: {displayReason}
                   <br />
-                  거절 사유: {rejectionReason}
+                  거절 사유: 이번 달 사용량이 많아서 거절할게.
                 </>
               ) : (
-                '요청 사유: 인강 들어야 해요.'
+                `요청 사유: ${displayReason}`
               )
             }
             isOwner={status === 'pending' && isOwner}
@@ -80,17 +85,18 @@ export default function AppealChatPage() {
           />
         </div>
 
-        {/* 채팅 메시지 목록 */}
+        {/* 채팅 메시지 목록 (새로운 요청 시에는 비어있을 수 있음) */}
         <div className="flex w-full flex-col gap-4">
-          {messages.map((msg, index) => (
-            <ChatBubble
-              key={index}
-              senderName={msg.senderName}
-              message={msg.message}
-              time={msg.time}
-              isMe={msg.isMe}
-            />
-          ))}
+          {!inputReason &&
+            initialData.messages.map((msg) => (
+              <ChatBubble
+                key={msg.messageId}
+                senderName={msg.author.name}
+                message={msg.message}
+                time={formatChatTime(msg.createdAt)}
+                isMe={msg.author.name === '김민지'}
+              />
+            ))}
         </div>
       </main>
 
