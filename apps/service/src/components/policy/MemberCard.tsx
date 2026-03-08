@@ -3,18 +3,8 @@
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-import {
-  Badge,
-  ChevronIcon,
-  DoNotIcon,
-  ErrorOutlineIcon,
-  TimeIcon,
-  bytesToGB,
-  cn,
-  formatPhoneNumber,
-  formatSize,
-  gbToBytes,
-} from '@shared';
+import { ChevronIcon, DoNotIcon, ErrorOutlineIcon, TimeIcon } from '@icons';
+import { Badge, bytesToGB, cn, formatPhoneNumber, formatSize, gbToBytes } from '@shared';
 
 import LimitInput from './LimitInput';
 
@@ -68,7 +58,7 @@ export default function MemberCard({
 
   React.useEffect(() => {
     setLocalLimit(Math.max(LIMIT.MIN, currentLimitGBFromProp));
-  }, [currentLimitGBFromProp]);
+  }, [LIMIT.MIN, currentLimitGBFromProp]);
 
   const sliderPercentage = ((localLimit - LIMIT.MIN) / (LIMIT.MAX - LIMIT.MIN)) * 100;
 
