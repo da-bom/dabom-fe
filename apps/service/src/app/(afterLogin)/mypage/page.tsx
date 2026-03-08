@@ -18,18 +18,15 @@ const MyPage = () => {
       <MainBox className="flex w-full flex-col gap-7 rounded-2xl px-5 py-4">
         <MyInfo data={data} />
       </MainBox>
-
-      <MainBox className="flex h-14 cursor-pointer items-center justify-between rounded-2xl px-4">
-        <span>내가 받은 보상 보기</span>
+      <MainBox className="flex cursor-pointer items-center justify-between rounded-2xl p-4">
+        <span className="text-body1-m">내가 받은 보상 보기</span>
         <ChevronIcon className="text-gray-800" sx={{ width: 16 }} />
       </MainBox>
-      <MainBox className="flex h-14 cursor-pointer items-center justify-between rounded-2xl px-4">
-        <span>이용 약관</span>
+      <MainBox className="flex cursor-pointer items-center justify-between rounded-2xl p-4">
+        <span className="text-body1-m">이용 약관</span>
         <ChevronIcon className="text-gray-800" sx={{ width: 16 }} />
       </MainBox>
-      <footer className="text-body2-m ml-2 flex flex-col items-start gap-1 text-gray-800 underline">
-        <button>로그아웃</button>
-      </footer>
+      <button className="text-body2-m ml-2 flex text-gray-800 underline">로그아웃</button>
     </div>
   );
 };
