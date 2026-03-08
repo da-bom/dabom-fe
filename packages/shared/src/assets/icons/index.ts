@@ -23,6 +23,8 @@ import EditIcon from '@mui/icons-material/ModeEdit';
 import EmergencyIcon from '@mui/icons-material/Emergency';
 import CloseIcon from "@mui/icons-material/Close";
 import FaceIcon from '@mui/icons-material/Face';
+import PuzzleIcon from '@mui/icons-material/ExtensionOutlined';
+import ShineIcon from '@mui/icons-material/AutoAwesomeOutlined';
 
 export {
   HomeIcon,
@@ -50,4 +52,6 @@ export {
   EmergencyIcon,
   CloseIcon,
   FaceIcon,
+  PuzzleIcon,
+  ShineIcon,
 };
