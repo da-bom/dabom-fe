@@ -4,6 +4,8 @@ import React from 'react';
 
 import { DoNotIcon, ErrorOutlineIcon, MainBox, TimeIcon, cn } from '@shared';
 
+import { Toggle } from '../common/Toggle';
+
 interface PolicyItemProps {
   icon: React.ReactNode;
   label: string;
@@ -34,27 +36,7 @@ export const PolicyBlock = ({ isBlocked, onToggle }: BlockProps) => (
   <PolicyItem
     icon={<DoNotIcon />}
     label="데이터 사용 차단"
-    value={
-      <div
-        className={cn(
-          'relative flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out',
-          isBlocked ? 'bg-primary-500' : 'bg-gray-500',
-        )}
-      >
-        <button
-          type="button"
-          role="switch"
-          aria-checked={isBlocked}
-          onClick={onToggle}
-          disabled={!onToggle}
-          className={cn(
-            'bg-brand-white h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out',
-            isBlocked ? 'translate-x-3' : 'translate-x-0',
-            !onToggle && 'cursor-default',
-          )}
-        />
-      </div>
-    }
+    value={<Toggle isChecked={isBlocked} onToggle={onToggle ?? (() => {})} disabled={!onToggle} />}
   />
 );
 

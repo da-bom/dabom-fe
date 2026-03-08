@@ -2,6 +2,8 @@ import React from 'react';
 
 import { TimeIcon, cn } from '@shared';
 
+import { Toggle } from '../common/Toggle';
+
 interface PolicyTimeOwnerProps {
   isDisabled: boolean;
   timeLimit: {
@@ -30,24 +32,7 @@ export function PolicyTimeOwner({
             <span className={cn('text-body1-m', isDisabled && 'text-gray-500')}>시간 제한</span>
           </div>
 
-          <button
-            type="button"
-            onClick={onToggleTime}
-            role="switch"
-            disabled={isDisabled}
-            aria-checked={!!timeLimit}
-            className={cn(
-              'flex h-4 w-7 items-center rounded-full p-[1px] transition-colors duration-200 ease-in-out',
-              timeLimit ? (isDisabled ? 'bg-gray-700' : 'bg-primary-500') : 'bg-gray-500',
-            )}
-          >
-            <div
-              className={cn(
-                'bg-brand-white shadow-default h-3.5 w-3.5 rounded-full transition-transform duration-200 ease-in-out',
-                timeLimit ? 'translate-x-3' : 'translate-x-0',
-              )}
-            />
-          </button>
+          <Toggle isChecked={!!timeLimit} onToggle={onToggleTime} disabled={isDisabled} />
         </div>
 
         <div className="bg-background-sub flex h-14 w-full flex-col items-center justify-center gap-2 rounded-lg py-4">
