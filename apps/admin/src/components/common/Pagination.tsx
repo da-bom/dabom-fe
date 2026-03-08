@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
   return (
     <div className="flex items-center justify-center gap-2 py-4">
       <button
-        onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+        onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className="cursor-pointer text-gray-700 disabled:opacity-30"
       >
@@ -39,7 +39,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
       </div>
 
       <button
-        onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+        onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className="cursor-pointer text-gray-700 disabled:opacity-30"
       >
