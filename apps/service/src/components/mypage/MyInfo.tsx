@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic';
 import { EditIcon } from '@icons';
 import { DaboIcon, Grade, cn } from '@shared';
 
+import PolicySimple from '../policy/PolicySimple';
+
 const ProgressBar = dynamic(() => import('@service/components/common/ProgressBar'), {
   ssr: false,
 });
@@ -100,6 +102,12 @@ const MyInfo = ({
         <ProgressBar value={usagePercent} />
       </div>
       <div className="border-t border-gray-100" />
+
+      <PolicySimple>
+        <PolicySimple.Block isBlocked />
+        <PolicySimple.Limit text="-" disabled />
+        <PolicySimple.Time text="-" isOn disabled />
+      </PolicySimple>
     </>
   );
 };

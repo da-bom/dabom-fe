@@ -35,7 +35,7 @@ interface BlockProps {
 
 export const PolicyBlock = ({ isBlocked, onToggle }: BlockProps) => (
   <PolicyItem
-    icon={<DoNotIcon />}
+    icon={<DoNotIcon sx={{ width: 16 }} />}
     label="데이터 사용 차단"
     value={<Toggle isChecked={isBlocked} onToggle={onToggle ?? (() => {})} disabled={!onToggle} />}
   />
@@ -43,7 +43,7 @@ export const PolicyBlock = ({ isBlocked, onToggle }: BlockProps) => (
 
 export const PolicyLimit = ({ text, disabled }: { text: string; disabled?: boolean }) => (
   <PolicyItem
-    icon={<ErrorOutlineIcon />}
+    icon={<ErrorOutlineIcon sx={{ width: 16 }} />}
     label="데이터 사용 한도"
     disabled={disabled || text === '-'}
     value={
@@ -69,7 +69,7 @@ export const PolicyTime = ({
   disabled?: boolean;
 }) => (
   <PolicyItem
-    icon={<TimeIcon />}
+    icon={<TimeIcon sx={{ width: 16 }} />}
     label="시간 제한"
     disabled={disabled || !isOn}
     value={
