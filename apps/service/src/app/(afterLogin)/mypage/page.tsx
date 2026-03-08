@@ -82,8 +82,10 @@ const MyPage = () => {
                 />
               </button>
             </div>
-            <span className="text-h2-m">{data.name}</span>
-            <Grade grade="VVIP" />
+            <div className="flex gap-1">
+              <span className="text-h2-m">{data.name}</span>
+              <Grade grade="NORMAL" />
+            </div>
           </div>
         </div>
 

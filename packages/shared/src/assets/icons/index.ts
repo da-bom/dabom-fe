@@ -20,6 +20,7 @@ import ResetIcon from '@mui/icons-material/Replay'
 import SearchIcon from '@mui/icons-material/Search'
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/ModeEdit';
+import EmergencyIcon from '@mui/icons-material/Emergency';
 
 export {
   HomeIcon,
@@ -43,5 +44,6 @@ export {
   ResetIcon,
   SearchIcon,
   CancelIcon,
-  EditIcon
+  EditIcon,
+  EmergencyIcon,
 };
