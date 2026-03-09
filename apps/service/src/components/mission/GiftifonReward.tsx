@@ -9,7 +9,7 @@ const GifticonReward = ({
   value: number | null;
   onSelect: (v: number) => void;
 }) => (
-  <div className="animate-in fade-in flex flex-col gap-5 duration-300">
+  <div className="animate-in fade-in mt-10 flex flex-col gap-5 duration-300">
     <p className="flex flex-col gap-2">
       <span className="text-h2-m">
         보상으로 제공될 <br />

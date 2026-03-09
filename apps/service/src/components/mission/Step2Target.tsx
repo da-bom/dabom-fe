@@ -39,7 +39,7 @@ const Step2Target = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
                 className={cn(
                   'h-14 rounded-2xl border transition-all',
                   isSelected
-                    ? 'bg-primary-100 text-brand-dark border-gray-500 font-bold'
+                    ? 'bg-primary-100 text-brand-dark border-gray-500'
                     : 'border-gray-200 bg-white text-gray-700',
                 )}
               >

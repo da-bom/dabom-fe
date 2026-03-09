@@ -5,7 +5,7 @@ export const missionSchema = z.object({
   targetId: z.number(),
   reward: z.discriminatedUnion('type', [
     z.object({
-      type: z.literal('DATA_COUPON'),
+      type: z.literal('DATA'),
       value: z.number(),
     }),
     z.object({

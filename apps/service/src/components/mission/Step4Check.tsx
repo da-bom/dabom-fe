@@ -22,11 +22,11 @@ const Step4Check = ({ prevStep }: { prevStep: () => void }) => {
           <p className="text-body2-m text-gray-700">생성된 미션은 수정이나 삭제가 불가능 합니다.</p>
         </header>
 
-        <MainBox className="flex justify-center rounded-2xl p-4 text-center">
+        <MainBox className="flex justify-center rounded-2xl border-gray-200 p-4 text-center">
           <p className="text-body1-m">
             {title} 완료 시 <br />
             {targetId} 에게 <br />
-            <span className="text-primary-600 font-bold">{reward ? reward.value : '보상'}</span>
+            <span className="text-primary-600">{reward ? reward.value : '보상'}</span>
             을(를) 지급합니다.
           </p>
         </MainBox>

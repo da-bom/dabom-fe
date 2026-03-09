@@ -12,13 +12,13 @@ import GifticonReward from './GiftifonReward';
 const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: () => void }) => {
   const { setValue, watch } = useFormContext<MissionForm>();
 
-  const selectedRewardType = watch('reward.type') as 'DATA_COUPON' | 'GIFTICON' | undefined;
+  const selectedRewardType = watch('reward.type') as 'DATA' | 'GIFTICON' | undefined;
   const selectedRewardValue = watch('reward.value');
 
   const detailRef = useRef<HTMLDivElement>(null);
 
   const handleTypeSelect = (id: string) => {
-    setValue('reward.type', id as 'DATA_COUPON' | 'GIFTICON', { shouldValidate: true });
+    setValue('reward.type', id as 'DATA' | 'GIFTICON', { shouldValidate: true });
     setValue('reward.value', 0);
   };
 
@@ -50,11 +50,14 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
                 <button
                   key={id}
                   type="button"
-                  onClick={() => handleTypeSelect(id)}
+                  onClick={() => {
+                    handleTypeSelect(id);
+                    console.log(label);
+                  }}
                   className={cn(
                     'h-14 rounded-2xl border transition-all',
                     selectedRewardType === id
-                      ? 'bg-primary-100 text-brand-dark border-gray-500 font-bold'
+                      ? 'bg-primary-100 text-brand-dark border-gray-500'
                       : 'border-gray-200 bg-white text-gray-700',
                   )}
                 >
@@ -64,8 +67,8 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
             </div>
           </section>
 
-          <section ref={detailRef} className="mt-10">
-            {selectedRewardType === 'DATA_COUPON' && (
+          <section ref={detailRef}>
+            {selectedRewardType === 'DATA' && (
               <DataReward
                 value={typeof selectedRewardValue === 'string' ? selectedRewardValue : null}
                 onSelect={handleValueSelect}
