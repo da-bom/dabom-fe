@@ -1,21 +1,24 @@
-export const mockNegotiations = [
+import { AppealSummary } from '../api/appeal/schema';
+
+// 이의제기 목록 조회 (/appeals) 응답 데이터 구조에 맞춤
+export const mockAppealList: AppealSummary[] = [
   {
     appealId: 1,
     type: 'NORMAL',
     policyAssignmentId: 55,
     requesterId: 12346,
-    requesterName: '김민지',
+    requesterName: '자녀1',
     requestReason: '인강을 들어야 합니다',
-    desiredRules: { limitBytes: 5368709120 },
+    desiredRules: { limitBytes: 524288000 },
     status: 'PENDING',
-    createdAt: '2026-03-03T10:30:00Z',
+    createdAt: '2024-01-15T10:30:00Z',
   },
   {
     appealId: 2,
     type: 'NORMAL',
     policyAssignmentId: 56,
     requesterId: 12346,
-    requesterName: '김민지',
+    requesterName: '자녀1',
     requestReason: '과제 업로드가 필요해요',
     desiredRules: { limitBytes: 2147483648 },
     status: 'APPROVED',
@@ -26,21 +29,10 @@ export const mockNegotiations = [
     type: 'NORMAL',
     policyAssignmentId: 57,
     requesterId: 12347,
-    requesterName: '김지훈',
+    requesterName: '자녀2',
     requestReason: '게임 업데이트를 하고 싶어요',
     desiredRules: { limitBytes: 10737418240 },
     status: 'REJECTED',
     createdAt: '2026-03-01T19:30:00Z',
-  },
-  {
-    appealId: 4,
-    type: 'EMERGENCY',
-    policyAssignmentId: 58,
-    requesterId: 12346,
-    requesterName: '김민지',
-    requestReason: '지도 앱 사용을 위한 긴급 데이터',
-    desiredRules: { limitBytes: 209715200 },
-    status: 'APPROVED',
-    createdAt: '2026-03-01T08:01:00Z',
   },
 ];

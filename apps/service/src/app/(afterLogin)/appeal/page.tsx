@@ -9,7 +9,7 @@ import { Button, formatSize } from '@shared';
 
 import { AppealRequestCard, AppealStatus, FilterSegment } from 'src/components/appeal';
 import { APPEAL_TYPE_LABEL } from 'src/constants/appeal';
-import { mockNegotiations } from 'src/data/negotiations';
+import { mockAppealList } from 'src/data/appealList';
 import { getCurrentUserRole } from 'src/utils/auth';
 
 const AppealPageContent = () => {
@@ -19,7 +19,7 @@ const AppealPageContent = () => {
   const userRole = getCurrentUserRole();
   const isOwner = userRole === 'OWNER';
 
-  const filteredItems = mockNegotiations.filter((item) => {
+  const filteredItems = mockAppealList.filter((item) => {
     if (activeTab === 'progress') return item.status === 'PENDING';
     if (activeTab === 'completed') return item.status !== 'PENDING';
     return true;
