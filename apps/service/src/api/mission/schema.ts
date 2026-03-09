@@ -6,11 +6,11 @@ export const missionSchema = z.object({
   reward: z.discriminatedUnion('type', [
     z.object({
       type: z.literal('DATA'),
-      value: z.number(),
+      value: z.string(),
     }),
     z.object({
       type: z.literal('GIFTICON'),
-      value: z.string(),
+      value: z.number(),
     }),
   ]),
 });

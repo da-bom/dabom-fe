@@ -8,7 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { MissionForm, missionSchema } from 'src/api/mission/schema';
-import Step1Ttile from 'src/components/mission/Step1Title';
+import Step1Title from 'src/components/mission/Step1Title';
 import Step2Target from 'src/components/mission/Step2Target';
 import Step3Reward from 'src/components/mission/Step3Reward';
 import Step4Check from 'src/components/mission/Step4Check';
@@ -35,7 +35,7 @@ function MissionCreateForm() {
     <FormProvider {...methods}>
       <div className="flex flex-col pb-24">
         <div className="flex-1 px-5 pt-10">
-          {currentStep === 1 && <Step1Ttile nextStep={nextStep} />}
+          {currentStep === 1 && <Step1Title nextStep={nextStep} />}
           {currentStep === 2 && <Step2Target prevStep={prevStep} nextStep={nextStep} />}
           {currentStep === 3 && <Step3Reward prevStep={prevStep} nextStep={nextStep} />}
           {currentStep === 4 && <Step4Check prevStep={prevStep} />}

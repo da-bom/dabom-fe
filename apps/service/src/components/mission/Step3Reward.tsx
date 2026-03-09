@@ -50,10 +50,7 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
                 <button
                   key={id}
                   type="button"
-                  onClick={() => {
-                    handleTypeSelect(id);
-                    console.log(label);
-                  }}
+                  onClick={() => handleTypeSelect(id)}
                   className={cn(
                     'h-14 rounded-2xl border transition-all',
                     selectedRewardType === id

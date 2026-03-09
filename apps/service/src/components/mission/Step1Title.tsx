@@ -4,7 +4,7 @@ import { Button, Input } from '@shared';
 
 import { MissionForm } from 'src/api/mission/schema';
 
-const Step1Ttile = ({ nextStep }: { nextStep: () => void }) => {
+const Step1Title = ({ nextStep }: { nextStep: () => void }) => {
   const {
     register,
     watch,
@@ -35,13 +35,7 @@ const Step1Ttile = ({ nextStep }: { nextStep: () => void }) => {
 
       <footer className="fixed right-0 bottom-25 left-0 mx-5">
         <div className="mx-auto">
-          <Button
-            size="lg"
-            color="dark"
-            isFullWidth
-            onClick={nextStep}
-            disabled={!titleValue || titleValue.length > 20}
-          >
+          <Button size="lg" color="dark" isFullWidth onClick={nextStep} disabled={!titleValue}>
             다음
           </Button>
         </div>
@@ -50,4 +44,4 @@ const Step1Ttile = ({ nextStep }: { nextStep: () => void }) => {
   );
 };
 
-export default Step1Ttile;
+export default Step1Title;
