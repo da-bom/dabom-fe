@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 import { Button, formatSize } from '@shared';
 
@@ -12,6 +13,7 @@ import { mockNegotiations } from 'src/data/negotiations';
 import { getCurrentUserRole } from 'src/utils/auth';
 
 const AppealPageContent = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'progress' | 'completed'>('progress');
 
   const userRole = getCurrentUserRole();
@@ -44,6 +46,11 @@ const AppealPageContent = () => {
                 reason={item.requestReason}
                 status={uiStatus}
                 requesterName={isOwner ? item.requesterName : undefined}
+                onClick={() => {
+                  router.push(
+                    `/appeal/chat?policy=${encodeURIComponent(policyType)}&id=${item.appealId}&status=${item.status}`,
+                  );
+                }}
               />
             );
           })}
@@ -52,7 +59,7 @@ const AppealPageContent = () => {
 
       {!isOwner && (
         <div className="fixed bottom-24 left-0 flex w-full justify-center px-5">
-          <Button size="lg" color="dark">
+          <Button size="lg" color="dark" onClick={() => router.push('/appeal/objection')}>
             이의 제기하기
           </Button>
         </div>
