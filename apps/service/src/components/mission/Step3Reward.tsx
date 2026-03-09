@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button, cn } from '@shared';
 
@@ -11,10 +11,21 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
   const [selectedRewardType, setSelectedRewardType] = useState<string | null>(null);
   const [selectedRewardValue, setSelectedRewardValue] = useState<number | null>(null);
 
+  const detailRef = useRef<HTMLDivElement>(null);
+
   const handleTypeSelect = (id: string) => {
     setSelectedRewardType(id);
     setSelectedRewardValue(null);
   };
+
+  useEffect(() => {
+    if (selectedRewardType && detailRef.current) {
+      detailRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [selectedRewardType]);
 
   return (
     <div className="flex flex-col">
@@ -34,7 +45,7 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
                   className={cn(
                     'h-14 rounded-2xl border transition-all',
                     selectedRewardType === id
-                      ? 'bg-primary-100 border-gray-500'
+                      ? 'bg-primary-100 text-brand-dark border-gray-500 font-bold'
                       : 'border-gray-200 bg-white text-gray-700',
                   )}
                 >
@@ -44,7 +55,7 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
             </div>
           </section>
 
-          <section>
+          <section ref={detailRef} className="mt-10">
             {selectedRewardType === 'DATA' && (
               <DataReward value={selectedRewardValue} onSelect={setSelectedRewardValue} />
             )}
