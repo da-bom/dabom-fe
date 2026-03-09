@@ -1,7 +1,7 @@
 import { MainBox } from '@shared';
 import dayjs from 'dayjs';
 
-import StatusIcon from '@service/components/common/StatusIcon';
+import StatusIcon from 'src/components/common/StatusIcon';
 
 const HistoryItem = ({
   mission,

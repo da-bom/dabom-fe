@@ -1,4 +1,4 @@
-export const MISSION_LIST_MEMBER = [
+export const MISSION_LIST = [
   {
     id: 1,
     title: '엄마한테 안마 15분 하기',

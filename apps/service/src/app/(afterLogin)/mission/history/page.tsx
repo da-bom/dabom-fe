@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
-import { MISSION_HISTORY } from 'src/data/mission';
 
-import DateDivider from '@service/components/mission/history/DateDevider';
-import HistoryItem from '@service/components/mission/history/HistoryItem';
+import DateDivider from 'src/components/mission/history/DateDevider';
+import HistoryItem from 'src/components/mission/history/HistoryItem';
+import { MISSION_HISTORY } from 'src/data/mission';
 
 const MissionHistoryPage = () => {
   return (
