@@ -16,6 +16,11 @@ const navItems = [
 const NavBar = () => {
   const pathname = usePathname();
 
+  const HIDE_NAVBAR_PATHS = ['/appeal/chat'];
+  if (HIDE_NAVBAR_PATHS.some((path) => pathname.startsWith(path))) {
+    return null;
+  }
+
   return (
     <nav className="fixed right-0 bottom-0 left-0 z-50 flex justify-center">
       <div className="relative h-19 w-full">
