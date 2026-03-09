@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 
 import { Button, DropDown } from '@shared';
 
+import { APPEAL_TYPE_LABEL } from 'src/constants/appeal';
+
 export default function ObjectionPage() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('데이터 한도');
+  const [selectedOption, setSelectedOption] = useState<string>(APPEAL_TYPE_LABEL.NORMAL);
 
-  const options = ['데이터 한도', '긴급 요청'];
+  const options = Object.values(APPEAL_TYPE_LABEL);
 
   return (
     <main className="mx-auto mt-27.5 flex w-full flex-col items-center px-5">
