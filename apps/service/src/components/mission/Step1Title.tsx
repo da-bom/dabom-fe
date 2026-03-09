@@ -30,7 +30,7 @@ const Step1Title = ({ nextStep }: { nextStep: () => void }) => {
           maxLength={20}
         />
 
-        {errors.title && <span className="text-sm text-red-500">{errors.title.message}</span>}
+        {errors.title && <span className="text-negative">{errors.title.message}</span>}
       </div>
 
       <footer className="fixed right-0 bottom-25 left-0 mx-5">

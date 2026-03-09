@@ -19,14 +19,14 @@ const Step4Check = ({ prevStep }: { prevStep: () => void }) => {
       <div className="flex flex-col gap-10 pt-10">
         <header className="flex flex-col gap-2">
           <h2 className="text-h2-m">미션 내용과 보상을 확인해 주세요.</h2>
-          <p className="text-body2-m text-gray-700">생성된 미션은 수정이나 삭제가 불가능 합니다.</p>
+          <p className="text-body2-m text-gray-700">생성된 미션은 수정이나 삭제가 불가능합니다.</p>
         </header>
 
         <MainBox className="flex justify-center rounded-2xl border-gray-200 p-4 text-center">
           <p className="text-body1-m">
             {title} 완료 시 <br />
             {targetId} 에게 <br />
-            <span className="text-primary-600">{reward ? reward.value : '보상'}</span>
+            <span className="text-primary">{reward ? reward.value : '보상'}</span>
             을(를) 지급합니다.
           </p>
         </MainBox>
