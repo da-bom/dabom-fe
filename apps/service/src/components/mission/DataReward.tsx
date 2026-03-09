@@ -6,8 +6,8 @@ const DataReward = ({
   value,
   onSelect,
 }: {
-  value: number | null;
-  onSelect: (v: number) => void;
+  value: string | null;
+  onSelect: (v: string) => void;
 }) => (
   <div className="animate-in fade-in flex flex-col gap-3 duration-300">
     <p className="flex flex-col gap-2">
@@ -18,10 +18,10 @@ const DataReward = ({
       {DATA.map((option) => (
         <button
           key={option.id}
-          onClick={() => onSelect(option.value)}
+          onClick={() => onSelect(option.label)}
           className={cn(
             'h-14 rounded-2xl border transition-all',
-            value === option.value
+            value === option.label
               ? 'bg-primary-100 border-gray-500'
               : 'border-gray-200 bg-white text-gray-700',
           )}

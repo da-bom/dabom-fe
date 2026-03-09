@@ -1,21 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Button, cn } from '@shared';
 
+import { MissionForm } from 'src/api/mission/schema';
 import { REWARD_TYPES } from 'src/types/rewardType';
 
 import DataReward from './DataReward';
 import GifticonReward from './GiftifonReward';
 
 const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: () => void }) => {
-  const [selectedRewardType, setSelectedRewardType] = useState<string | null>(null);
-  const [selectedRewardValue, setSelectedRewardValue] = useState<number | null>(null);
+  const { setValue, watch } = useFormContext<MissionForm>();
+
+  const selectedRewardType = watch('reward.type') as 'DATA_COUPON' | 'GIFTICON' | undefined;
+  const selectedRewardValue = watch('reward.value');
 
   const detailRef = useRef<HTMLDivElement>(null);
 
   const handleTypeSelect = (id: string) => {
-    setSelectedRewardType(id);
-    setSelectedRewardValue(null);
+    setValue('reward.type', id as 'DATA_COUPON' | 'GIFTICON', { shouldValidate: true });
+    setValue('reward.value', 0);
+  };
+
+  const handleValueSelect = (value: number | string) => {
+    setValue('reward.value', value, { shouldValidate: true });
   };
 
   useEffect(() => {
@@ -28,7 +36,7 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
   }, [selectedRewardType]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-40">
       <main className="flex-1 pt-10">
         <div className="flex flex-col gap-40">
           <section className="flex flex-col gap-7">
@@ -41,6 +49,7 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
               {REWARD_TYPES.map(({ id, label }) => (
                 <button
                   key={id}
+                  type="button"
                   onClick={() => handleTypeSelect(id)}
                   className={cn(
                     'h-14 rounded-2xl border transition-all',
@@ -56,11 +65,17 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
           </section>
 
           <section ref={detailRef} className="mt-10">
-            {selectedRewardType === 'DATA' && (
-              <DataReward value={selectedRewardValue} onSelect={setSelectedRewardValue} />
+            {selectedRewardType === 'DATA_COUPON' && (
+              <DataReward
+                value={typeof selectedRewardValue === 'string' ? selectedRewardValue : null}
+                onSelect={handleValueSelect}
+              />
             )}
             {selectedRewardType === 'GIFTICON' && (
-              <GifticonReward value={selectedRewardValue} onSelect={setSelectedRewardValue} />
+              <GifticonReward
+                value={typeof selectedRewardValue === 'number' ? selectedRewardValue : null}
+                onSelect={handleValueSelect}
+              />
             )}
           </section>
         </div>

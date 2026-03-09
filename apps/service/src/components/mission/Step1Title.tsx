@@ -1,6 +1,18 @@
+import { useFormContext } from 'react-hook-form';
+
 import { Button, Input } from '@shared';
 
+import { MissionForm } from 'src/api/mission/schema';
+
 const Step1Ttile = ({ nextStep }: { nextStep: () => void }) => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext<MissionForm>();
+
+  const titleValue = watch('title');
+
   return (
     <div className="relative mt-10 flex flex-col overflow-hidden">
       <div className="flex flex-col gap-7">
@@ -10,17 +22,26 @@ const Step1Ttile = ({ nextStep }: { nextStep: () => void }) => {
         </p>
 
         <Input
+          {...register('title')}
+          value={titleValue || ''}
           type="text"
-          value="mission"
-          onChange={() => {}}
           placeholder="입력하세요."
           className="w-full"
+          maxLength={20}
         />
+
+        {errors.title && <span className="text-sm text-red-500">{errors.title.message}</span>}
       </div>
 
       <footer className="fixed right-0 bottom-30 left-0 mx-5">
         <div className="mx-auto">
-          <Button size="lg" color="dark" isFullWidth onClick={nextStep}>
+          <Button
+            size="lg"
+            color="dark"
+            isFullWidth
+            onClick={nextStep}
+            disabled={!titleValue || titleValue.length > 20}
+          >
             다음
           </Button>
         </div>

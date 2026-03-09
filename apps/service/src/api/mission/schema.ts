@@ -1,8 +1,8 @@
 import z from 'zod';
 
 export const missionSchema = z.object({
-  content: z.string().max(20, '최대 20자까지 입력 가능합니다.'),
-  targetId: z.string(),
+  title: z.string().max(20, '최대 20자까지 입력 가능합니다.'),
+  targetId: z.number(),
   reward: z.discriminatedUnion('type', [
     z.object({
       type: z.literal('DATA_COUPON'),

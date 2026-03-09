@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Button, cn } from '@shared';
+
+import { MissionForm } from 'src/api/mission/schema';
 
 const MEMBER = [
   { id: 1, name: '김민지' },
@@ -9,15 +11,22 @@ const MEMBER = [
 ];
 
 const Step2Target = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: () => void }) => {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const { setValue, watch } = useFormContext<MissionForm>();
+
+  const selectedId = watch('targetId');
+
+  const handleSelect = (id: number) => {
+    setValue('targetId', id, { shouldValidate: true });
+  };
 
   return (
     <div className="mt-10 flex flex-col justify-between">
       <div className="flex flex-col gap-7">
-        <p className="flex flex-col gap-2">
-          <span className="text-h2-m">누구의 미션을 만들어볼까요?</span>
-          <span className="text-body2-m text-gray-700">미션의 대상을 선택해 주세요.</span>
-        </p>
+        <header className="flex flex-col gap-2">
+          <h2 className="text-h2-m">누구의 미션을 만들어볼까요?</h2>
+          <p className="text-body2-m text-gray-700">미션의 대상을 선택해 주세요.</p>
+        </header>
+
         <div className="grid grid-cols-2 gap-4">
           {MEMBER.map((member) => {
             const isSelected = selectedId === member.id;
@@ -25,11 +34,12 @@ const Step2Target = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
             return (
               <button
                 key={member.id}
-                onClick={() => setSelectedId(member.id)}
+                type="button"
+                onClick={() => handleSelect(member.id)}
                 className={cn(
                   'h-14 rounded-2xl border transition-all',
                   isSelected
-                    ? 'bg-primary-100 border-gray-500'
+                    ? 'bg-primary-100 text-brand-dark border-gray-500 font-bold'
                     : 'border-gray-200 bg-white text-gray-700',
                 )}
               >
