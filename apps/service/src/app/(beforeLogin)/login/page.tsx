@@ -58,7 +58,7 @@ export default function LoginPage() {
 
             {isLoginFailed && (
               <div className="flex flex-row items-center justify-center gap-1">
-                <ErrorIcon className="text-negative h-3.5 w-3.5" />
+                <ErrorIcon sx={{ fontSize: 14 }} className="text-negative" />
                 <span className="text-body2-m text-negative">
                   아이디 또는 비밀번호가 일치하지 않습니다.
                 </span>
