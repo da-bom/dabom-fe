@@ -31,7 +31,7 @@ export default function ObjectionPage() {
             options={options}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
-            className="h-[48px] w-full rounded-2xl border border-[#DEDEDE] bg-white"
+            className="h-12 w-full rounded-2xl border border-gray-200 bg-white"
             size="lg"
           />
         </div>
@@ -42,7 +42,10 @@ export default function ObjectionPage() {
         <Button
           size="lg"
           color="dark"
-          onClick={() => router.push(`/appeal/chat?policy=${encodeURIComponent(selectedOption)}`)}
+          onClick={() => {
+            // 이의제기 생성 API 호출 로직 추가 예정
+            router.push('/appeal');
+          }}
         >
           다음
         </Button>
