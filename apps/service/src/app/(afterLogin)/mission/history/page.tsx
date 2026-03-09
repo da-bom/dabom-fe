@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import DateDivider from 'src/components/mission/history/DateDevider';
+import DateDivider from 'src/components/mission/history/DateDivider';
 import HistoryItem from 'src/components/mission/history/HistoryItem';
 import { MISSION_HISTORY } from 'src/data/mission';
 
