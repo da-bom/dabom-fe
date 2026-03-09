@@ -38,7 +38,7 @@ const OwnerActionButton = ({ status }: { status: string }) => {
 
 const MissionPage = () => {
   return (
-    <div className="m-4 flex flex-col gap-5">
+    <div className="m-5 flex flex-col gap-5">
       <p className="flex flex-col">
         <span className="text-h2-m">현재 진행 중인 미션</span>
         <span className="text-body2-m gray-800">
