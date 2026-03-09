@@ -14,7 +14,7 @@ export default function TokenExpiredPage() {
   return (
     <main className="flex h-dvh w-full flex-col items-center justify-center px-7.75">
       <div className="flex flex-col items-center">
-        <DaboIcon type="hurt" />
+        <DaboIcon type="hurt" width={130} height={130} />
 
         <p className="text-body2-d mt-6 text-center">
           세션이 만료되었어요.
