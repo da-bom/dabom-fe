@@ -17,7 +17,7 @@ const NavBar = () => {
   const pathname = usePathname();
 
   const HIDE_NAVBAR_PATHS = ['/appeal/chat'];
-  if (HIDE_NAVBAR_PATHS.includes(pathname)) {
+  if (HIDE_NAVBAR_PATHS.some((path) => pathname.startsWith(path))) {
     return null;
   }
 
