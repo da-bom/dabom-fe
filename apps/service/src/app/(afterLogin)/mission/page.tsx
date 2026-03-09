@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { ChevronIcon } from '@icons';
 import { Button, Card, MainBox } from '@shared';
+
 import { MISSION_LIST_MEMBER } from 'src/data/mission';
 
 const isOwner = true;
