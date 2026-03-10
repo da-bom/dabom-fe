@@ -48,7 +48,7 @@ const AppealPageContent = () => {
                 requesterName={isOwner ? item.requesterName : undefined}
                 onClick={() => {
                   router.push(
-                    `/appeal/chat?policy=${encodeURIComponent(policyType)}&id=${item.appealId}&status=${item.status}`,
+                    `/appeal/comment?policy=${encodeURIComponent(policyType)}&id=${item.appealId}&status=${item.status}`,
                   );
                 }}
               />

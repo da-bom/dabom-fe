@@ -13,7 +13,7 @@ import { mockAppealDetails } from 'src/data/appealDetails';
 import { getCurrentUserRole } from 'src/utils/auth';
 import { formatChatTime } from 'src/utils/formatTime';
 
-function AppealChatContent() {
+function AppealCommentContent() {
   const searchParams = useSearchParams();
   const appealId = Number(searchParams.get('id'));
 
@@ -128,10 +128,10 @@ function AppealChatContent() {
   );
 }
 
-export default function AppealChatPage() {
+export default function AppealCommentPage() {
   return (
     <Suspense fallback={<div className="h-full min-h-screen" />}>
-      <AppealChatContent />
+      <AppealCommentContent />
     </Suspense>
   );
 }
