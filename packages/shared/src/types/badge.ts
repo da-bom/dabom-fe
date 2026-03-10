@@ -6,8 +6,6 @@ export type BadgeColor =
   | 'primary_light'
   | 'negative'
   | 'gray_light'
-  | 'emergency'
-  | 'approved'
-  | 'rejected';
+  | 'emergency';
 
-export type BadgeSize = 'sm' | 'lg' | 'md_fixed';
+export type BadgeSize = 'sm' | 'lg';
