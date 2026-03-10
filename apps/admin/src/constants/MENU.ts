@@ -33,7 +33,11 @@ export const MENU = [
         path: '/reward/products',
         description: '유저에게 제공될 보상의 종류를 관리합니다.',
       },
-      { label: '지급 내역', path: '/reward/history' },
+      {
+        label: '지급 내역',
+        path: '/reward/history',
+        description: '유저에게 제공된 보상을 관리합니다.',
+      },
     ],
   },
   {
