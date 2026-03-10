@@ -41,8 +41,13 @@ export default function ObjectionPage() {
           size="lg"
           color="dark"
           onClick={() => {
-            // 이의제기 생성 API 호출 로직 추가 예정
-            router.push('/appeal');
+            if (selectedOption === APPEAL_TYPE_LABEL.NORMAL) {
+              router.push('/appeal/create/data');
+            } else if (selectedOption === APPEAL_TYPE_LABEL.TIME_BLOCK) {
+              router.push('/appeal/create/time');
+            } else {
+              router.push('/appeal');
+            }
           }}
         >
           다음
