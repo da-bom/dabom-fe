@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { Button, DaboIcon, Logo } from '@shared';
@@ -10,28 +9,26 @@ export default function SignupPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/');
+    router.push('/login');
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <main className="flex w-82 flex-col items-center">
-        <div className="flex flex-col items-center gap-17.5">
-          <DaboIcon className="h-50 w-50 animate-bounce" />
-          <Logo type="default" className="w-46" />
+    <div className="flex min-h-screen flex-col items-center">
+      <main className="mt-65 flex flex-col items-center">
+        <div className="flex flex-col items-center gap-7">
+          <div className="flex items-center justify-center">
+            <DaboIcon type="default" sx={{ width: '130px', height: '130px' }} />
+          </div>
+
+          <div className="flex flex-col items-center gap-1">
+            <Logo type="default" sx={{ width: '182px', height: '42px' }} />
+          </div>
         </div>
 
-        <form onSubmit={handleLogin} className="mt-30 flex w-full flex-col gap-2">
+        <form onSubmit={handleLogin} className="mt-37.25 flex flex-col items-center">
           <Button type="submit" size="lg" color="dark">
-            회원가입
+            로그인
           </Button>
-
-          <div className="text-caption-m text-3 flex items-center justify-center gap-1">
-            <span>이미 계정이 있다면?</span>
-            <Link href="/login" className="text-decoration: underline">
-              로그인
-            </Link>
-          </div>
         </form>
       </main>
     </div>

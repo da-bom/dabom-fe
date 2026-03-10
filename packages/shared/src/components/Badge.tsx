@@ -1,7 +1,17 @@
 import { ReactNode } from 'react';
 
-type BadgeColor = 'primary' | 'white' | 'gray' | 'outline' | 'primary_light' | 'negative';
-type BadgeSize = 'sm' | 'lg';
+export type BadgeColor =
+  | 'primary'
+  | 'white'
+  | 'gray'
+  | 'outline'
+  | 'primary_light'
+  | 'negative'
+  | 'gray_light'
+  | 'emergency'
+  | 'approved'
+  | 'rejected';
+export type BadgeSize = 'sm' | 'lg' | 'md_fixed';
 
 interface BadgeProps {
   children: ReactNode;
@@ -18,11 +28,16 @@ const Badge = ({ children, className, color = 'primary', size = 'sm' }: BadgePro
     outline: 'bg-brand-white text-brand-dark border-2 border-primary text-primary',
     primary_light: 'bg-primary-100',
     negative: 'text-negative border border-negative',
+    gray_light: 'bg-gray-100',
+    emergency: 'bg-primary-emergency',
+    approved: 'bg-brand-white border border-positive text-positive',
+    rejected: 'bg-brand-white border border-negative text-negative',
   };
 
   const sizes: Record<BadgeSize, string> = {
     sm: 'px-3 text-caption-d rounded-full',
     lg: 'px-4  text-body2-d rounded-full',
+    md_fixed: 'w-[150px] h-8 rounded-full text-body1-m',
   };
   return (
     <span
