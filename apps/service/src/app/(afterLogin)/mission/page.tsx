@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { ChevronIcon } from '@icons';
-import { Card, MainBox } from '@shared';
+import { Button, Card, MainBox } from '@shared';
 
 import MemberActionButton from 'src/components/mission/MemberActionButton';
 import OwnerActionButton from 'src/components/mission/OwnerActionButton';
