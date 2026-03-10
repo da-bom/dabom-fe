@@ -30,7 +30,7 @@ const AppealPageContent = () => {
       <div className="flex flex-col gap-5">
         <FilterSegment activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <div className="flex flex-col gap-2 pb-24">
+        <div className="flex flex-col gap-2">
           {filteredItems.map((item) => {
             const { total: formattedSize } = formatSize(item.desiredRules.limitBytes);
             const policyType =
