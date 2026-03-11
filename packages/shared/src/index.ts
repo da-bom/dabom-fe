@@ -7,6 +7,8 @@ export { default as Badge } from './components/Badge';
 export { default as Button } from './components/Button';
 export { default as Card } from './components/Card';
 export { default as DaboIcon } from './components/DaboIcon';
+export { DaboMoon } from './components/DaboMoon';
+export { DaboSun } from './components/DaboSun';
 export { default as Drawer } from './components/Drawer';
 export { default as DropDown } from './components/DropDown';
 export { default as Grade } from './components/Grade';
