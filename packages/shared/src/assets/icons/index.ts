@@ -78,7 +78,7 @@ export {
   IosShareIcon,
   GiftIcon,
   ImageIcon,
-  WarningIcon
+  WarningIcon,
   CopyIcon
 };
 
