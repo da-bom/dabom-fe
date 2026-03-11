@@ -144,27 +144,23 @@ const UsageDashboard = () => {
         </div>
       </div>
 
-      <MainBox className="m-auto w-full rounded-2xl p-5">
-        {processedCustomers.length === 0 ? (
+      {processedCustomers.length === 0 ? (
+        <MainBox className="m-auto w-full rounded-2xl pt-10 pb-5">
           <div className="flex flex-1 items-center justify-center text-gray-400">
             <p>등록된 가족 구성원이 없어요.</p>
           </div>
-        ) : (
-          <>
-            {viewMode === 'list' ? (
-              <CustomerList customers={processedCustomers} />
-            ) : (
-              <div className="mx-auto aspect-square w-full max-w-70">
-                <UsageChart
-                  customers={processedCustomers}
-                  totalUsageGB={totalUsageGB}
-                  totalQuotaBytes={displayTotalLimitBytes}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </MainBox>
+        </MainBox>
+      ) : viewMode === 'list' ? (
+        <MainBox className="w-full rounded-2xl">
+          <CustomerList customers={processedCustomers} />
+        </MainBox>
+      ) : (
+        <UsageChart
+          customers={processedCustomers}
+          totalUsageGB={totalUsageGB}
+          totalQuotaBytes={displayTotalLimitBytes}
+        />
+      )}
     </div>
   );
 };

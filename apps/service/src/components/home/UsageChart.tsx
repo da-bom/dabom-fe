@@ -19,7 +19,7 @@ interface Props {
 const UsageChart = ({ customers, totalUsageGB, totalQuotaBytes }: Props) => {
   if (!customers || customers.length === 0) {
     return (
-      <div className="flex w-full items-center justify-center p-8 text-gray-400">
+      <div className="flex h-75 w-full items-center justify-center rounded-2xl border text-gray-400">
         <p>데이터가 없습니다.</p>
       </div>
     );
@@ -30,14 +30,14 @@ const UsageChart = ({ customers, totalUsageGB, totalQuotaBytes }: Props) => {
   const remainingTotalGB = Math.max(0, totalQuotaGB - totalUsageGB);
 
   const memberSlices = customers.map((customer, index) => {
-    const idx = index % CHART_COLOR.COLORS.length;
+    const color = CHART_COLOR.COLORS[index % CHART_COLOR.COLORS.length];
     const usedGB = bytesToGB(customer.monthlyUsedBytes);
 
     return {
       id: customer.customerId,
       name: customer.name,
       value: usedGB,
-      color: CHART_COLOR.COLORS[idx],
+      color,
       isRemaining: false,
     };
   });
@@ -103,15 +103,15 @@ const UsageChart = ({ customers, totalUsageGB, totalQuotaBytes }: Props) => {
   }));
 
   return (
-    <div className="animate-in fade-in zoom-in-95 flex w-full flex-col items-center gap-5 duration-500">
-      <div className="relative flex aspect-square w-full items-center justify-center">
+    <div className="bg-brand-white animate-in fade-in zoom-in-95 flex h-75 w-full flex-col items-center justify-center gap-4 rounded-2xl border border-gray-200 duration-500">
+      <div className="relative h-[215px] w-[215px]">
         <Pie data={data} options={options} />
       </div>
 
-      <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+      <div className="flex w-full flex-wrap justify-center gap-x-4 gap-y-1 px-2">
         {legendData.map((c) => (
-          <div key={c.id} className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded-full" style={{ backgroundColor: c.color }} />
+          <div key={c.id} className="flex items-center gap-1">
+            <div className="h-4 w-4 rounded-full" style={{ backgroundColor: c.color }} />
             <span className="text-caption-m">{c.name}</span>
           </div>
         ))}
