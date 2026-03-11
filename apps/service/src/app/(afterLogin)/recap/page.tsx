@@ -13,6 +13,7 @@ import BalancedOpalescentBackground from './BalancedOpalescentBackground';
 import { RecapStep1Usage } from './RecapStep1Usage';
 import { CrystalSkyBackground, DeepBlueLuminousBackground } from './RecapStep2Background';
 import { RecapStep2Time } from './RecapStep2Time';
+import { RecapStep3Appeal } from './RecapStep3Appeal';
 
 function RecapContent() {
   const router = useRouter();
@@ -41,8 +42,15 @@ function RecapContent() {
 
   return (
     <div className="relative flex flex-1 flex-col overflow-hidden bg-transparent">
-      {currentStep === 0 && <BalancedOpalescentBackground />}
-      {currentStep === 1 && (isMorning ? <CrystalSkyBackground /> : <DeepBlueLuminousBackground />)}
+      {currentStep === 1 ? (
+        isMorning ? (
+          <CrystalSkyBackground />
+        ) : (
+          <DeepBlueLuminousBackground />
+        )
+      ) : (
+        <BalancedOpalescentBackground />
+      )}
 
       <div className="flex flex-1 flex-col">
         {currentStep === 0 && (
@@ -53,6 +61,15 @@ function RecapContent() {
         )}
         {currentStep === 1 && (
           <RecapStep2Time startHour={data.peakUsage.startHour} endHour={data.peakUsage.endHour} />
+        )}
+        {currentStep === 2 && (
+          <RecapStep3Appeal
+            requesterName={data.appealHighlights.topSuccessfulRequester.requesterName}
+            successRate={Math.round(
+              (data.appealSummary.approvedAppeals / data.appealSummary.totalAppeals) * 100,
+            )}
+            appeals={data.appealHighlights.topSuccessfulRequester.recentApprovedAppeals}
+          />
         )}
       </div>
 
