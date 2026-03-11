@@ -75,7 +75,6 @@ export {
   GiftIcon,
   ImageIcon,
   WarningIcon,
-  GiftIcon,
- CopyIcon
+  CopyIcon
 };
 
