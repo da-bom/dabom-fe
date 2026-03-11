@@ -4,6 +4,7 @@ export const RECAP_UI_TEXT = {
   STEP2_MORNING_SUFFIX: '시에 데이터를\n가장 많이 이용하시네요🥞',
   STEP3_TITLE_PREFIX: '님의 간절한 조르기가 ',
   STEP3_TITLE_SUFFIX: ' 통했어요',
+  STEP4_TITLE_SUFFIX: '님이\n가장 너그러운 데이터 천사로\n등극하셨네요!',
   SHARE: '리포트 공유하기',
   WEEKDAY_LABELS: {
     monday: '월',

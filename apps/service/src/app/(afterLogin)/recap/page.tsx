@@ -14,6 +14,7 @@ import { RecapStep1Usage } from './RecapStep1Usage';
 import { CrystalSkyBackground, DeepBlueLuminousBackground } from './RecapStep2Background';
 import { RecapStep2Time } from './RecapStep2Time';
 import { RecapStep3Appeal } from './RecapStep3Appeal';
+import { RecapStep4Angel } from './RecapStep4Angel';
 
 function RecapContent() {
   const router = useRouter();
@@ -69,6 +70,15 @@ function RecapContent() {
               (data.appealSummary.approvedAppeals / data.appealSummary.totalAppeals) * 100,
             )}
             appeals={data.appealHighlights.topSuccessfulRequester.recentApprovedAppeals}
+          />
+        )}
+        {currentStep === 3 && (
+          <RecapStep4Angel
+            approverName={data.appealHighlights.topAcceptedApprover.approverName}
+            approvedAppeals={data.appealHighlights.topAcceptedApprover.recentAcceptedAppeals.slice(
+              0,
+              3,
+            )}
           />
         )}
       </div>
