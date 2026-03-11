@@ -46,7 +46,10 @@ export const formatRewardHistory = ({ history }: { history: readonly RewardHisto
             navigator.clipboard.writeText(item.couponNumber);
           }}
         >
-          <CopyIcon className="text-gray-400" sx={{ width: 16 }} />
+          <CopyIcon
+            className="cursor-pointer text-gray-400 hover:text-gray-800"
+            sx={{ width: 16 }}
+          />
         </button>
       </div>,
 
