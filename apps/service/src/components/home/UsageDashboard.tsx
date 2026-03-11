@@ -131,17 +131,20 @@ const UsageDashboard = () => {
   return (
     <div className="flex w-full flex-col items-center gap-7 p-5">
       <div className="relative h-38 w-full">
-        <MainBox className="absolute bottom-0 left-0 flex h-38 w-full flex-col items-end justify-between rounded-2xl border-gray-200 p-5">
-          <div className="flex h-fit w-fit flex-col items-start gap-4">
-            <span className="text-body1-m h-fit w-fit">현재 데이터 사용량</span>
-            <div className="flex h-fit w-fit items-baseline gap-1">
-              <span className="text-main-m h-fit w-fit font-bold">{totalUsageGB}GB</span>
+        <MainBox className="absolute bottom-0 left-0 flex w-full flex-col items-end gap-4 rounded-2xl border p-5">
+          <div className="flex flex-col items-start gap-4">
+            <span className="text-body1-m">현재 데이터 사용량</span>
+            <div className="flex items-end gap-1">
+              <span className="text-main-m">{totalUsageGB}GB</span>
               <span className="text-body2-m text-gray-500">/ {totalLimitGB}GB</span>
             </div>
           </div>
-          <ProgressBar value={usagePercent} className="h-2" />
+
+          <div className="h-2 w-full">
+            <ProgressBar value={usagePercent} />
+          </div>
         </MainBox>
-        <div className="absolute left-5">
+        <div className="absolute -top-5 left-5 z-10">
           <DaboIcon type="default" usage={usagePercent} width={130} height={130} />
         </div>
       </div>
