@@ -37,6 +37,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import GiftIcon from './GiftIcon';
 import ImageIcon from '@mui/icons-material/ImageOutlined';
 import WarningIcon from '@mui/icons-material/Warning';
+import CopyIcon from '@mui/icons-material/ContentCopy';
 
 export {
   HomeIcon,
@@ -78,5 +79,6 @@ export {
   GiftIcon,
   ImageIcon,
   WarningIcon
+  CopyIcon
 };
 
