@@ -2,7 +2,9 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import { Logo, LogoutIcon } from '@shared';
+import { LogoutIcon } from '@icons';
+import { Logo } from '@shared';
+
 import { logout } from 'src/api/auth/useLogout';
 import { MENU } from 'src/constants/MENU';
 
@@ -32,10 +34,11 @@ const Sidebar = () => {
             return (
               <MenuItem
                 key={item.id}
-                isSelected={pathname === item.path}
-                name={item.label}
-                href={item.path}
+                path={item.path}
+                label={item.label}
                 icon={item.icon}
+                currentPath={pathname}
+                subItems={'subItems' in item ? item.subItems : undefined}
               />
             );
           })}

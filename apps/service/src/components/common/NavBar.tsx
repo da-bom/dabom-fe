@@ -3,25 +3,23 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import {
-  ExtensionOutlined as ExtensionIcon,
-  Face as FaceIcon,
-  Home as HomeIcon,
-  PersonOutlined as PersonIcon,
-  StarBorder as StarIcon,
-} from '@mui/icons-material';
-import { cn } from '@shared';
+import { FaceIcon, HomeIcon, PersonIcon, PuzzleIcon, ShineIcon } from '@icons';
 
 const navItems = [
-  { label: '미션', href: '/mission', icon: ExtensionIcon },
+  { label: '미션', href: '/mission', icon: PuzzleIcon },
   { label: '가족', href: '/family', icon: FaceIcon },
   { label: '홈', href: '/home', isHome: true },
-  { label: '어필', href: '/appeal', icon: StarIcon },
+  { label: '어필', href: '/appeal', icon: ShineIcon },
   { label: 'MY', href: '/mypage', icon: PersonIcon },
 ];
 
 const NavBar = () => {
   const pathname = usePathname();
+
+  const HIDE_NAVBAR_PATHS = ['/appeal/comment'];
+  if (HIDE_NAVBAR_PATHS.some((path) => pathname.startsWith(path))) {
+    return null;
+  }
 
   return (
     <nav className="fixed right-0 bottom-0 left-0 z-50 flex justify-center">
@@ -52,7 +50,7 @@ const NavBar = () => {
                     />
                   )}
                 </div>
-                <span className={cn('text-caption-m', isActive ? 'text-primary' : 'text-gray-700')}>
+                <span className={`text-caption-m ${isActive ? 'text-primary' : 'text-gray-700'}`}>
                   {item.label}
                 </span>
               </Link>

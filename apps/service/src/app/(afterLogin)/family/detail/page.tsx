@@ -4,10 +4,11 @@ import React, { Suspense, useSyncExternalStore } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
-import { FaceIcon, MainBox, bytesToGB, formatPhoneNumber } from '@shared';
-import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
+import { FaceIcon } from '@icons';
+import { MainBox, bytesToGB, formatPhoneNumber } from '@shared';
 
-import PolicySimple from '@service/components/policy/PolicySimple';
+import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
+import PolicySimple from 'src/components/policy/PolicySimple';
 
 const emptySubscribe = () => () => {};
 function useIsClient() {

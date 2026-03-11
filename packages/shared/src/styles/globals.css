@@ -5,15 +5,29 @@
 
 @source '../../../**/*.{ts,tsx,html}';
 
+@font-face {
+  font-family: 'Libre Barcode 128';
+  src: url('/fonts/LibreBarcode128-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-barcode {
+  font-family: 'Libre Barcode 128', system-ui;
+}
+
 /* 테마 설정 */
 @theme {
   /* 폰트 */
   --font-sans: 'Pretendard', sans-serif;
+  --font-barcode: 'Libre Barcode 128', cursive;
 
   /* 색상 */
   --color-primary-50: #fff5fa;
   --color-primary-100: #ffeaf5;
   --color-primary-200: #ffe0ef;
+  --color-primary-emergency: #ffc0c1;
   --color-primary-300: #febedf;
   --color-primary: #fd2e97;
   --color-primary-500: #e42988;
@@ -38,6 +52,7 @@
   --color-background-base: #f0f1f3;
 
   --color-negative: #ff383c;
+  --color-positive: #11af58;
 
   /* Balanced Opalescent Background */
   --color-opalescent-pink: #ffe4f2;
@@ -48,9 +63,20 @@
 
   /* shadow */
   --shadow-default: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+  /* radius */
+  --radius-bubble: 16px;
+  --radius-bubble-sm: 4px;
 }
 
 /* typography */
+@utility text-barcode {
+  font-family: var(--font-barcode);
+  font-size: 80px;
+  line-height: 1;
+  color: var(--color-brand-black);
+  user-select: none;
+}
 
 /* Web */
 @utility text-display-d {
@@ -78,8 +104,13 @@
   line-height: 150%;
   font-weight: 500;
 }
+@utility text-body3-d {
+  font-size: 0.875rem;
+  line-height: 150%;
+  font-weight: 500;
+}
 @utility text-caption-d {
-  font-size: 0.8125rem;
+  font-size: 0.625rem;
   line-height: 140%;
   font-weight: 500;
 }
@@ -108,17 +139,17 @@
 @utility text-body1-m {
   font-size: 1rem;
   line-height: 150%;
-  font-weight: 500;
+  font-weight: 400;
 }
 @utility text-body2-m {
   font-size: 0.875rem;
   line-height: 150%;
-  font-weight: 500;
+  font-weight: 400;
 }
 @utility text-caption-m {
   font-size: 0.75rem;
   line-height: 140%;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* Grid */

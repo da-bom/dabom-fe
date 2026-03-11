@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
-type BadgeColor = 'primary' | 'white' | 'gray' | 'outline' | 'primary_light' | 'negative';
-type BadgeSize = 'sm' | 'lg';
+import { BadgeColor, BadgeSize } from '../types/badge';
 
 interface BadgeProps {
   children: ReactNode;
@@ -18,12 +17,15 @@ const Badge = ({ children, className, color = 'primary', size = 'sm' }: BadgePro
     outline: 'bg-brand-white text-brand-dark border-2 border-primary text-primary',
     primary_light: 'bg-primary-100',
     negative: 'text-negative border border-negative',
+    gray_light: 'bg-gray-100',
+    emergency: 'bg-primary-emergency',
   };
 
   const sizes: Record<BadgeSize, string> = {
     sm: 'px-3 text-caption-d rounded-full',
     lg: 'px-4  text-body2-d rounded-full',
   };
+
   return (
     <span
       className={`inline-flex shrink-0 items-center justify-center whitespace-nowrap ${sizes[size]} ${colors[color]} ${className ?? ''}`}

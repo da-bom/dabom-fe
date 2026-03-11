@@ -9,17 +9,14 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "endOfLine": "lf",
-  "plugins": [
-    "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss"
-  ],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
   "importOrder": [
     "^react",
     "^next",
     "<THIRD_PARTY_MODULES>",
     "^@shared/(.*)$",
     "^@admin/(.*)$",
-    "^@service/(.*)$",
+    "^src/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,

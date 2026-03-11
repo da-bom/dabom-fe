@@ -13,9 +13,10 @@ interface DaboIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   usage?: number;
   isBlocked?: boolean;
   type?: 'blocked' | 'bomb' | 'default' | 'hurt' | 'loved' | 'sad';
+  sx?: React.CSSProperties;
 }
 
-const DaboIcon = ({ usage = 0, isBlocked, type, ...props }: DaboIconProps) => {
+const DaboIcon = ({ usage = 0, isBlocked, type, sx, style, ...props }: DaboIconProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const DaboIcon = ({ usage = 0, isBlocked, type, ...props }: DaboIconProps) => {
     (SelectedComponent as unknown as string);
 
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt="dabo-icon" {...props} />;
+  return <img src={src} alt="dabo-icon" style={{ ...style, ...sx }} {...props} />;
 };
 
 export default DaboIcon;

@@ -4,8 +4,9 @@ import { Pie } from 'react-chartjs-2';
 
 import { bytesToGB } from '@shared';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip, TooltipItem } from 'chart.js';
+
 import { CHART_COLOR } from 'src/app/(afterLogin)/home/contents';
-import { CustomerListType } from 'src/types/dataUsage';
+import { CustomerListType } from 'src/types/DataUsage';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

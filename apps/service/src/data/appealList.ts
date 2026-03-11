@@ -1,0 +1,48 @@
+import { AppealSummary } from '../api/appeal/schema';
+
+export const mockAppealList: AppealSummary[] = [
+  {
+    appealId: 1,
+    type: 'NORMAL',
+    policyAssignmentId: 55,
+    requesterId: 12346,
+    requesterName: '자녀1',
+    requestReason: '인강을 들어야 합니다',
+    desiredRules: { limitBytes: 524288000 },
+    status: 'PENDING',
+    createdAt: '2024-01-15T10:30:00Z',
+  },
+  {
+    appealId: 2,
+    type: 'NORMAL',
+    policyAssignmentId: 56,
+    requesterId: 12346,
+    requesterName: '자녀1',
+    requestReason: '과제 업로드가 필요해요',
+    desiredRules: { limitBytes: 2147483648 },
+    status: 'APPROVED',
+    createdAt: '2026-03-02T21:05:00Z',
+  },
+  {
+    appealId: 3,
+    type: 'NORMAL',
+    policyAssignmentId: 57,
+    requesterId: 12347,
+    requesterName: '자녀2',
+    requestReason: '게임 업데이트를 하고 싶어요',
+    desiredRules: { limitBytes: 10737418240 },
+    status: 'REJECTED',
+    createdAt: '2026-03-01T19:30:00Z',
+  },
+  {
+    appealId: 4,
+    type: 'EMERGENCY',
+    policyAssignmentId: 58,
+    requesterId: 12346,
+    requesterName: '자녀1',
+    requestReason: '긴급하게 데이터가 더 필요해요',
+    desiredRules: { limitBytes: 5368709120 },
+    status: 'APPROVED',
+    createdAt: '2026-03-10T10:00:00Z',
+  },
+];

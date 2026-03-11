@@ -1,10 +1,11 @@
 import { QUERY_TIME, http } from '@shared';
 import { useQuery } from '@tanstack/react-query';
-import { formatFamilyPolicies } from 'src/utils/formatPolicy';
 
 import { ApiErrorResponse } from '@shared/type/error';
 
-import { FamilyDetail, FamilyPoliciesData, FamilyPoliciesDataSchema } from './scheme';
+import { formatFamilyPolicies } from 'src/utils/formatPolicy';
+
+import { FamilyDetail, FamilyPoliciesData, FamilyPoliciesDataSchema } from './schema';
 
 export const getFamilyPolicies = async (): Promise<FamilyPoliciesData> => {
   const response = await http.get('/families/policies');
