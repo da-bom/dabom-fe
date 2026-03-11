@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { DaboMoon, DaboSun, cn } from '@shared';
+import { DaboMoon, DaboSun } from '@shared';
 
 import { RECAP_UI_TEXT } from 'src/constants/recap';
 

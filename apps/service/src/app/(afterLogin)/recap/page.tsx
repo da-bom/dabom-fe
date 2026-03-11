@@ -2,8 +2,6 @@
 
 import React, { Suspense, useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { Button, IosShareIcon } from '@shared';
 
 import { RECAP_CONFIG, RECAP_UI_TEXT } from 'src/constants/recap';
@@ -19,8 +17,6 @@ import { RecapStep5Mission } from './RecapStep5Mission';
 import { RecapStep6Report } from './RecapStep6Report';
 
 function RecapContent() {
-  const router = useRouter();
-
   const [currentStep, setCurrentStep] = useState(0);
   const [data] = useState(MOCK_RECAP_DATA.data);
 
@@ -30,21 +26,17 @@ function RecapContent() {
   const nextStep = () => {
     if (currentStep < totalSteps - 1) {
       setCurrentStep((prev) => prev + 1);
-    } else {
-      router.push('/home');
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
-    } else {
-      router.back();
     }
   };
 
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden bg-transparent">
+    <div className="relative flex h-full flex-1 flex-col overflow-hidden bg-transparent">
       {currentStep === 1 ? (
         isMorning ? (
           <CrystalSkyBackground />
@@ -93,17 +85,17 @@ function RecapContent() {
         {currentStep === 5 && <RecapStep6Report score={data.communicationScore} />}
       </div>
 
-      <div className="absolute inset-0 flex">
+      <div className="absolute inset-0 z-10 flex">
         <button
           type="button"
           onClick={prevStep}
-          className="h-full w-1/3 cursor-pointer"
+          className="h-full w-1/2 cursor-pointer"
           aria-label="Previous step"
         />
         <button
           type="button"
           onClick={nextStep}
-          className="h-full w-2/3 cursor-pointer"
+          className="h-full w-1/2 cursor-pointer"
           aria-label="Next step"
         />
       </div>
