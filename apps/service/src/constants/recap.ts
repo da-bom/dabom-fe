@@ -1,9 +1,6 @@
 export const RECAP_UI_TEXT = {
   STEP1_TITLE_SUFFIX: '요일에 데이터를 많이 사용하시네요!',
-  NEXT_STEP: '다음 리포트',
-  COMPLETE: '완료',
-  PREPARING: '다음 리포트 준비 중...',
-  DESCRIPTION_PLACEHOLDER: 'description',
+  SHARE: '리포트 공유하기',
   WEEKDAY_LABELS: {
     monday: '월',
     tuesday: '화',
@@ -16,7 +13,7 @@ export const RECAP_UI_TEXT = {
 } as const;
 
 export const RECAP_CONFIG = {
-  TOTAL_STEPS: 4,
+  TOTAL_STEPS: 6,
   DEFAULT_YEAR: '2026',
   DEFAULT_MONTH: '3',
 } as const;

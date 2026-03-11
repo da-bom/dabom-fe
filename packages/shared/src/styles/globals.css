@@ -39,6 +39,13 @@
 
   --color-negative: #ff383c;
 
+  /* Balanced Opalescent Background */
+  --color-opalescent-pink: #ffe4f2;
+  --color-opalescent-purple: #f3e8ff;
+  --color-opalescent-mint: #e0fff6;
+  --color-opalescent-blue: #e6f3ff;
+  --color-opalescent-yellow: #fffaec;
+
   /* shadow */
   --shadow-default: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
