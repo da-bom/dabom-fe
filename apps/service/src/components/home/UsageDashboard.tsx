@@ -78,8 +78,8 @@ const UsageDashboard = () => {
     (isCurrentMonth ? currentData?.totalQuotaBytes : null) ??
     usageData.totalQuotaBytes;
 
-  const totalUsageGB = bytesToGB(displayTotalUsedBytes);
-  const totalLimitGB = bytesToGB(displayTotalLimitBytes);
+  const totalUsageGB = Math.floor(bytesToGB(displayTotalUsedBytes));
+  const totalLimitGB = Math.floor(bytesToGB(displayTotalLimitBytes));
   const usagePercent =
     displayTotalLimitBytes === 0
       ? 0
@@ -131,12 +131,12 @@ const UsageDashboard = () => {
   return (
     <div className="flex w-full flex-col items-center gap-7 p-5">
       <div className="relative h-38 w-full">
-        <MainBox className="absolute bottom-0 left-0 flex w-full flex-col items-end gap-4 rounded-2xl border p-5">
-          <div className="flex flex-col items-start gap-4">
-            <span className="text-body1-m">현재 데이터 사용량</span>
-            <div className="flex items-end gap-1">
-              <span className="text-main-m">{totalUsageGB}GB</span>
-              <span className="text-body2-m text-gray-500">/ {totalLimitGB}GB</span>
+        <MainBox className="absolute bottom-0 left-0 flex w-full flex-col items-end gap-4 rounded-2xl border border-gray-200 p-5">
+          <div className="flex w-42 flex-col items-start gap-4">
+            <span className="text-body1-m h-fit w-fit">현재 데이터 사용량</span>
+            <div className="flex h-fit w-fit items-end gap-1">
+              <span className="text-main-m h-fit w-fit">{totalUsageGB}GB</span>
+              <span className="text-body2-m h-fit w-fit text-gray-500">/ {totalLimitGB}GB</span>
             </div>
           </div>
 
