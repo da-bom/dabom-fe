@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { ImageIcon } from '@icons';
 import { Button, Drawer, Input, MainBox, RadioGroup, TextField } from '@shared';
