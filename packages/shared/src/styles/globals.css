@@ -145,6 +145,11 @@
   font-weight: 400;
 }
 
+@utility bg-emergency-gradient {
+  background:
+    linear-gradient(180deg, rgba(254, 254, 254, 0.1) 0%, rgba(255, 56, 60, 0.1) 100%), #ffffff;
+}
+
 /* Grid */
 @utility layout-grid {
   display: grid;
