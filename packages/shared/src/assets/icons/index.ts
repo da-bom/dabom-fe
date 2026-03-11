@@ -33,6 +33,8 @@ import E911EmergencyIcon from './E911EmergencyIcon';
 import DashboardIcon from '@mui/icons-material/DashboardOutlined';
 import ChartIcon from '@mui/icons-material/BarChartOutlined';
 import GiftIcon from './GiftIcon';
+import ImageIcon from '@mui/icons-material/ImageOutlined';
+import WarningIcon from '@mui/icons-material/Warning';
 
 export {
   HomeIcon,
@@ -69,6 +71,8 @@ export {
   E911EmergencyIcon,
   DashboardIcon,
   ChartIcon,
-  GiftIcon
+  GiftIcon,
+  ImageIcon,
+  WarningIcon,
 };
 
