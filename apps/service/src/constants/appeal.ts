@@ -25,4 +25,9 @@ export const APPEAL_UI_TEXT = {
   TO: '까지',
   START_TIME_SETTING: '시작 시간 설정',
   END_TIME_SETTING: '종료 시간 설정',
+  CONFIRM_TITLE: '이의 제기 내용을 확인해 주세요.',
+  CONFIRM_DESCRIPTION: '입력하신 내용을 확인해 주세요.',
+  POLICY_PREFIX: '정책: ',
+  CHANGE_PREFIX: '변경: ',
+  REASON_PREFIX: '요청 사유: ',
 } as const;

@@ -3,12 +3,13 @@
 import React, { Suspense, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Button } from '@shared';
 
 function AppealReasonContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [reason, setReason] = useState('');
 
   const handleComplete = () => {
@@ -17,7 +18,9 @@ function AppealReasonContent() {
       return;
     }
 
-    router.push('/appeal');
+    const params = new URLSearchParams(searchParams);
+    params.set('reason', reason);
+    router.push(`/appeal/create/confirm?${params.toString()}`);
   };
 
   return (
