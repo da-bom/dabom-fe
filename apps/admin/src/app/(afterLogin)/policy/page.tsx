@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Table } from '@shared';
 
@@ -12,9 +12,12 @@ import { formatPolicy } from 'src/utils/formatPolicy';
 
 const PolicyContent = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [page, setPage] = useState(() => {
-    return Number(searchParams.get('page')) || 0;
+    const pageParam = searchParams.get('page');
+    return pageParam ? Number(pageParam) - 1 : 0;
   });
 
   const { data, isPending } = useGetPolicy(page);
@@ -22,10 +25,10 @@ const PolicyContent = () => {
   if (isPending) return <div>로딩 중</div>;
 
   const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+    setPage(newPage - 1);
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', newPage.toString());
-    window.history.pushState({}, '', `?${params}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   if (!data || !data.policies || data.policies.length === 0) {
@@ -44,7 +47,7 @@ const PolicyContent = () => {
         />
       </div>
       <Pagination
-        currentPage={page}
+        currentPage={page + 1}
         totalPages={data.totalPages || 1}
         onPageChange={handlePageChange}
       />

@@ -44,6 +44,7 @@ export const formatRewardHistory = ({ history }: { history: readonly RewardHisto
           type="button"
           onClick={() => navigator.clipboard.writeText(item.couponNumber)}
           className="flex items-center"
+          aria-label="쿠폰 번호 복사"
         >
           <CopyIcon className="text-gray-400 hover:text-gray-800" sx={{ width: 16 }} />
         </button>
