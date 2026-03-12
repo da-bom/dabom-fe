@@ -9,7 +9,9 @@ const nextConfigBase: NextConfig = {
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
+      transpilePackages: ['@tanstack/react-query', '@tanstack/react-query-devtools'],
     });
+
     return config;
   },
 };
