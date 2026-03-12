@@ -56,7 +56,7 @@ const FamilyPage = () => {
         </SearchBox>
       </div>
       <div className="flex h-full gap-5">
-        <MainBox className="w-86 p-4">
+        <MainBox className="h-full w-86 p-4">
           <FamilyList params={params} selectedFam={selectedFam} setSelectedFam={setSelectedFam} />
         </MainBox>
         <MainBox className="h-full w-full flex-1">

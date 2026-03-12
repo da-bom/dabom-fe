@@ -5,6 +5,7 @@ import { Badge, Button } from '@shared';
 import { useGetFamilyDetail } from 'src/api/family/useGetFamilyDetail';
 
 import Error from '../common/Error';
+import Loading from '../common/Loading';
 import FamilyTable from './FamilyTable';
 import UsageBox from './UsageBox';
 
@@ -19,7 +20,7 @@ const FamilyDetail = ({ selectedFam }: { selectedFam: number | undefined }) => {
       />
     );
 
-  if (isLoading) return <div>로딩</div>;
+  if (isLoading) return <Loading />;
 
   if (!familyDetail) return <div>가족 정보 없음</div>;
 

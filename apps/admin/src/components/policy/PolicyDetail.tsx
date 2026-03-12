@@ -11,6 +11,7 @@ import { Policy } from 'src/api/policy/schema';
 import { useGetPolicyDetail } from 'src/api/policy/useGetPolicyDetail';
 import { useUpdatePolicy } from 'src/api/policy/useUpdatePolicy';
 
+import Loading from '../common/Loading';
 import StatusField from './StatusField';
 import DefaultRuleField from './rule/DefaultRuleField';
 
@@ -20,7 +21,7 @@ const PolicyDetailModal = () => {
 
   const { data, isLoading, isError } = useGetPolicyDetail(policyId);
 
-  if (isLoading) return <div>로딩</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>에러</div>;
   if (!data) return <div>데이터가 없습니다.</div>;
 

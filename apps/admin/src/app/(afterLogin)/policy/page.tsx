@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Table } from '@shared';
 
 import { useGetPolicy } from 'src/api/policy/useGetPolicy';
+import Loading from 'src/components/common/Loading';
 import Pagination from 'src/components/common/Pagination';
 import { formatPolicy } from 'src/utils/formatPolicy';
 
@@ -22,7 +23,7 @@ const PolicyContent = () => {
 
   const { data, isPending } = useGetPolicy(page);
 
-  if (isPending) return <div>로딩 중</div>;
+  if (isPending) return <Loading />;
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage - 1);
@@ -57,7 +58,7 @@ const PolicyContent = () => {
 
 export default function PolicyPage() {
   return (
-    <Suspense fallback={<div>로딩</div>}>
+    <Suspense fallback={<Loading />}>
       <PolicyContent />
     </Suspense>
   );

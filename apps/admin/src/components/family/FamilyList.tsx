@@ -6,6 +6,7 @@ import { FamilySearchRequest } from 'src/api/family/schema';
 import { useGetFamilies } from 'src/api/family/useGetFamilies';
 
 import Error from '../common/Error';
+import Loading from '../common/Loading';
 import FamilyItem from './FamilyItem';
 
 const FamilyList = ({
@@ -22,9 +23,7 @@ const FamilyList = ({
   const familyList = data?.content || [];
   const totalElements = data?.numberOfElements || 0;
 
-  if (isLoading) {
-    return <div>로딩</div>;
-  }
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex h-[calc(100vh-250px)] flex-col gap-2">

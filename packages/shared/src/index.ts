@@ -19,6 +19,7 @@ export { default as Logo } from './components/Logo';
 export { default as MainBox } from './components/MainBox';
 export { default as ModalLayout } from './components/ModalLayout';
 export { default as RadioGroup } from './components/RadioGroup';
+export { default as Spinner } from './components/Spinner';
 export { default as SubBox } from './components/SubBox';
 export { default as Switch } from './components/Switch';
 export { default as Table } from './components/Table';
