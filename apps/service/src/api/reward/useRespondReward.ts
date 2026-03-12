@@ -18,7 +18,6 @@ export const respondRewardRequest = async ({
   const response = await http.put(`/rewards/requests/${requestId}/respond`, payload);
 
   try {
-    // 인터셉터가 data 알맹이만 반환한다고 가정
     return RespondRewardDataSchema.parse(response);
   } catch (error) {
     console.error('❌ 보상 응답 처리 파싱 실패:', error);
@@ -32,7 +31,6 @@ export const useRespondReward = () => {
   return useMutation({
     mutationFn: respondRewardRequest,
     onSuccess: () => {
-      // 보상 요청 목록이나 내역 갱신
       queryClient.invalidateQueries({ queryKey: ['rewardRequests'] });
       queryClient.invalidateQueries({ queryKey: ['receivedRewards'] });
     },

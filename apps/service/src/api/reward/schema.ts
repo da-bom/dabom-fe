@@ -29,10 +29,9 @@ export const ReceivedRewardListSchema = z.object({
 export type ReceivedReward = z.infer<typeof ReceivedRewardSchema>;
 export type ReceivedRewardList = z.infer<typeof ReceivedRewardListSchema>;
 
-// 보상 요청 응답 결과 데이터
 export const RespondRewardDataSchema = z.object({
   requestId: z.number(),
-  status: z.string(), // "APPROVED", "REJECTED" 등
+  status: z.string(),
   missionItem: z.object({
     missionItemId: z.number(),
     missionText: z.string(),
@@ -41,7 +40,7 @@ export const RespondRewardDataSchema = z.object({
       rewardId: z.number(),
       name: z.string(),
       category: z.string(),
-      thumbnailUrl: z.string(),
+      thumbnailUrl: z.string().nullable(),
       templateId: z.number(),
     }),
   }),
