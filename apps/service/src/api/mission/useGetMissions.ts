@@ -14,7 +14,7 @@ export const getMissions = async (params: MissionRequest) => {
     const parsed = MissionResponseSchema.parse(response);
     return parsed;
   } catch (error) {
-    console.error('❌ Mission Zod 파싱 실패:', error);
+    console.error('❌ Zod 파싱 실패:', error);
     throw error;
   }
 };
