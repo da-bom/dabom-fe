@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useMemo, useState } from 'react';
+import React, { Suspense, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
@@ -8,6 +8,7 @@ import { ApprovedIcon, RejectedIcon } from '@icons';
 import { formatSize } from '@shared';
 
 import { useSuspenseGetAppealDetail } from 'src/api/appeal/useGetAppealDetail';
+import { usePostComment } from 'src/api/appeal/usePostComment';
 import { AppealInputBar, ChatBubble, PolicySummaryCard } from 'src/components/appeal';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 import { getCurrentUserRole } from 'src/utils/auth';
@@ -24,8 +25,10 @@ const isValidStatus = (status: string | null): status is AppealStatus => {
 function AppealCommentContent() {
   const searchParams = useSearchParams();
   const appealId = Number(searchParams.get('id'));
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const { data } = useSuspenseGetAppealDetail(appealId);
+  const { mutateAsync: postComment } = usePostComment(appealId);
 
   const [inputValue, setInputValue] = useState('');
 
@@ -34,6 +37,27 @@ function AppealCommentContent() {
 
   const rawStatus = data.status.toLowerCase();
   const status = isValidStatus(rawStatus) ? rawStatus : 'pending';
+
+  const sortedComments = useMemo(() => {
+    return [...data.comments.content].reverse();
+  }, [data.comments.content]);
+
+  useLayoutEffect(() => {
+    if (scrollRef.current) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [sortedComments]);
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim()) return;
+
+    try {
+      await postComment({ comment: inputValue });
+      setInputValue('');
+    } catch (error) {
+      console.error('댓글 작성 실패:', error);
+    }
+  };
 
   const policyLabel = useMemo(() => {
     if (data.type === 'EMERGENCY') return APPEAL_TYPE_LABEL.EMERGENCY;
@@ -96,8 +120,8 @@ function AppealCommentContent() {
           />
         </div>
 
-        <div className="flex w-full flex-col gap-4">
-          {data.comments.content.map((msg) => (
+        <div className="flex w-full flex-col gap-4" ref={scrollRef}>
+          {sortedComments.map((msg) => (
             <ChatBubble
               key={msg.commentId}
               senderName={msg.authorName}
@@ -117,10 +141,7 @@ function AppealCommentContent() {
         <AppealInputBar
           value={inputValue}
           onChange={setInputValue}
-          onSubmit={() => {
-            console.log('Submit:', inputValue);
-            setInputValue('');
-          }}
+          onSubmit={handleSendMessage}
           disabled={status !== 'pending'}
         />
       </div>

@@ -145,3 +145,26 @@ export const AppealCreateResponseSchema = z.object({
 });
 
 export type AppealCreateResponse = z.infer<typeof AppealCreateResponseSchema>;
+
+export const CreateCommentRequestSchema = z.object({
+  comment: z.string().min(1),
+});
+
+export type CreateCommentRequest = z.infer<typeof CreateCommentRequestSchema>;
+
+export const CommentResultSchema = z.object({
+  commentId: z.number(),
+  appealId: z.number(),
+  authorId: z.number(),
+  authorName: z.string(),
+  comment: z.string(),
+  createdAt: z.string(),
+});
+
+export const CreateCommentResponseSchema = z.object({
+  success: z.boolean(),
+  data: CommentResultSchema,
+  timestamp: z.string(),
+});
+
+export type CreateCommentResponse = z.infer<typeof CreateCommentResponseSchema>;
