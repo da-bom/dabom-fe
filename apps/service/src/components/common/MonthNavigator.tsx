@@ -24,7 +24,7 @@ const MonthNavigator = ({ currentDateText, onPrev, onNext }: MonthNavigatorProps
         className="flex items-center justify-center transition-opacity hover:opacity-70 active:scale-95"
         aria-label="이전 달로 이동"
       >
-        <ChevronIcon sx={{ fontSize: '15px' }} className="rotate-180" />
+        <ChevronIcon sx={{ width: 16 }} className="rotate-180" />
       </button>
 
       <span className="text-body1-m w-fit text-center tabular-nums">{currentDateText}</span>
@@ -34,7 +34,7 @@ const MonthNavigator = ({ currentDateText, onPrev, onNext }: MonthNavigatorProps
         className="flex items-center justify-center transition-opacity hover:opacity-70 active:scale-95"
         aria-label="다음 달로 이동"
       >
-        <ChevronIcon sx={{ fontSize: '15px' }} />
+        <ChevronIcon sx={{ width: 16 }} />
       </button>
     </div>
   );
