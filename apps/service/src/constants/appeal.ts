@@ -31,7 +31,7 @@ export const APPEAL_UI_TEXT = {
   POLICY_PREFIX: '정책: ',
   CHANGE_PREFIX: '변경: ',
   REASON_PREFIX: '요청 사유: ',
-  EMERGENCY_DATA_AMOUNT: '500MB',
+  EMERGENCY_DATA_AMOUNT: '300MB',
   REASON_INPUT_TITLE: '사유를 입력해 주세요.',
   REASON_INPUT_DESCRIPTION: 'description',
   REASON_INPUT_PLACEHOLDER: '입력하세요..',

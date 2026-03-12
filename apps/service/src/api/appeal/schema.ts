@@ -80,3 +80,26 @@ export const AppealListResponseSchema = z.object({
 });
 
 export type AppealListResponse = z.infer<typeof AppealListResponseSchema>;
+
+export const EmergencyAppealRequestSchema = z.object({
+  requestReason: z.string(),
+  additionalBytes: z.number(),
+});
+
+export type EmergencyAppealRequest = z.infer<typeof EmergencyAppealRequestSchema>;
+
+export const EmergencyAppealResponseSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    appealId: z.number(),
+    type: z.literal('EMERGENCY'),
+    status: z.literal('APPROVED'),
+    additionalBytes: z.number(),
+    newMonthlyLimitBytes: z.number(),
+    requestReason: z.string(),
+    createdAt: z.string(),
+  }),
+  timestamp: z.string(),
+});
+
+export type EmergencyAppealResponse = z.infer<typeof EmergencyAppealResponseSchema>;

@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Button, MainBox } from '@shared';
 
+import { usePostEmergencyAppeal } from 'src/api/appeal/usePostEmergencyAppeal';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 
 function AppealConfirmContent() {
@@ -16,7 +17,22 @@ function AppealConfirmContent() {
   const amount = searchParams.get('amount');
   const start = searchParams.get('start');
   const end = searchParams.get('end');
-  const reason = searchParams.get('reason');
+  const reason = searchParams.get('reason') || '';
+
+  const { mutateAsync: postEmergency } = usePostEmergencyAppeal();
+
+  const handleSubmit = async () => {
+    if (policy === APPEAL_TYPE_LABEL.EMERGENCY) {
+      try {
+        await postEmergency(reason);
+        router.push('/appeal');
+      } catch (error) {
+        console.error('긴급 요청 에러:', error);
+      }
+    } else {
+      router.push('/appeal');
+    }
+  };
 
   const getChangedValue = () => {
     if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {
@@ -26,7 +42,7 @@ function AppealConfirmContent() {
       return `${start} ~ ${end}`;
     }
     if (policy === APPEAL_TYPE_LABEL.EMERGENCY) {
-      return amount || APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT;
+      return APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT;
     }
     return '';
   };
@@ -66,13 +82,7 @@ function AppealConfirmContent() {
         <Button size="md-short" color="light" onClick={() => router.back()}>
           이전
         </Button>
-        <Button
-          size="lg"
-          color="primary"
-          onClick={() => {
-            router.push('/appeal');
-          }}
-        >
+        <Button size="lg" color="primary" onClick={handleSubmit}>
           이의 제기 하기
         </Button>
       </div>
