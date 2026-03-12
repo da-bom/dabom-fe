@@ -12,10 +12,16 @@ interface PaginationProps {
 const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  const handleChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    if (page === currentPage) return;
+    onPageChange(page);
+  };
+
   return (
     <div className="flex items-center justify-center gap-2 py-4">
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => handleChange(currentPage - 1)}
         disabled={currentPage === 1}
         className="cursor-pointer text-gray-700 disabled:opacity-30"
       >
@@ -26,7 +32,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         {pages.map((page) => (
           <button
             key={page}
-            onClick={() => onPageChange(page)}
+            onClick={() => handleChange(page)}
             className={cn(
               'text-body2-d flex h-6 w-6 cursor-pointer items-center justify-center rounded-full transition-colors',
               currentPage === page
@@ -40,7 +46,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
       </div>
 
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => handleChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className="cursor-pointer text-gray-700 disabled:opacity-30"
       >

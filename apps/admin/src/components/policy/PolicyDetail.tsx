@@ -7,7 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { CheckOutlinedIcon, UnpublishedIcon } from '@icons';
 import { Button, Drawer, DropDown, MainBox, TextField } from '@shared';
 
-import { PolicyDetail } from 'src/api/policy/schema';
+import { Policy } from 'src/api/policy/schema';
 import { useGetPolicyDetail } from 'src/api/policy/useGetPolicyDetail';
 import { useUpdatePolicy } from 'src/api/policy/useUpdatePolicy';
 
@@ -29,7 +29,7 @@ const PolicyDetailModal = () => {
 
 export default PolicyDetailModal;
 
-const PolicyDetailContent = ({ data, policyId }: { data: PolicyDetail; policyId: number }) => {
+const PolicyDetailContent = ({ data, policyId }: { data: Policy; policyId: number }) => {
   const router = useRouter();
   const { mutate: updatePolicy } = useUpdatePolicy();
 
