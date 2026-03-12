@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
@@ -10,24 +10,21 @@ import { useGetPolicy } from 'src/api/policy/useGetPolicy';
 import Pagination from 'src/components/common/Pagination';
 import { formatPolicy } from 'src/utils/formatPolicy';
 
-const PolicyPage = () => {
+const PolicyContent = () => {
   const searchParams = useSearchParams();
 
   const [page, setPage] = useState(() => {
     return Number(searchParams.get('page')) || 0;
   });
+
   const { data, isPending } = useGetPolicy(page);
 
-  if (isPending) {
-    return <div>로딩</div>;
-  }
+  if (isPending) return <div>로딩 중</div>;
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', newPage.toString());
-
     window.history.pushState({}, '', `?${params}`);
   };
 
@@ -46,7 +43,6 @@ const PolicyPage = () => {
           className="rounded-md"
         />
       </div>
-
       <Pagination
         currentPage={page}
         totalPages={data.totalPages || 1}
@@ -56,4 +52,10 @@ const PolicyPage = () => {
   );
 };
 
-export default PolicyPage;
+export default function PolicyPage() {
+  return (
+    <Suspense fallback={<div>로딩</div>}>
+      <PolicyContent />
+    </Suspense>
+  );
+}
