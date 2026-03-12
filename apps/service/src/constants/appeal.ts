@@ -31,4 +31,5 @@ export const APPEAL_UI_TEXT = {
   POLICY_PREFIX: '정책: ',
   CHANGE_PREFIX: '변경: ',
   REASON_PREFIX: '요청 사유: ',
+  EMERGENCY_DATA_AMOUNT: '500MB',
 } as const;

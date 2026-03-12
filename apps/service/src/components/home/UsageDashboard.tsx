@@ -8,7 +8,7 @@ import { DaboIcon, MainBox, bytesToGB } from '@shared';
 
 import { useGetFamilyUsage, useGetFamilyUsageCurrent } from 'src/api/family/useGetFamilyUsage';
 import { useSSE } from 'src/api/family/useUsageSSE';
-import { APPEAL_TYPE_LABEL } from 'src/constants/appeal';
+import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 import { mockAppealList } from 'src/data/appealList';
 import { getCurrentUserRole } from 'src/utils/auth';
 
@@ -153,7 +153,9 @@ const UsageDashboard = () => {
         onRecapClick={() => router.push('/recap')}
         onEmergencyClick={() =>
           router.push(
-            `/appeal/create/reason?policy=${encodeURIComponent(APPEAL_TYPE_LABEL.EMERGENCY)}&amount=500MB`,
+            `/appeal/create/reason?policy=${encodeURIComponent(
+              APPEAL_TYPE_LABEL.EMERGENCY,
+            )}&amount=${APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT}`,
           )
         }
         onBegClick={() => router.push('/appeal/objection')}

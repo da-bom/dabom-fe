@@ -26,7 +26,7 @@ function AppealConfirmContent() {
       return `${start} ~ ${end}`;
     }
     if (policy === APPEAL_TYPE_LABEL.EMERGENCY) {
-      return amount || '500MB';
+      return amount || APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT;
     }
     return '';
   };
