@@ -1,13 +1,22 @@
+import { ResetIcon } from '@icons';
 import { MainBox } from '@shared';
+import dayjs from 'dayjs';
 
 import HealthStatusCard from 'src/components/dashboard/HealthStatusCard';
 import SummaryCard from 'src/components/dashboard/SummaryCard';
 import TpsStatusCard from 'src/components/dashboard/TpsStatusCard';
 import { DASHBOARD } from 'src/data/dashboard';
 
+// TODO: API 연결 후 API 응답으로 수정
+const timeStamp = '2024-01-15T10:30:00Z';
+
 const DashboardPage = () => {
   return (
     <div className="flex h-screen flex-col gap-4">
+      <div className="flex w-full items-center justify-end gap-1 text-gray-800">
+        <ResetIcon sx={{ width: 16, height: 16 }} />
+        <span>현재 시간: {dayjs(timeStamp).format('YYYY-MM-DD HH:mm')}</span>
+      </div>
       <div className="flex w-full gap-4">
         <TpsStatusCard value={DASHBOARD.currentTps} lastUpdate="2026-03-10 11:18:32" />
         <HealthStatusCard systems={['Kafka', 'Redis', 'MySQL']} />
