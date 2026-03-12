@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Button, formatSize } from '@shared';
@@ -31,34 +33,36 @@ const formatDefaultRule = (type: PolicyType, rules: DefaultRules): string => {
       return '-';
   }
 };
-
 export const formatPolicy = ({ policies }: { policies: Policy[] }) => {
   return policies.map((p) => {
     const isDeactive = !p.isActive;
-
-    const cell = (children: React.ReactNode) => (
-      <div className={isDeactive ? 'text-gray-400' : ''}>{children}</div>
-    );
+    const activeClass = isDeactive ? 'text-gray-400' : '';
 
     return {
       id: p.policyId,
       cells: [
-        cell(p.name),
-        cell(p.requireRole),
-        cell(formatDefaultRule(p.type, p.defaultRules)),
-        cell(p.isActive ? <span className="text-primary">활성화</span> : '비활성화'),
-        cell(
-          p.isActive ? (
-            <Link href={`/policy/${p.policyId}`}>
-              <Button color="light" size="sm">
-                수정
-              </Button>
-            </Link>
-          ) : (
-            <Button color="gray" size="sm">
+        <span key="name" className={activeClass}>
+          {p.name}
+        </span>,
+        <span key="role" className={activeClass}>
+          {p.requireRole}
+        </span>,
+        <span key="rule" className={activeClass}>
+          {formatDefaultRule(p.type, p.defaultRules)}
+        </span>,
+        <span key="status" className={p.isActive ? 'text-primary' : 'text-gray-400'}>
+          {p.isActive ? '활성화' : '비활성화'}
+        </span>,
+        p.isActive ? (
+          <Link key="edit" href={`/policy/${p.policyId}`}>
+            <Button color="light" size="sm">
               수정
             </Button>
-          ),
+          </Link>
+        ) : (
+          <Button key="edit" color="gray" size="sm">
+            수정
+          </Button>
         ),
       ],
     };

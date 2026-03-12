@@ -1,8 +1,8 @@
 'use client';
 
-import { Suspense } from 'react';
+import { useState } from 'react';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { Table } from '@shared';
 
@@ -10,27 +10,29 @@ import { useGetPolicy } from 'src/api/policy/useGetPolicy';
 import Pagination from 'src/components/common/Pagination';
 import { formatPolicy } from 'src/utils/formatPolicy';
 
-const PolicyContent = () => {
-  const router = useRouter();
-  const pathname = usePathname();
+const PolicyPage = () => {
   const searchParams = useSearchParams();
 
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const [page, setPage] = useState(() => {
+    return Number(searchParams.get('page')) || 0;
+  });
+  const { data, isPending } = useGetPolicy(page);
 
-  const { data, isLoading } = useGetPolicy(currentPage - 1);
-
-  const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('page', newPage.toString());
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
-  if (isLoading) {
-    return <div className="p-10 text-center">로딩 중...</div>;
+  if (isPending) {
+    return <div>로딩</div>;
   }
 
-  if (!data || data.policies.length === 0) {
-    return <div className="p-10 text-center">표시할 정책이 없습니다.</div>;
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', newPage.toString());
+
+    window.history.pushState({}, '', `?${params}`);
+  };
+
+  if (!data || !data.policies || data.policies.length === 0) {
+    return <div>표시할 정책이 없습니다.</div>;
   }
 
   const policyRows = formatPolicy({ policies: data.policies });
@@ -45,15 +47,13 @@ const PolicyContent = () => {
         />
       </div>
 
-      <Pagination currentPage={currentPage} totalPages={5} onPageChange={handlePageChange} />
+      <Pagination
+        currentPage={page}
+        totalPages={data.totalPages || 1}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
 
-export default function PolicyPage() {
-  return (
-    <Suspense fallback={<div className="p-10 text-center">페이지 로드 중...</div>}>
-      <PolicyContent />
-    </Suspense>
-  );
-}
+export default PolicyPage;

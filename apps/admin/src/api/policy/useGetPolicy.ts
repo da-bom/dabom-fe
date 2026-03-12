@@ -1,5 +1,5 @@
 import { http } from '@shared';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { PolicyResponse, PolicyResponseSchema } from './schema';
 
@@ -18,7 +18,7 @@ export const getPolicy = async (page: number): Promise<PolicyResponse> => {
 };
 
 export const useGetPolicy = (page: number) => {
-  return useSuspenseQuery<PolicyResponse, Error>({
+  return useQuery<PolicyResponse, Error>({
     queryKey: ['policies', page],
     queryFn: () => getPolicy(page),
   });

@@ -1,13 +1,13 @@
 import { http } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 
-import { PolicyDetail, PolicyDetailSchema } from './schema';
+import { Policy, PolicySchema } from './schema';
 
-export const getPolicyDetail = async (policyId: number): Promise<PolicyDetail> => {
+export const getPolicyDetail = async (policyId: number): Promise<Policy> => {
   const response = await http.get(`/policies/${policyId}`);
 
   try {
-    const parsed = PolicyDetailSchema.parse(response);
+    const parsed = PolicySchema.parse(response);
     return parsed;
   } catch (error) {
     console.error('❌ Zod 파싱 실패:', error);
