@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Button } from '@shared';
 
+import { APPEAL_UI_TEXT } from 'src/constants/appeal';
+
 function AppealReasonContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -14,7 +16,7 @@ function AppealReasonContent() {
 
   const handleComplete = () => {
     if (!reason.trim()) {
-      toast.error('사유를 입력해 주세요.');
+      toast.error(APPEAL_UI_TEXT.REASON_INPUT_ERROR);
       return;
     }
 
@@ -27,14 +29,14 @@ function AppealReasonContent() {
     <div className="bg-background-base flex flex-col">
       <div className="flex flex-col items-center gap-7 px-5 pt-20">
         <div className="flex w-full flex-col items-start gap-2">
-          <h1 className="text-h2-m">사유를 입력해 주세요.</h1>
-          <p className="text-body2-m text-gray-700">description</p>
+          <h1 className="text-h2-m">{APPEAL_UI_TEXT.REASON_INPUT_TITLE}</h1>
+          <p className="text-body2-m text-gray-700">{APPEAL_UI_TEXT.REASON_INPUT_DESCRIPTION}</p>
         </div>
 
         <div className="bg-brand-white flex h-38 w-full flex-col rounded-2xl border border-gray-200 p-4">
           <textarea
             className="text-body1-m h-full w-full resize-none outline-none placeholder:text-gray-500"
-            placeholder="입력하세요.."
+            placeholder={APPEAL_UI_TEXT.REASON_INPUT_PLACEHOLDER}
             value={reason}
             onChange={(e) => setReason(e.target.value)}
           />

@@ -32,4 +32,8 @@ export const APPEAL_UI_TEXT = {
   CHANGE_PREFIX: '변경: ',
   REASON_PREFIX: '요청 사유: ',
   EMERGENCY_DATA_AMOUNT: '500MB',
+  REASON_INPUT_TITLE: '사유를 입력해 주세요.',
+  REASON_INPUT_DESCRIPTION: 'description',
+  REASON_INPUT_PLACEHOLDER: '입력하세요..',
+  REASON_INPUT_ERROR: '사유를 입력해 주세요.',
 } as const;
