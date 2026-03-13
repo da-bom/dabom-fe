@@ -26,12 +26,12 @@ const RewardEditDrawer = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const { mutate: updateReward, isPending: isUpdating } = useUpdateReward();
-  const { mutate: deleteReward } = useDeleteReward();
+  const { mutate: deleteReward, isPending: isDeleting } = useDeleteReward();
+
   const { mutateAsync: uploadImage, isPending: isUploading } = useUploadImage();
 
   const { register, handleSubmit, setValue } = useForm<RewardUpdate>({
     resolver: zodResolver(RewardUpdateSchema),
-    // TODO: defaultValue 추가
   });
 
   const handleImageClick = () => {
@@ -45,10 +45,11 @@ const RewardEditDrawer = () => {
 
     try {
       const uploadedUrl = await uploadImage({ file, type: 'REWARD' });
+
       setValue('thumbnailUrl', uploadedUrl);
       setPreviewUrl(uploadedUrl);
     } catch (error) {
-      console.error(error);
+      console.error('이미지 업로드 실패:', error);
     } finally {
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
@@ -62,14 +63,14 @@ const RewardEditDrawer = () => {
     setIsModalOpen(true);
   };
 
-  const isSubmitting = isUpdating || isUploading;
+  const isSubmitting = isUpdating || isUploading || isDeleting;
 
   return (
     <>
       <ConfirmModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        buttonText="보상 삭제"
+        buttonText={isDeleting ? '삭제 중...' : '보상 삭제'}
         onClickButton={() => {
           deleteReward(targetId);
           setIsModalOpen(false);

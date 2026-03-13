@@ -19,7 +19,7 @@ const RewardCreateDrawer = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const { mutate: createReward, isPending } = useCreateReward();
+  const { mutate: createReward, isPending: isCreating } = useCreateReward();
   const { mutateAsync: uploadImage, isPending: isUploading } = useUploadImage();
 
   const { register, handleSubmit, control, setValue } = useForm<RewardCreate>({
@@ -48,13 +48,17 @@ const RewardCreateDrawer = () => {
 
       setPreviewUrl(uploadedUrl);
     } catch (error) {
-      console.error(error);
+      console.error('이미지 업로드 에러:', error);
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
   const onSubmit = (data: RewardCreate) => {
     createReward(data);
   };
+
+  const isSubmitting = isCreating || isUploading;
 
   return (
     <Drawer>
@@ -136,8 +140,8 @@ const RewardCreateDrawer = () => {
           <Button color="light" size="md-short" type="button" onClick={() => router.back()}>
             취소
           </Button>
-          <Button color="dark" size="md" type="submit" disabled={isPending}>
-            {isPending ? '저장 중...' : '변경사항 저장'}
+          <Button color="dark" size="md" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? '처리 중...' : '변경사항 저장'}
           </Button>
         </div>
       </form>

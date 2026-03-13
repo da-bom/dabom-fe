@@ -10,6 +10,7 @@ export const uploadImage = async (file: File, type: UploadType = 'REWARD') => {
   formData.append('file', file);
 
   const response = await http.post(`/uploads/images?type=${type}`, formData, {
+    timeout: 60000,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
