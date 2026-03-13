@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
@@ -9,6 +9,7 @@ import { Button, formatSize } from '@shared';
 
 import { useGetAppealDetail } from 'src/api/appeal/useGetAppealDetail';
 import { usePatchAppealRespond } from 'src/api/appeal/usePatchAppealRespond';
+import { usePostComment } from 'src/api/appeal/usePostComment';
 import { AppealInputBar, ChatBubble, PolicySummaryCard } from 'src/components/appeal';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 import { getCurrentUserRole } from 'src/utils/auth';
@@ -25,6 +26,7 @@ const isValidStatus = (status: string | null): status is AppealStatus => {
 function AppealCommentContent() {
   const searchParams = useSearchParams();
   const appealId = Number(searchParams.get('id'));
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const selectedPolicy = searchParams.get('policy') || APPEAL_TYPE_LABEL.NORMAL;
   const inputAmount = searchParams.get('amount');
@@ -35,11 +37,18 @@ function AppealCommentContent() {
 
   const { data, isLoading, isError, refetch } = useGetAppealDetail(appealId, cursor, size);
   const { mutateAsync: respondAppeal } = usePatchAppealRespond(appealId);
+  const { mutateAsync: postComment } = usePostComment(appealId);
 
   const [inputValue, setInputValue] = useState('');
 
   const userRole = getCurrentUserRole();
   const isOwner = userRole === 'OWNER';
+
+  useLayoutEffect(() => {
+    if (scrollRef.current && data?.comments?.content) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [data?.comments?.content]);
 
   if (isLoading) {
     return (
@@ -64,6 +73,17 @@ function AppealCommentContent() {
     ? (data.status.toLowerCase() as AppealStatus)
     : 'pending';
   const displayReason = inputReason || data.requestReason;
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim()) return;
+
+    try {
+      await postComment({ comment: inputValue });
+      setInputValue('');
+    } catch (error) {
+      console.error('댓글 작성 실패:', error);
+    }
+  };
 
   const handleApprove = async () => {
     try {
@@ -121,7 +141,7 @@ function AppealCommentContent() {
           />
         </div>
 
-        <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full flex-col gap-4" ref={scrollRef}>
           {data.comments?.content.map((msg) => (
             <ChatBubble
               key={msg.commentId}
@@ -142,10 +162,7 @@ function AppealCommentContent() {
         <AppealInputBar
           value={inputValue}
           onChange={setInputValue}
-          onSubmit={() => {
-            console.log('Submit:', inputValue);
-            setInputValue('');
-          }}
+          onSubmit={handleSendMessage}
           disabled={status !== 'pending'}
         />
       </div>
