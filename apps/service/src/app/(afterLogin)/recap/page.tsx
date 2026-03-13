@@ -3,6 +3,7 @@
 import React, { Suspense, useMemo, useState } from 'react';
 
 import { Button, IosShareIcon } from '@shared';
+import dayjs from 'dayjs';
 
 import { useGetMonthlyRecap } from 'src/api/recap/useGetMonthlyRecap';
 import { RecapStep1Usage } from 'src/components/recap/RecapStep1Usage';
@@ -22,10 +23,10 @@ function RecapContent() {
   const [currentStep, setCurrentStep] = useState(0);
 
   const { year, month } = useMemo(() => {
-    const now = new Date();
+    const prevMonth = dayjs().subtract(1, 'month');
     return {
-      year: now.getFullYear(),
-      month: now.getMonth() + 1,
+      year: prevMonth.year(),
+      month: prevMonth.month() + 1,
     };
   }, []);
 
@@ -68,17 +69,19 @@ function RecapContent() {
     />,
     <RecapStep3Appeal
       key="step3"
-      requesterName={data.appealHighlights.topSuccessfulRequester.requesterName}
+      requesterName={data.appealHighlights.topSuccessfulRequester?.requesterName ?? ''}
       successRate={successRate}
-      appeals={data.appealHighlights.topSuccessfulRequester.recentApprovedAppeals}
+      appeals={data.appealHighlights.topSuccessfulRequester?.recentApprovedAppeals ?? []}
     />,
     <RecapStep4Angel
       key="step4"
-      approverName={data.appealHighlights.topAcceptedApprover.approverName}
-      approvedAppeals={data.appealHighlights.topAcceptedApprover.recentAcceptedAppeals.slice(
-        0,
-        RECAP_CONFIG.MAX_RECENT_APPEALS,
-      )}
+      approverName={data.appealHighlights.topAcceptedApprover?.approverName ?? ''}
+      approvedAppeals={
+        data.appealHighlights.topAcceptedApprover?.recentAcceptedAppeals.slice(
+          0,
+          RECAP_CONFIG.MAX_RECENT_APPEALS,
+        ) ?? []
+      }
     />,
     <RecapStep5Mission
       key="step5"

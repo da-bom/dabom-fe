@@ -1,7 +1,7 @@
 import { QUERY_TIME, http } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 
-import { MonthlyRecapResponseSchema } from './schema';
+import { MonthlyRecapDataSchema } from './schema';
 
 export const getMonthlyRecap = async (year: number, month: number) => {
   const response = await http.get('/recaps/monthly', {
@@ -12,8 +12,7 @@ export const getMonthlyRecap = async (year: number, month: number) => {
   });
 
   try {
-    const parsed = MonthlyRecapResponseSchema.parse(response);
-    return parsed.data;
+    return MonthlyRecapDataSchema.parse(response);
   } catch (error) {
     console.error('❌ 월간 리캡 Zod 파싱 실패:', error);
     throw error;

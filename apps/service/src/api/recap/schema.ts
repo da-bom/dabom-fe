@@ -28,39 +28,40 @@ export const AppealSummarySchema = z.object({
   rejectedAppeals: z.number(),
 });
 
-export const RecentApprovedAppealSchema = z.object({
+const BaseAppealRecapSchema = z.object({
   appealId: z.number(),
+  requestReason: z.string(),
+});
+
+export const RecentApprovedAppealSchema = BaseAppealRecapSchema.extend({
   approverId: z.number(),
   approverName: z.string(),
-  requestReason: z.string(),
   requestedAt: z.string(),
 });
 
-export const RecentAcceptedAppealSchema = z.object({
-  appealId: z.number(),
+export const RecentAcceptedAppealSchema = BaseAppealRecapSchema.extend({
   requesterId: z.number(),
   requesterName: z.string(),
-  requestReason: z.string(),
   resolvedAt: z.string(),
 });
 
 export const TopSuccessfulRequesterSchema = z.object({
-  requesterId: z.number(),
-  requesterName: z.string(),
+  requesterId: z.number().nullable(),
+  requesterName: z.string().nullable(),
   approvedAppealCount: z.number(),
   recentApprovedAppeals: z.array(RecentApprovedAppealSchema),
 });
 
 export const TopAcceptedApproverSchema = z.object({
-  approverId: z.number(),
-  approverName: z.string(),
+  approverId: z.number().nullable(),
+  approverName: z.string().nullable(),
   approvedAppealCount: z.number(),
   recentAcceptedAppeals: z.array(RecentAcceptedAppealSchema),
 });
 
 export const AppealHighlightsSchema = z.object({
-  topSuccessfulRequester: TopSuccessfulRequesterSchema,
-  topAcceptedApprover: TopAcceptedApproverSchema,
+  topSuccessfulRequester: TopSuccessfulRequesterSchema.nullable(),
+  topAcceptedApprover: TopAcceptedApproverSchema.nullable(),
 });
 
 export const MonthlyRecapDataSchema = z.object({
