@@ -28,3 +28,29 @@ export const ReceivedRewardListSchema = z.object({
 
 export type ReceivedReward = z.infer<typeof ReceivedRewardSchema>;
 export type ReceivedRewardList = z.infer<typeof ReceivedRewardListSchema>;
+
+// 보상 요청 응답 결과 데이터
+export const RespondRewardDataSchema = z.object({
+  requestId: z.number(),
+  status: z.string(), // "APPROVED", "REJECTED" 등
+  missionItem: z.object({
+    missionItemId: z.number(),
+    missionText: z.string(),
+    status: z.string(),
+    reward: z.object({
+      rewardId: z.number(),
+      name: z.string(),
+      category: z.string(),
+      thumbnailUrl: z.string(),
+      templateId: z.number(),
+    }),
+  }),
+  respondedBy: z.object({
+    customerId: z.number(),
+    name: z.string(),
+  }),
+  rejectReason: z.string().nullable(),
+  updatedAt: z.string(),
+});
+
+export type RespondRewardData = z.infer<typeof RespondRewardDataSchema>;
