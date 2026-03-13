@@ -87,3 +87,18 @@ export const RewardGrantListResponseSchema = z.object({
   totalElements: z.number(),
   totalPages: z.number(),
 });
+
+export const DeleteRewardTemplateResponseSchema = z.object({
+  success: z.boolean(),
+  data: z.any().nullable(),
+  error: z
+    .object({
+      code: z.string().nullable(),
+      message: z.string().nullable(),
+      details: z.record(z.any()).nullable(),
+    })
+    .nullable(),
+  timestamp: z.string(),
+});
+
+export type DeleteRewardTemplateResponse = z.infer<typeof DeleteRewardTemplateResponseSchema>;

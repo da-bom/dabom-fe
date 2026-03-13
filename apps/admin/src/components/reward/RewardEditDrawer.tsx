@@ -76,8 +76,19 @@ const RewardEditDrawer = () => {
     );
   };
 
-  const handleDelete = () => {
-    setIsModalOpen(true);
+  const onClickDelete = () => {
+    deleteReward(targetId, {
+      onSuccess: (res) => {
+        if (res) {
+          setIsModalOpen(false);
+          router.push('/reward/products');
+        }
+      },
+      onError: () => {
+        alert('보상 삭제에 실패했습니다.');
+        setIsModalOpen(false);
+      },
+    });
   };
 
   const isSubmitting = isUpdating || isUploading || isDeleting;
@@ -98,13 +109,10 @@ const RewardEditDrawer = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         buttonText={isDeleting ? '삭제 중...' : '보상 삭제'}
-        onClickButton={() => {
-          deleteReward(targetId);
-          setIsModalOpen(false);
-        }}
+        onClickButton={onClickDelete}
       >
         <div className="text-body2-d flex flex-col gap-1">
-          <p className="font-bold">• 삭제한 보상은 복구할 수 없습니다.</p>
+          <p className="text-negative font-bold">• 삭제한 보상은 복구할 수 없습니다.</p>
           <p>• 보상이 삭제되어도 유저에게 제공된 보상은 해당 보상의 만료일까지 유효합니다.</p>
         </div>
       </ConfirmModal>
@@ -131,7 +139,7 @@ const RewardEditDrawer = () => {
               <span className="text-body3-d bg-background-base rounded-md p-2 text-gray-700">
                 {rewardData?.category === 'DATA' ? '데이터' : '기프티콘'}
               </span>
-              <span className="text-body3-d text-gray-700">유형은 변경할 수 없습니다.</span>
+              <span className="text-body3-d ml-2 text-gray-700">유형은 변경할 수 없습니다.</span>
             </TextField>
 
             <TextField label="썸네일">
@@ -181,8 +189,8 @@ const RewardEditDrawer = () => {
               color="light"
               size="md-short"
               type="button"
-              className="text-negative"
-              onClick={handleDelete}
+              className="text-negative font-bold"
+              onClick={() => setIsModalOpen(true)}
               disabled={isSubmitting}
             >
               삭제
