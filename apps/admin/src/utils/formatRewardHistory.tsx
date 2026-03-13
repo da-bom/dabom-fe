@@ -32,20 +32,28 @@ export const formatRewardHistory = ({ history }: { history: readonly RewardGrant
         <span key={`mission-${item.grantId}`}>{item.mission.missionText}</span>,
 
         <span key={`coupon-${item.grantId}`} className="inline-flex items-center gap-1">
-          <span>{item.couponCode}</span>
-          <button
-            type="button"
-            onClick={() => navigator.clipboard.writeText(String(item.grantId))}
-            className="flex items-center"
-            aria-label="쿠폰 번호 복사"
-          >
-            <CopyIcon className="text-gray-400 hover:text-gray-800" sx={{ width: 16 }} />
-          </button>
+          {item.couponCode ? (
+            <>
+              <span>{`${item.couponCode.slice(0, -6)}******`}</span>
+              <button
+                type="button"
+                onClick={() => navigator.clipboard.writeText(item.couponCode!)}
+                className="ml-1 flex items-center"
+                aria-label="쿠폰 번호 복사"
+              >
+                <CopyIcon className="text-gray-400 hover:text-gray-800" sx={{ width: 16 }} />
+              </button>
+            </>
+          ) : (
+            <span>-</span>
+          )}
         </span>,
 
         <span key={`issued-${item.grantId}`}>{dayjs(item.createdAt).format('YYYY.MM.DD')}</span>,
 
-        <span key={`expired-${item.grantId}`}>{dayjs(item.expiredAt).format('YYYY.MM.DD')}</span>,
+        <span key={`expired-${item.grantId}`}>
+          {item.expiredAt ? dayjs(item.expiredAt).format('YYYY.MM.DD') : '-'}
+        </span>,
       ],
     };
   });
