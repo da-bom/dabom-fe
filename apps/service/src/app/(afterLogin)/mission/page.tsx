@@ -10,7 +10,8 @@ import { useGetMissions } from 'src/api/mission/useGetMissions';
 import MemberActionButton from 'src/components/mission/MemberActionButton';
 import OwnerActionButton from 'src/components/mission/OwnerActionButton';
 
-const isOwner = true;
+// TODO: API 응답값으로 수정
+const isOwner = false;
 
 const MissionPage = () => {
   const { data, isLoading, isError } = useGetMissions({ size: 20 });

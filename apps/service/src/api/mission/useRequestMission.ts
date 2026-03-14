@@ -8,7 +8,7 @@ export const requestMissionApproval = async (missionId: number) => {
 
   try {
     const parsed = MissionRequestResponseSchema.parse(response);
-    return parsed.data;
+    return parsed;
   } catch (error) {
     console.error('❌ 미션 요청 파싱 실패:', error);
     throw error;
@@ -21,7 +21,7 @@ export const useRequestMission = () => {
   return useMutation({
     mutationFn: (missionId: number) => requestMissionApproval(missionId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['missionHistory'] });
+      queryClient.invalidateQueries({ queryKey: ['missions'] });
       alert('미션 완료 요청을 보냈습니다!');
     },
     onError: () => {

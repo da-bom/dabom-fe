@@ -90,7 +90,7 @@ export const MissionHistoryDataSchema = z.object({
 });
 export type MissionHistoryData = z.infer<typeof MissionHistoryDataSchema>;
 
-export const MissionRequestResponseDataSchema = z.object({
+export const MissionRequestResponseSchema = z.object({
   requestId: z.number(),
   missionItem: MissionItemSchema,
   status: z.string(),
@@ -99,19 +99,6 @@ export const MissionRequestResponseDataSchema = z.object({
     name: z.string(),
   }),
   createdAt: z.string(),
-});
-
-export const MissionRequestResponseSchema = z.object({
-  success: z.boolean(),
-  data: MissionRequestResponseDataSchema,
-  error: z
-    .object({
-      code: z.string(),
-      message: z.string(),
-      details: z.record(z.any()),
-    })
-    .nullable(),
-  timestamp: z.string(),
 });
 
 export type MissionRequestResponse = z.infer<typeof MissionRequestResponseSchema>;
