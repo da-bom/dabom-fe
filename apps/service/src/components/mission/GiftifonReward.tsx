@@ -4,13 +4,12 @@ import { cn } from '@shared';
 
 import { useGetRewardTemplates } from 'src/api/reward/useGetRewardTemplates';
 
-const GifticonReward = ({
-  value,
-  onSelect,
-}: {
+interface GifticonRewardProps {
   value: number | null;
-  onSelect: (v: number) => void;
-}) => {
+  onSelect: (v: number, name: string) => void;
+}
+
+const GifticonReward = ({ value, onSelect }: GifticonRewardProps) => {
   const { data: templates } = useGetRewardTemplates('GIFTICON');
 
   return (
@@ -29,7 +28,7 @@ const GifticonReward = ({
           <button
             key={reward.id}
             type="button"
-            onClick={() => onSelect(reward.id)}
+            onClick={() => onSelect(reward.id, reward.name)}
             className={cn(
               'flex h-45 flex-col items-center justify-between rounded-2xl border p-4 transition-all',
               value === reward.id

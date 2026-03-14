@@ -2,14 +2,16 @@
 
 import { cn } from '@shared';
 
-import { DATA } from 'src/constants/reward';
+import { useGetRewardTemplates } from 'src/api/reward/useGetRewardTemplates';
 
 interface DataRewardProps {
   value: number;
-  onSelect: (templateId: number) => void;
+  onSelect: (templateId: number, templateName: string) => void;
 }
 
 const DataReward = ({ value, onSelect }: DataRewardProps) => {
+  const { data: templates } = useGetRewardTemplates('DATA');
+
   return (
     <div className="animate-in fade-in mt-10 flex flex-col gap-3 duration-300">
       <p className="flex flex-col gap-2">
@@ -18,22 +20,22 @@ const DataReward = ({ value, onSelect }: DataRewardProps) => {
       </p>
 
       <div className="mb-110 grid grid-cols-2 gap-4">
-        {DATA.map((option) => {
+        {templates?.map((option) => {
           const isSelected = value === option.id;
 
           return (
             <button
               key={option.id}
               type="button"
-              onClick={() => onSelect(option.id)}
+              onClick={() => onSelect(option.id, option.name)}
               className={cn(
                 'text-body1-m h-14 rounded-2xl border transition-all',
                 isSelected
-                  ? 'bg-primary-100 text-brand-dark border-gray-500'
+                  ? 'bg-primary-100 text-brand-dark border-gray-500 font-bold'
                   : 'border-gray-200 bg-white text-gray-700',
               )}
             >
-              {option.label}
+              {option.name}
             </button>
           );
         })}

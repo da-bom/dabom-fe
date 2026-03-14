@@ -14,8 +14,9 @@ const Step2Target = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
 
   const selectedId = watch('targetCustomerId');
 
-  const handleSelect = (id: number) => {
+  const handleSelect = (id: number, name: string) => {
     setValue('targetCustomerId', id, { shouldValidate: true });
+    setValue('targetName', name);
   };
 
   return (
@@ -38,7 +39,7 @@ const Step2Target = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
                   <button
                     key={member.customerId}
                     type="button"
-                    onClick={() => handleSelect(member.customerId)}
+                    onClick={() => handleSelect(member.customerId, member.name)}
                     className={cn(
                       'text-body1-m h-14 rounded-2xl border transition-all',
                       isSelected

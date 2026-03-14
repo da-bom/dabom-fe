@@ -4,6 +4,8 @@ export const MissionCreateSchema = z.object({
   missionText: z.string().max(20, '최대 20자까지 입력 가능합니다.'),
   targetCustomerId: z.number(),
   rewardTemplateId: z.number(),
+  rewardName: z.string().optional(),
+  targetName: z.string().optional(),
 });
 
 export type MissionCreate = z.infer<typeof MissionCreateSchema>;

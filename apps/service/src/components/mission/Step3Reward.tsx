@@ -20,13 +20,15 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
 
   const detailRef = useRef<HTMLDivElement>(null);
 
-  const handleTypeSelect = (type: 'DATA' | 'GIFTICON' | null) => {
+  const handleTypeSelect = (type: 'DATA' | 'GIFTICON') => {
     setSelectedType(type);
     setValue('rewardTemplateId', 0);
+    setValue('rewardName', '');
   };
 
-  const handleValueSelect = (templateId: number) => {
+  const handleValueSelect = (templateId: number, templateName: string) => {
     setValue('rewardTemplateId', templateId, { shouldValidate: true });
+    setValue('rewardName', templateName);
   };
 
   useEffect(() => {
@@ -50,10 +52,7 @@ const Step3Reward = ({ prevStep, nextStep }: { prevStep: () => void; nextStep: (
                 <button
                   key={type}
                   type="button"
-                  onClick={() => {
-                    handleTypeSelect(type);
-                    console.log('클릭!');
-                  }}
+                  onClick={() => handleTypeSelect(type as 'DATA' | 'GIFTICON')}
                   className={cn(
                     'text-body1-m h-14 cursor-pointer rounded-2xl border transition-all',
                     selectedType === type
