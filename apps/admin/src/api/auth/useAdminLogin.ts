@@ -1,5 +1,6 @@
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, http } from '@shared';
 import { useMutation } from '@tanstack/react-query';
+import { setCookie } from 'cookies-next';
 
 import { ApiErrorResponse } from '@shared/types/error';
 
@@ -31,6 +32,11 @@ export const useAdminLogin = () => {
     onSuccess: (data) => {
       localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
       localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+
+      setCookie(ACCESS_TOKEN_KEY, data.accessToken, {
+        path: '/',
+        maxAge: 60 * 60 * 24,
+      });
     },
 
     onError: (error: ApiErrorResponse) => {

@@ -1,4 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import { deleteCookie, setCookie } from 'cookies-next';
 
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../constants/auth';
 import { ApiError, ApiErrorResponse, ERROR_CODES, ERROR_MESSAGE_MAP } from '../types/error';
@@ -106,6 +107,9 @@ http.interceptors.response.use(
           localStorage.setItem(ACCESS_TOKEN_KEY, newAT);
           localStorage.setItem(REFRESH_TOKEN_KEY, newRT);
 
+          setCookie(ACCESS_TOKEN_KEY, newAT, { path: '/' });
+          setCookie(REFRESH_TOKEN_KEY, newRT, { path: '/' });
+
           processQueue(null, newAT);
 
           if (originalRequest.headers) {
@@ -114,8 +118,11 @@ http.interceptors.response.use(
           return http(originalRequest);
         } catch (refreshError) {
           processQueue(refreshError, null);
+
           localStorage.removeItem(ACCESS_TOKEN_KEY);
           localStorage.removeItem(REFRESH_TOKEN_KEY);
+          deleteCookie(ACCESS_TOKEN_KEY);
+          deleteCookie(REFRESH_TOKEN_KEY);
 
           if (window.location.pathname !== '/login' && window.location.pathname !== '/expired') {
             window.location.href = '/expired';
