@@ -22,6 +22,10 @@ const FamilyPage = () => {
   const [params, setParams] = useState<FamilySearchRequest>(INITIAL_FAMILY_SEARCH_PARAMS);
   const [usageRange, setUsageRange] = useState({ min: '', max: '' });
 
+  const handlePageChange = (page: number) => {
+    setParams((prev) => ({ ...prev, page }));
+  };
+
   const handleSearch = (type: string, keyword: string) => {
     setParams((prev) => ({
       ...prev,
@@ -102,7 +106,12 @@ const FamilyPage = () => {
 
       <div className="flex h-full gap-5 overflow-hidden">
         <MainBox className="h-full w-86 p-4">
-          <FamilyList params={params} selectedFam={selectedFam} setSelectedFam={setSelectedFam} />
+          <FamilyList
+            params={params}
+            selectedFam={selectedFam}
+            setSelectedFam={setSelectedFam}
+            onPageChange={handlePageChange}
+          />
         </MainBox>
         <MainBox className="h-full w-full flex-1 overflow-auto">
           <FamilyDetail selectedFam={selectedFam} />
