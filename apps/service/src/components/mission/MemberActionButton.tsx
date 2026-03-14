@@ -4,7 +4,13 @@ import { useRequestMission } from 'src/api/mission/useRequestMission';
 
 import StatusBox from './StatusBox';
 
-const MemberActionButton = ({ requestId, status }: { requestId: number; status: string }) => {
+const MemberActionButton = ({
+  requestId,
+  status,
+}: {
+  requestId: number;
+  status: 'PENDING' | 'REJECTED' | null;
+}) => {
   const { mutate: requestApproval } = useRequestMission();
 
   const handleRequest = () => {
