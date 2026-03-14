@@ -16,7 +16,7 @@ const DesiredRulesSchema = z
 
 const AppealBaseSchema = z.object({
   appealId: z.number(),
-  policyAssignmentId: z.number(),
+  policyAssignmentId: z.number().nullish(),
   status: AppealStatusSchema,
   desiredRules: DesiredRulesSchema,
   createdAt: z.string(),
@@ -32,7 +32,7 @@ export const CommentSchema = z.object({
 
 export const AppealSummarySchema = AppealBaseSchema.extend({
   type: AppealTypeSchema,
-  policyType: z.string(),
+  policyType: z.string().nullish(),
   requesterId: z.number(),
   requesterName: z.string(),
   requestReason: z.string(),
