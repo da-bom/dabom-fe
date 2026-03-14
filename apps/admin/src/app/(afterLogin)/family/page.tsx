@@ -22,10 +22,7 @@ const FamilyPage = () => {
   const [params, setParams] = useState<FamilySearchRequest>(INITIAL_FAMILY_SEARCH_PARAMS);
   const [usageRange, setUsageRange] = useState({ min: '', max: '' });
 
-  console.log(params);
-
   const handleSearch = (type: string, keyword: string) => {
-    console.log('여기 들어왓나?');
     setParams((prev) => ({
       ...prev,
       page: 0,

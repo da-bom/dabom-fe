@@ -1,5 +1,6 @@
 'use client';
 
+import { Divider } from '@mui/material';
 import { Badge, Button } from '@shared';
 
 import { useGetFamilyDetail } from 'src/api/family/useGetFamilyDetail';
@@ -33,8 +34,7 @@ const FamilyDetail = ({ selectedFam }: { selectedFam: number | undefined }) => {
           </Badge>
           <span className="text-body1-d">{familyDetail.familyName}</span>
         </div>
-        <div className="w-full border border-gray-100" />
-
+        <Divider />
         <UsageBox familyDetail={familyDetail} />
         <FamilyTable familyDetail={familyDetail} />
       </div>
