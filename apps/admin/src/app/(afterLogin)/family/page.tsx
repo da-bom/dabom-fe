@@ -114,7 +114,7 @@ const FamilyPage = () => {
           />
         </MainBox>
         <MainBox className="h-full w-full flex-1 overflow-auto">
-          <FamilyDetail selectedFam={selectedFam} />
+          <FamilyDetail key={selectedFam} selectedFam={selectedFam} />
         </MainBox>
       </div>
     </div>

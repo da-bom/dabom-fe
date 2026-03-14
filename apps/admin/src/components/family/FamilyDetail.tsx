@@ -1,8 +1,11 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Divider } from '@mui/material';
 import { Badge, Button } from '@shared';
 
+import { FamilyDetail as FamilyDetailType } from 'src/api/family/schema';
 import { useGetFamilyDetail } from 'src/api/family/useGetFamilyDetail';
 
 import Error from '../common/Error';
@@ -11,7 +14,19 @@ import FamilyTable from './FamilyTable';
 import UsageBox from './UsageBox';
 
 const FamilyDetail = ({ selectedFam }: { selectedFam: number | undefined }) => {
-  const { data: familyDetail, isLoading } = useGetFamilyDetail(selectedFam);
+  const { data: serverData, isLoading } = useGetFamilyDetail(selectedFam);
+
+  const [familyDetail, setFamilyDetail] = useState<FamilyDetailType | null>(null);
+
+  if (!familyDetail && serverData) {
+    setFamilyDetail(serverData);
+  }
+
+  const handleSave = () => {
+    if (!familyDetail) return;
+    // TODO: useUpdateFamily mutate 호출
+    console.log('저장될 데이터:', familyDetail);
+  };
 
   if (!selectedFam)
     return (
@@ -35,12 +50,13 @@ const FamilyDetail = ({ selectedFam }: { selectedFam: number | undefined }) => {
           <span className="text-body1-d">{familyDetail.familyName}</span>
         </div>
         <Divider />
+
         <UsageBox familyDetail={familyDetail} />
-        <FamilyTable familyDetail={familyDetail} />
+        <FamilyTable familyDetail={familyDetail} onChange={(updated) => setFamilyDetail(updated)} />
       </div>
 
       <div className="flex justify-end">
-        <Button color="dark" size="md">
+        <Button color="dark" size="md" onClick={handleSave}>
           변경사항 저장
         </Button>
       </div>
