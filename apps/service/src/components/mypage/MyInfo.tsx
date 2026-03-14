@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { EditIcon } from '@icons';
 import { CURRENT_DATE, DaboIcon, Divider, Grade, bytesToGB, cn } from '@shared';
 
+import { useUpdateFamilyName } from 'src/api/family/useUpdateFamilyName';
 import { useGetMyPage } from 'src/api/mypage/useGetMypage';
 
 import PolicySimple from '../policy/PolicySimple';
@@ -17,6 +18,7 @@ const ProgressBar = dynamic(() => import('src/components/common/ProgressBar'), {
 
 const MyInfo = () => {
   const { data: myPageData, isLoading } = useGetMyPage(CURRENT_DATE.YEAR, CURRENT_DATE.MONTH);
+  const { mutate: updateFamilyName } = useUpdateFamilyName();
 
   const [familyName, setFamilyName] = useState('');
   const [inputWidth, setInputWidth] = useState(0);
@@ -25,8 +27,10 @@ const MyInfo = () => {
   const spanRef = useRef<HTMLSpanElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  if (myPageData?.familyName && !familyName && !isEditing) {
+  const [isInitialized, setIsInitialized] = useState(false);
+  if (myPageData?.familyName && !isInitialized) {
     setFamilyName(myPageData.familyName);
+    setIsInitialized(true);
   }
 
   useEffect(() => {
@@ -53,6 +57,12 @@ const MyInfo = () => {
 
   const handleBlur = () => {
     setIsEditing(false);
+
+    if (familyName !== myPageData.familyName && familyName.trim() !== '') {
+      updateFamilyName(familyName);
+    } else if (familyName.trim() === '') {
+      setFamilyName(myPageData.familyName);
+    }
   };
 
   return (
