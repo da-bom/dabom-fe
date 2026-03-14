@@ -7,16 +7,32 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Button } from '@shared';
 
-import { APPEAL_UI_TEXT } from 'src/constants/appeal';
+import { usePostEmergencyAppeal } from 'src/api/appeal/usePostEmergencyAppeal';
+import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 
 function AppealReasonContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [reason, setReason] = useState('');
 
-  const handleComplete = () => {
+  const policyType = searchParams.get('policy');
+  const isEmergency = policyType === APPEAL_TYPE_LABEL.EMERGENCY;
+
+  const { mutateAsync: postEmergency } = usePostEmergencyAppeal();
+
+  const handleComplete = async () => {
     if (!reason.trim()) {
       toast.error(APPEAL_UI_TEXT.REASON_INPUT_ERROR);
+      return;
+    }
+
+    if (isEmergency) {
+      try {
+        await postEmergency(reason);
+        router.replace('/appeal');
+      } catch (error) {
+        console.error('긴급 요청 실패:', error);
+      }
       return;
     }
 
