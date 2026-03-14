@@ -1,10 +1,12 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useMemo, useState } from 'react';
 
 import { IosShareIcon } from '@icons';
 import { Button } from '@shared';
+import dayjs from 'dayjs';
 
+import { useGetMonthlyRecap } from 'src/api/recap/useGetMonthlyRecap';
 import { RecapStep1Usage } from 'src/components/recap/RecapStep1Usage';
 import { RecapStep2Time } from 'src/components/recap/RecapStep2Time';
 import { RecapStep3Appeal } from 'src/components/recap/RecapStep3Appeal';
@@ -17,11 +19,34 @@ import {
   DeepBlueLuminousBackground,
 } from 'src/components/recap/utils/RecapStep2Background';
 import { RECAP_CONFIG, RECAP_UI_TEXT } from 'src/constants/recap';
-import { MOCK_RECAP_DATA } from 'src/data/recap';
 
 function RecapContent() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [data] = useState(MOCK_RECAP_DATA.data);
+
+  const { year, month } = useMemo(() => {
+    const prevMonth = dayjs().subtract(1, 'month');
+    return {
+      year: prevMonth.year(),
+      month: prevMonth.month() + 1,
+    };
+  }, []);
+
+  const { data, isLoading, isError } = useGetMonthlyRecap(year, month);
+
+  if (isLoading || !data) {
+    return <div className="bg-background-base h-full min-h-screen" />;
+  }
+
+  if (isError) {
+    return (
+      <div className="bg-background-base flex h-full min-h-screen flex-col items-center justify-center p-8 text-center">
+        <p className="text-h2-m mb-4">오류 발생.</p>
+        <Button size="md" color="light" onClick={() => window.location.reload()}>
+          다시 시도하기
+        </Button>
+      </div>
+    );
+  }
 
   const isMorning =
     data.peakUsage.startHour >= RECAP_CONFIG.MORNING_START_HOUR &&
@@ -45,17 +70,19 @@ function RecapContent() {
     />,
     <RecapStep3Appeal
       key="step3"
-      requesterName={data.appealHighlights.topSuccessfulRequester.requesterName}
+      requesterName={data.appealHighlights.topSuccessfulRequester?.requesterName ?? ''}
       successRate={successRate}
-      appeals={data.appealHighlights.topSuccessfulRequester.recentApprovedAppeals}
+      appeals={data.appealHighlights.topSuccessfulRequester?.recentApprovedAppeals ?? []}
     />,
     <RecapStep4Angel
       key="step4"
-      approverName={data.appealHighlights.topAcceptedApprover.approverName}
-      approvedAppeals={data.appealHighlights.topAcceptedApprover.recentAcceptedAppeals.slice(
-        0,
-        RECAP_CONFIG.MAX_RECENT_APPEALS,
-      )}
+      approverName={data.appealHighlights.topAcceptedApprover?.approverName ?? ''}
+      approvedAppeals={
+        data.appealHighlights.topAcceptedApprover?.recentAcceptedAppeals.slice(
+          0,
+          RECAP_CONFIG.MAX_RECENT_APPEALS,
+        ) ?? []
+      }
     />,
     <RecapStep5Mission
       key="step5"
@@ -63,7 +90,7 @@ function RecapContent() {
       successCount={data.missionSummary.completedMissionCount}
       failureCount={data.missionSummary.rejectedRequestCount}
     />,
-    <RecapStep6Report key="step6" score={data.communicationScore} />,
+    <RecapStep6Report key="step6" score={data.communicationScore ?? 0} />,
   ];
 
   const totalSteps = steps.length;

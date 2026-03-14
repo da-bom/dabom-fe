@@ -6,20 +6,54 @@ import { useRouter } from 'next/navigation';
 
 import { Button, MainBox } from '@shared';
 
+import { useGetFamilyPolicies } from 'src/api/policy/useGetFamilyPolicies';
 import TimeSettingSheet from 'src/components/policy/TimeSettingBottomSheet';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
-
-const CURRENT_START = '23:00';
-const CURRENT_END = '07:00';
+import { getCurrentUserId } from 'src/utils/auth';
 
 function TimeLimitAppealContent() {
   const router = useRouter();
 
-  const [startTime, setStartTime] = useState('23:00');
-  const [endTime, setEndTime] = useState('07:00');
+  const { data: familyData, isLoading, isError, refetch } = useGetFamilyPolicies();
+  const currentUserId = getCurrentUserId();
+
+  const currentUser = familyData?.customers.find((c) => c.customerId === currentUserId);
+  const myPolicyId = currentUser?.assignmentIds?.timeBlock;
+
+  const currentStart = currentUser?.timeLimit?.start || '23:00';
+  const currentEnd = currentUser?.timeLimit?.end || '07:00';
+
+  const [startTime, setStartTime] = useState(currentStart);
+  const [endTime, setEndTime] = useState(currentEnd);
 
   const [isStartSheetOpen, setIsStartSheetOpen] = useState(false);
   const [isEndSheetOpen, setIsEndSheetOpen] = useState(false);
+
+  React.useEffect(() => {
+    if (currentUser?.timeLimit) {
+      setStartTime(currentUser.timeLimit.start);
+      setEndTime(currentUser.timeLimit.end);
+    }
+  }, [currentUser?.timeLimit]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full min-h-screen items-center justify-center">
+        <p className="text-body1-m">가족 데이터를 불러오는 중...</p>
+      </div>
+    );
+  }
+
+  if (isError || !familyData) {
+    return (
+      <div className="flex h-full min-h-screen flex-col items-center justify-center p-8 text-center">
+        <p className="text-h2-m mb-4">데이터를 불러오는 중 오류가 발생했습니다.</p>
+        <Button size="md" color="light" onClick={() => refetch()}>
+          다시 시도하기
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-background-base flex flex-col">
@@ -32,7 +66,7 @@ function TimeLimitAppealContent() {
         <div className="flex w-full flex-col gap-4">
           <div className="bg-background-sub flex h-fit w-full items-center justify-center rounded-2xl border border-gray-200 px-4 py-4">
             <span className="text-body1-m">
-              {APPEAL_UI_TEXT.CURRENT_TIME_LABEL}: {CURRENT_START} ~ {CURRENT_END}
+              {APPEAL_UI_TEXT.CURRENT_TIME_LABEL}: {currentStart} ~ {currentEnd}
             </span>
           </div>
 
@@ -69,7 +103,7 @@ function TimeLimitAppealContent() {
           color="dark"
           onClick={() =>
             router.push(
-              `/appeal/create/reason?start=${startTime}&end=${endTime}&policy=${encodeURIComponent(APPEAL_TYPE_LABEL.TIME_BLOCK)}`,
+              `/appeal/create/reason?id=${myPolicyId || ''}&start=${startTime}&end=${endTime}&policy=${encodeURIComponent(APPEAL_TYPE_LABEL.TIME_BLOCK)}`,
             )
           }
         >

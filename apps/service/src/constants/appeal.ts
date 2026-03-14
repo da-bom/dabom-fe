@@ -1,3 +1,5 @@
+import { formatToBytes } from '@shared';
+
 export const APPEAL_TYPE_LABEL = {
   EMERGENCY: '긴급 요청',
   NORMAL: '데이터 한도',
@@ -31,9 +33,12 @@ export const APPEAL_UI_TEXT = {
   POLICY_PREFIX: '정책: ',
   CHANGE_PREFIX: '변경: ',
   REASON_PREFIX: '요청 사유: ',
-  EMERGENCY_DATA_AMOUNT: '500MB',
+  EMERGENCY_DATA_AMOUNT: '300MB',
   REASON_INPUT_TITLE: '사유를 입력해 주세요.',
   REASON_INPUT_DESCRIPTION: 'description',
   REASON_INPUT_PLACEHOLDER: '입력하세요..',
   REASON_INPUT_ERROR: '사유를 입력해 주세요.',
+  REJECT_REASON_DESCRIPTION: '거절하는 사유를 입력해 주세요.',
 } as const;
+
+export const EMERGENCY_DATA_BYTES = formatToBytes(300, 'MB');
