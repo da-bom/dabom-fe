@@ -1,12 +1,13 @@
 'use client';
 
-import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
+import React, { Suspense, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
 import { ApprovedIcon, RejectedIcon } from '@icons';
 import { Button, formatSize } from '@shared';
 
+import { Comment } from 'src/api/appeal/schema';
 import { useGetAppealDetail } from 'src/api/appeal/useGetAppealDetail';
 import { usePatchAppealRespond } from 'src/api/appeal/usePatchAppealRespond';
 import { usePostComment } from 'src/api/appeal/usePostComment';
@@ -44,11 +45,16 @@ function AppealCommentContent() {
   const userRole = getCurrentUserRole();
   const isOwner = userRole === 'OWNER';
 
+  const sortedComments = useMemo(() => {
+    if (!data?.comments?.content) return [];
+    return [...data.comments.content].reverse();
+  }, [data]);
+
   useLayoutEffect(() => {
-    if (scrollRef.current && data?.comments?.content) {
+    if (scrollRef.current && sortedComments.length > 0) {
       window.scrollTo(0, document.body.scrollHeight);
     }
-  }, [data?.comments?.content]);
+  }, [sortedComments]);
 
   if (isLoading) {
     return (
@@ -76,7 +82,6 @@ function AppealCommentContent() {
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
-
     try {
       await postComment({ comment: inputValue });
       setInputValue('');
@@ -96,7 +101,6 @@ function AppealCommentContent() {
   const handleReject = async () => {
     const reason = '';
     if (reason === null) return;
-
     try {
       await respondAppeal({ action: 'REJECTED', rejectReason: reason || '사유 없음' });
     } catch (error) {
@@ -118,7 +122,9 @@ function AppealCommentContent() {
                 ? `${inputAmount}GB`
                 : data.desiredRules?.limitBytes
                   ? formatSize(data.desiredRules.limitBytes).total
-                  : '-'
+                  : data.desiredRules?.start && data.desiredRules?.end
+                    ? `${data.desiredRules.start} ~ ${data.desiredRules.end}`
+                    : '-'
             }
             reasonText={
               status === 'rejected' ? (
@@ -142,7 +148,7 @@ function AppealCommentContent() {
         </div>
 
         <div className="flex w-full flex-col gap-4" ref={scrollRef}>
-          {data.comments?.content.map((msg) => (
+          {sortedComments.map((msg: Comment) => (
             <ChatBubble
               key={msg.commentId}
               senderName={msg.authorName}

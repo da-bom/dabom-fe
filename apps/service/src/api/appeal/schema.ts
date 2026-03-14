@@ -84,7 +84,12 @@ export const EmergencyAppealRequestSchema = z.object({
 });
 
 /** 이의제기 승인/거절 */
-export const AppealRespondResponseSchema = AppealBaseSchema.extend({
+export const AppealRespondResponseSchema = z.object({
+  appealId: z.number(),
+  status: AppealStatusSchema,
+  policyAssignmentId: z.number().optional(),
+  desiredRules: DesiredRulesSchema.optional(),
+  createdAt: z.string().optional(),
   rejectReason: z.string().nullable(),
   resolvedById: z.number().nullable(),
   resolvedAt: z.string().nullable(),

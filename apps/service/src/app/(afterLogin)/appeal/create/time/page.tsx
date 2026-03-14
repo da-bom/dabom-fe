@@ -11,23 +11,30 @@ import TimeSettingSheet from 'src/components/policy/TimeSettingBottomSheet';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 import { getCurrentUserId } from 'src/utils/auth';
 
-const CURRENT_START = '23:00';
-const CURRENT_END = '07:00';
-
 function TimeLimitAppealContent() {
   const router = useRouter();
-
-  const [startTime, setStartTime] = useState('23:00');
-  const [endTime, setEndTime] = useState('07:00');
-
-  const [isStartSheetOpen, setIsStartSheetOpen] = useState(false);
-  const [isEndSheetOpen, setIsEndSheetOpen] = useState(false);
 
   const { data: familyData } = useGetFamilyPolicies();
   const currentUserId = getCurrentUserId();
 
-  const myPolicyId = familyData?.customers.find((c) => c.customerId === currentUserId)
-    ?.assignmentIds?.timeBlock;
+  const currentUser = familyData?.customers.find((c) => c.customerId === currentUserId);
+  const myPolicyId = currentUser?.assignmentIds?.timeBlock;
+
+  const currentStart = currentUser?.timeLimit?.start || '23:00';
+  const currentEnd = currentUser?.timeLimit?.end || '07:00';
+
+  const [startTime, setStartTime] = useState(currentStart);
+  const [endTime, setEndTime] = useState(currentEnd);
+
+  const [isStartSheetOpen, setIsStartSheetOpen] = useState(false);
+  const [isEndSheetOpen, setIsEndSheetOpen] = useState(false);
+
+  React.useEffect(() => {
+    if (currentUser?.timeLimit) {
+      setStartTime(currentUser.timeLimit.start);
+      setEndTime(currentUser.timeLimit.end);
+    }
+  }, [currentUser?.timeLimit]);
 
   return (
     <div className="bg-background-base flex flex-col">
@@ -40,7 +47,7 @@ function TimeLimitAppealContent() {
         <div className="flex w-full flex-col gap-4">
           <div className="bg-background-sub flex h-fit w-full items-center justify-center rounded-2xl border border-gray-200 px-4 py-4">
             <span className="text-body1-m">
-              {APPEAL_UI_TEXT.CURRENT_TIME_LABEL}: {CURRENT_START} ~ {CURRENT_END}
+              {APPEAL_UI_TEXT.CURRENT_TIME_LABEL}: {currentStart} ~ {currentEnd}
             </span>
           </div>
 

@@ -76,6 +76,11 @@ export interface ServiceCustomerDetail extends CustomerDetail {
   timeLimit: { start: string; end: string } | null;
   isBlocked: boolean;
   policies: ApiPolicy[];
+  assignmentIds: {
+    monthlyLimit: number | null;
+    timeBlock: number | null;
+    manualBlock: number | null;
+  };
 }
 
 export interface FamilyDetail {
