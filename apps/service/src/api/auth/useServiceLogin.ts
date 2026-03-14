@@ -17,7 +17,7 @@ export const login = async (
   return ServiceLoginResponseSchema.parse(response);
 };
 
-export const useLogin = () => {
+export const useServiceLogin = () => {
   return useMutation({
     mutationFn: ({ phoneNumber, password }: ServiceLoginRequest) => login(phoneNumber, password),
 

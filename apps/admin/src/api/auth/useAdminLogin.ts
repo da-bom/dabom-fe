@@ -24,7 +24,7 @@ export const login = async (email: string, password: string): Promise<AdminLogin
   }
 };
 
-export const useLogin = () => {
+export const useAdminLogin = () => {
   return useMutation({
     mutationFn: ({ email, password }: AdminLoginRequest) => login(email, password),
 

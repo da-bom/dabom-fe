@@ -5,7 +5,7 @@ import { ApiErrorResponse } from '@shared/types/error';
 
 export const logout = () => http.post('/admin/logout');
 
-export const useLogout = () => {
+export const useAdminLogout = () => {
   return useMutation({
     mutationFn: () => logout(),
 
