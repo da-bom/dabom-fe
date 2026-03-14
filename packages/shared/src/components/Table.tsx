@@ -11,7 +11,7 @@ interface TableProps {
 const Table = ({ headers, rows, className }: TableProps) => {
   return (
     <div className={cn('h-full w-full overflow-auto border border-gray-100', className)}>
-      <table className="min-h-full w-full border-collapse">
+      <table className="w-full border-collapse">
         <thead className="bg-brand-dark text-brand-white text-body2-d sticky top-0 z-21 h-11">
           <tr>
             {headers.map((header) => (
