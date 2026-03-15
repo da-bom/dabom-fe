@@ -7,16 +7,15 @@ import { useRouter } from 'next/navigation';
 import { ErrorIcon } from '@icons';
 import { Button, InputField } from '@shared';
 
-import { useLogin } from 'src/api/auth/useLogin';
-import { usePushSubscription } from 'src/hooks/usePushSubscription';
 import { useServiceLogin } from 'src/api/auth/useServiceLogin';
+import { usePushSubscription } from 'src/hooks/usePushSubscription';
 
 export default function LoginPage() {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginFailed, setIsLoginFailed] = useState(false);
-  const { mutateAsync: login, isPending: isLoading } = useLogin();
+  const { mutateAsync: login, isPending: isLoading } = useServiceLogin();
   const { subscribe } = usePushSubscription();
 
   const handleLogin = async (e: React.FormEvent) => {
