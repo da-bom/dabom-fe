@@ -9,13 +9,13 @@ import { Button, InputField } from '@shared';
 
 import { useLogin } from 'src/api/auth/useLogin';
 import { usePushSubscription } from 'src/hooks/usePushSubscription';
+import { useServiceLogin } from 'src/api/auth/useServiceLogin';
 
 export default function LoginPage() {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoginFailed, setIsLoginFailed] = useState(false);
-
   const { mutateAsync: login, isPending: isLoading } = useLogin();
   const { subscribe } = usePushSubscription();
 
