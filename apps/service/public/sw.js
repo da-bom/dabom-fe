@@ -74,3 +74,57 @@ globalThis.addEventListener('fetch', (event) => {
       }),
   );
 });
+
+globalThis.addEventListener('push', (event) => {
+  console.log('SW: 푸시 메시지 수신됨!', event.data?.text());
+
+  if (!event.data) return;
+
+  let title = '다봄';
+  let options = {
+    icon: '/icons/icon-192x192.png',
+    badge: '/icons/icon-192x192.png',
+  };
+
+  try {
+    const data = event.data.json();
+    title = data.title || title;
+    options = {
+      ...options,
+      body: data.body || '새로운 알림이 도착했습니다.',
+      data: {
+        url: data.url || '/',
+      },
+    };
+  } catch (error) {
+    const text = event.data.text();
+    options = {
+      ...options,
+      body: text || '새로운 알림이 도착했습니다.',
+      data: {
+        url: '/',
+      },
+    };
+  }
+
+  event.waitUntil(globalThis.registration.showNotification(title, options));
+});
+
+globalThis.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  const urlToOpen = event.notification.data.url || '/';
+
+  event.waitUntil(
+    globalThis.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      for (const client of windowClients) {
+        if (client.url === urlToOpen && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (globalThis.clients.openWindow) {
+        return globalThis.clients.openWindow(urlToOpen);
+      }
+    }),
+  );
+});
