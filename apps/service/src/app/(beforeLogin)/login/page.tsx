@@ -8,6 +8,7 @@ import { ErrorIcon } from '@icons';
 import { Button, InputField } from '@shared';
 
 import { useLogin } from 'src/api/auth/useLogin';
+import { usePushSubscription } from 'src/hooks/usePushSubscription';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function LoginPage() {
   const [isLoginFailed, setIsLoginFailed] = useState(false);
 
   const { mutateAsync: login, isPending: isLoading } = useLogin();
+  const { subscribe } = usePushSubscription();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ export default function LoginPage() {
 
     try {
       await login({ phoneNumber, password });
+      await subscribe();
       router.push('/home');
     } catch (error) {
       console.error('로그인 실패:', error);

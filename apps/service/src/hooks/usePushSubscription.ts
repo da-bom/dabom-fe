@@ -20,6 +20,19 @@ export const usePushSubscription = () => {
   const subscribe = useCallback(async () => {
     if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
 
+    if (Notification.permission === 'denied') {
+      console.warn('⚠️ 알림 권한이 이미 거부되었습니다. 설정에서 권한을 허용해 주세요.');
+      return;
+    }
+
+    if (Notification.permission === 'default') {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        console.warn('⚠️ 알림 권한이 거부되었습니다.');
+        return;
+      }
+    }
+
     const customerId = getCurrentUserId();
     if (!customerId) {
       console.warn('⚠️ 로그인된 사용자 정보를 찾을 수 없습니다. push 구독을 건너뜁니다.');
