@@ -5,12 +5,23 @@ import { ACCESS_TOKEN_KEY } from '@shared';
 
 export function proxy(request: NextRequest) {
   const session = request.cookies.get(ACCESS_TOKEN_KEY);
-
   const { pathname } = request.nextUrl;
 
   const showDevtools = process.env.NEXT_PUBLIC_SHOW_QUERY_DEVTOOLS === 'true';
 
   if (showDevtools) {
+    return NextResponse.next();
+  }
+
+  const isStaticAsset =
+    pathname.includes('manifest.webmanifest') ||
+    pathname.includes('sw.js') ||
+    pathname.includes('sw-constants.js') ||
+    pathname.startsWith('/icons/') ||
+    pathname.endsWith('.ico') ||
+    pathname.endsWith('.png');
+
+  if (isStaticAsset) {
     return NextResponse.next();
   }
 
@@ -31,5 +42,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)'],
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|sw-constants.js|icons|.*\\.png$|.*\\.ico$).*)',
+  ],
 };
