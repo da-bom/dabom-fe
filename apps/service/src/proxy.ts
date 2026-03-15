@@ -13,18 +13,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const isStaticAsset =
-    pathname.includes('manifest.webmanifest') ||
-    pathname.includes('sw.js') ||
-    pathname.includes('sw-constants.js') ||
-    pathname.startsWith('/icons/') ||
-    pathname.endsWith('.ico') ||
-    pathname.endsWith('.png');
-
-  if (isStaticAsset) {
-    return NextResponse.next();
-  }
-
   if (session) {
     if (pathname === '/login' || pathname === '/') {
       return NextResponse.redirect(new URL('/home', request.url));
