@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { ErrorIcon } from '@icons';
-import { Button, InputField } from '@shared';
+import { Button, InputField, Spinner } from '@shared';
 
 import { useServiceLogin } from 'src/api/auth/useServiceLogin';
 import { usePushSubscription } from 'src/hooks/usePushSubscription';
@@ -73,7 +73,7 @@ export default function LoginPage() {
 
           <div className="flex w-full justify-center">
             <Button type="submit" size="lg" color="dark" disabled={isLoading}>
-              로그인
+              {isLoading ? <Spinner size="sm" /> : '로그인'}
             </Button>
           </div>
         </form>
