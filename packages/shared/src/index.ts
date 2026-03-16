@@ -24,6 +24,7 @@ export { default as SubBox } from './components/SubBox';
 export { default as Switch } from './components/Switch';
 export { default as Table } from './components/Table';
 export { default as TextField } from './components/TextField';
+export { default as Toast } from './components/Toast';
 export * from './hooks/useUploadImage';
 export * from './constants/auth';
 export * from './constants/colors';

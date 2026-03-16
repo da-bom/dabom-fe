@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
 
 import { ChevronIcon } from '@icons';
 import { Badge, Divider, bytesToGB, cn, formatPhoneNumber, formatSize, gbToBytes } from '@shared';
+
+import { showToast } from 'src/utils/toast';
 
 import { PolicyBlockOwner } from './PolicyBlockOwner';
 import { PolicyLimitOwner } from './PolicyLimitOwner';
@@ -106,23 +107,7 @@ export default function MemberCard({
       try {
         await handlers.onLimitChange(idStr, clampedGB);
       } catch {
-        toast.custom(
-          (t) => (
-            <div
-              className={`${
-                t.visible ? 'animate-enter' : 'animate-leave'
-              } bg-primary-600 flex h-8 w-85 flex-col items-center justify-center rounded-full`}
-            >
-              <span className="text-body2-m text-3.5 text-white">
-                데이터 한도 조절에 실패했습니다.
-              </span>
-            </div>
-          ),
-          {
-            duration: 2000,
-            position: 'bottom-center',
-          },
-        );
+        showToast.error('데이터 한도 조절에 실패했습니다.');
         setLocalLimit(
           currentLimitGBFromProp !== null ? Math.max(LIMIT.MIN, currentLimitGBFromProp) : LIMIT.MIN,
         );

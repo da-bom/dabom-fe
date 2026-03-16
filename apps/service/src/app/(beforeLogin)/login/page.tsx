@@ -9,6 +9,7 @@ import { Button, InputField } from '@shared';
 
 import { useServiceLogin } from 'src/api/auth/useServiceLogin';
 import { usePushSubscription } from 'src/hooks/usePushSubscription';
+import { showToast } from 'src/utils/toast';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!phoneNumber || !password) {
-      alert('전화번호와 비밀번호를 입력해주세요.');
+      showToast.error('전화번호와 비밀번호를 입력해주세요.');
       return;
     }
 
