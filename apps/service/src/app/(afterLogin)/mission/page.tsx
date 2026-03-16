@@ -5,16 +5,17 @@ import Link from 'next/link';
 import { ChevronIcon } from '@icons';
 import { Button, Card, MainBox } from '@shared';
 
+import { useAuthStore } from 'src/api/auth/authStore';
 import { Mission } from 'src/api/mission/schema';
 import { useGetMissions } from 'src/api/mission/useGetMissions';
 import MemberActionButton from 'src/components/mission/MemberActionButton';
 import OwnerActionButton from 'src/components/mission/OwnerActionButton';
 
-// TODO: API 응답값으로 수정
-const isOwner = false;
-
 const MissionPage = () => {
   const { data, isLoading, isError } = useGetMissions({ size: 20 });
+
+  const role = useAuthStore((state) => state.role);
+  const isOwner = role === 'OWNER';
 
   if (isLoading) return <div className="m-5 text-center">미션을 불러오는 중...</div>;
   if (isError)
