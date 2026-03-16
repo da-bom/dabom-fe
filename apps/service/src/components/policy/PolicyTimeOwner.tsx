@@ -78,13 +78,15 @@ export function PolicyTimeOwner({
           )}
         </div>
       </div>
-      <div
-        className={cn(
-          'text-caption-m flex items-center justify-center',
-          isDisabled ? 'text-gray-700' : 'text-gray-800',
-        )}
-      >
-        터치하여 시간을 설정하세요.
+      <div className="flex h-[17px] w-full flex-col items-center justify-center gap-1">
+        <span
+          className={cn(
+            'text-caption-m w-fit leading-[17px]',
+            isDisabled ? 'text-gray-500' : 'text-gray-700',
+          )}
+        >
+          터치하여 시간을 설정하세요.
+        </span>
       </div>
     </>
   );
