@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { useAuthStore } from 'src/api/auth/authStore';
 import { MissionCreate, MissionCreateSchema } from 'src/api/mission/schema';
 import Step1Title from 'src/components/mission/Step1Title';
 import Step2Target from 'src/components/mission/Step2Target';
@@ -16,6 +17,9 @@ import Step4Check from 'src/components/mission/Step4Check';
 function MissionCreateForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const role = useAuthStore((state) => state.role);
+  const isOwner = role === 'OWNER';
 
   const currentStep = Number(searchParams.get('step')) || 1;
 
@@ -44,6 +48,8 @@ function MissionCreateForm() {
   };
 
   const nextStep = () => setStep(currentStep + 1);
+
+  if (!isOwner) return <div>접근 불가</div>;
 
   return (
     <FormProvider {...methods}>
