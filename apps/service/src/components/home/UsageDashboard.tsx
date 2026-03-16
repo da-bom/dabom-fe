@@ -85,8 +85,6 @@ const UsageDashboard = () => {
       ? 0
       : Math.min(Math.round((displayTotalUsedBytes / displayTotalLimitBytes) * 100), 100);
 
-  const displayDate = `${year}년 ${month}월`;
-
   const updateUrl = (nextYear: number, nextMonth: number, nextView: 'list' | 'chart') => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('year', nextYear.toString());
@@ -163,19 +161,15 @@ const UsageDashboard = () => {
         isMember={isMember}
       />
 
-      <MonthNavigator
-        currentDateText={displayDate}
-        onPrev={handlePrevMonth}
-        onNext={handleNextMonth}
-      />
+      <MonthNavigator year={year} month={month} onPrev={handlePrevMonth} onNext={handleNextMonth} />
 
       <div className="flex w-full flex-col gap-2">
         <ViewSegment viewMode={viewMode} onModeChange={handleModeChange} />
 
-        {processedCustomers.length === 0 ? (
+        {displayTotalUsedBytes === 0 ? (
           <MainBox className="m-auto w-full rounded-2xl pt-10 pb-5">
             <div className="flex flex-1 items-center justify-center text-gray-400">
-              <p>등록된 가족 구성원이 없어요.</p>
+              <p>해당 월의 사용 내역이 존재하지 않습니다.</p>
             </div>
           </MainBox>
         ) : viewMode === 'list' ? (
