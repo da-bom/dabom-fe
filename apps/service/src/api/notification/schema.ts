@@ -1,0 +1,49 @@
+import { z } from 'zod';
+
+export const NotificationTypeSchema = z.enum([
+  'QUOTA_UPDATED',
+  'CUSTOMER_BLOCKED',
+  'CUSTOMER_UNBLOCKED',
+  'THRESHOLD_ALERT',
+  'POLICY_CHANGED',
+  'MISSION_CREATED',
+  'REWARD_REQUESTED',
+  'REWARD_APPROVED',
+  'REWARD_REJECTED',
+  'APPEAL_CREATED',
+  'APPEAL_APPROVED',
+  'APPEAL_REJECTED',
+  'EMERGENCY_APPROVED',
+]);
+
+export const NotificationItemSchema = z.object({
+  notificationId: z.number(),
+  type: NotificationTypeSchema,
+  title: z.string(),
+  message: z.string(),
+  payload: z.record(z.any()).optional(),
+  isRead: z.boolean(),
+  sentAt: z.string(),
+});
+
+export const NotificationListResponseSchema = z.object({
+  success: z.boolean(),
+  data: z.object({
+    content: z.array(NotificationItemSchema),
+    nextCursor: z.string().nullable(),
+    hasNext: z.boolean(),
+    unreadCount: z.number(),
+  }),
+  timestamp: z.string(),
+});
+
+export interface NotificationFilter {
+  cursor?: string;
+  size?: number;
+  isRead?: boolean;
+  type?: string;
+}
+
+export type NotificationType = z.infer<typeof NotificationTypeSchema>;
+export type NotificationItem = z.infer<typeof NotificationItemSchema>;
+export type NotificationListResponse = z.infer<typeof NotificationListResponseSchema>;
