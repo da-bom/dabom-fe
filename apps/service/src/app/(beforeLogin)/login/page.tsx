@@ -5,10 +5,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { ErrorIcon } from '@icons';
-import { Button, InputField } from '@shared';
+import { Button, InputField, Spinner } from '@shared';
 
 import { useServiceLogin } from 'src/api/auth/useServiceLogin';
 import { usePushSubscription } from 'src/hooks/usePushSubscription';
+import { showToast } from 'src/utils/toast';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!phoneNumber || !password) {
-      alert('전화번호와 비밀번호를 입력해주세요.');
+      showToast.error('전화번호와 비밀번호를 입력해주세요.');
       return;
     }
 
@@ -72,7 +73,7 @@ export default function LoginPage() {
 
           <div className="flex w-full justify-center">
             <Button type="submit" size="lg" color="dark" disabled={isLoading}>
-              로그인
+              {isLoading ? <Spinner size="sm" /> : '로그인'}
             </Button>
           </div>
         </form>

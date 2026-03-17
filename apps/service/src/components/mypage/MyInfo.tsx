@@ -68,7 +68,7 @@ const MyInfo = () => {
   return (
     <>
       <div className="flex items-center gap-4">
-        <DaboIcon usage={displayStatus} width={100} />
+        <DaboIcon usage={displayStatus} type={!limitGB ? 'smile' : undefined} width={100} />
         <div className="flex flex-col justify-center gap-2">
           <div className="flex items-center gap-1">
             <div className="relative flex items-center">
@@ -112,7 +112,7 @@ const MyInfo = () => {
         <div className="flex justify-between">
           <span className="text-caption-m">내 데이터 사용량</span>
           <span className="text-caption-m">
-            {usedGB.toFixed(1)}GB / {limitGB ? `${limitGB}GB` : '무제한'}
+            {Math.round(usedGB)}GB / {limitGB ? `${limitGB}GB` : '무제한'}
           </span>
         </div>
         <ProgressBar value={usagePercent} />
