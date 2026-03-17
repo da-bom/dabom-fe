@@ -15,7 +15,7 @@ export const connectUsageSSE = (
   onMessage: (eventName: string, rawData: string) => void,
   signal: AbortSignal,
 ) => {
-  const ENDPOINT = '/families/usage/sse';
+  const ENDPOINT = '/events/stream';
   return sseClient.connect(ENDPOINT, onMessage, signal);
 };
 
