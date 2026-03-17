@@ -14,6 +14,8 @@ export default function NotificationPage() {
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
+  const unreadCount = notifications.filter((n) => !n.isRead).length || 0;
+
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const loadData = useCallback(async () => {
@@ -61,11 +63,24 @@ export default function NotificationPage() {
   }, [loadData, hasMore]);
 
   return (
-    <section className="bg-background-base flex min-h-full w-full flex-col">
-      <div className="mt-14 w-full px-4 pb-10">
-        <ul className="flex flex-col gap-4">
+    <section className="bg-background-base flex min-h-screen w-full flex-col">
+      <div className="flex flex-col items-start gap-4 p-5">
+        <div className="flex w-full items-center justify-between">
+          <span className="text-body2-m text-brand-black">새 알림 ({unreadCount})</span>
+          <button
+            type="button"
+            className="text-body2-m text-primary cursor-pointer border-none bg-transparent p-0"
+            onClick={() => {
+              /* 모두 읽음 처리 로직 */
+            }}
+          >
+            모두 읽음으로 표시
+          </button>
+        </div>
+
+        <ul className="flex w-full flex-col gap-4">
           {notifications.map((noti) => (
-            <li key={noti.id}>
+            <li key={noti.id} className="w-full">
               <NotiBox title={noti.title} description={noti.description} isRead={noti.isRead} />
             </li>
           ))}
@@ -83,9 +98,10 @@ export default function NotificationPage() {
           </div>
         )}
 
-        {!hasMore && (
-          // 알람 리스트의 개수가 많아 화면을 가득 채울 때 바텀의 도달점?을 일단 임의로 정했습니다. mt-8, mb-12
-          <p className="text-body2-m mt-8 mb-12 text-center text-gray-500">{NOTICE_MESSAGE}</p>
+        {!hasMore && notifications.length > 0 && (
+          <div className="mt-8 mb-12 flex w-full flex-col items-center gap-1">
+            <p className="text-body2-m text-gray-600">{NOTICE_MESSAGE}</p>
+          </div>
         )}
       </div>
     </section>
