@@ -9,8 +9,8 @@ export type AppealStatus = z.infer<typeof AppealStatusSchema>;
 const DesiredRulesSchema = z
   .object({
     limitBytes: z.number().optional(),
-    start: z.string().optional(),
-    end: z.string().optional(),
+    startTime: z.string().optional(),
+    endTime: z.string().optional(),
   })
   .nullable();
 
@@ -64,6 +64,7 @@ export const AppealCreateResponseSchema = AppealBaseSchema;
 export const AppealCreateRequestSchema = z.object({
   policyAssignmentId: z.number(),
   requestReason: z.string().min(1),
+  policyActive: z.boolean().optional(),
   desiredRules: DesiredRulesSchema.optional(),
 });
 

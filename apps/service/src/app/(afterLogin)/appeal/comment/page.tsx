@@ -119,11 +119,15 @@ function AppealCommentContent() {
             requestedValue={
               inputAmount
                 ? `${inputAmount}GB`
-                : data.desiredRules?.limitBytes
-                  ? formatSize(data.desiredRules.limitBytes).total
-                  : data.desiredRules?.start && data.desiredRules?.end
-                    ? `${data.desiredRules.start} ~ ${data.desiredRules.end}`
-                    : '-'
+                : data.type === 'EMERGENCY'
+                  ? APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT
+                  : data.policyType === 'MANUAL_BLOCK'
+                    ? APPEAL_UI_TEXT.MANUAL_BLOCK
+                    : data.desiredRules?.limitBytes
+                      ? formatSize(data.desiredRules.limitBytes).total
+                      : data.desiredRules?.startTime && data.desiredRules?.endTime
+                        ? `${data.desiredRules.startTime} ~ ${data.desiredRules.endTime}`
+                        : '-'
             }
             reasonText={
               status === 'rejected' ? (

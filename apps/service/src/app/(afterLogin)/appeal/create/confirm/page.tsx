@@ -18,6 +18,7 @@ function AppealConfirmContent() {
   const amount = searchParams.get('amount');
   const start = searchParams.get('start');
   const end = searchParams.get('end');
+  const isUnblock = searchParams.get('unblock') === 'true';
   const reason = searchParams.get('reason') || '';
   const policyAssignmentId = Number(searchParams.get('id')) || 0;
 
@@ -29,19 +30,22 @@ function AppealConfirmContent() {
       if (policy === APPEAL_TYPE_LABEL.EMERGENCY) {
         await postEmergency(reason);
       } else {
-        const desiredRules: { limitBytes?: number; start?: string; end?: string } = {};
+        const desiredRules: { limitBytes?: number; startTime?: string; endTime?: string } = {};
 
-        if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {
-          desiredRules.limitBytes = gbToBytes(Number(amount));
-        } else if (policy === APPEAL_TYPE_LABEL.TIME_BLOCK && start && end) {
-          desiredRules.start = start;
-          desiredRules.end = end;
+        if (!isUnblock) {
+          if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {
+            desiredRules.limitBytes = gbToBytes(Number(amount));
+          } else if (policy === APPEAL_TYPE_LABEL.TIME_BLOCK && start && end) {
+            desiredRules.startTime = start;
+            desiredRules.endTime = end;
+          }
         }
 
         const requestData = {
           policyAssignmentId,
           requestReason: reason,
-          desiredRules,
+          policyActive: !isUnblock,
+          desiredRules: isUnblock ? null : desiredRules,
         };
         await postAppeal(requestData);
       }
@@ -52,6 +56,9 @@ function AppealConfirmContent() {
   };
 
   const getChangedValue = () => {
+    if (isUnblock) {
+      return APPEAL_UI_TEXT.MANUAL_BLOCK;
+    }
     if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {
       return `${amount}GB`;
     }

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Button, DropDown, MainBox } from '@shared';
 
 import { useGetObjectionPolicies } from 'src/api/appeal/useGetObjectionPolicies';
-import { APPEAL_UI_TEXT } from 'src/constants/appeal';
+import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 
 export default function ObjectionPage() {
   const router = useRouter();
@@ -29,7 +29,9 @@ export default function ObjectionPage() {
     } else if (selectedPolicy.policyType === 'TIME_BLOCK') {
       router.push(`/appeal/create/time?id=${selectedPolicy.policyAssignmentId}`);
     } else if (selectedPolicy.policyType === 'MANUAL_BLOCK') {
-      router.push(`/appeal/create/reason?id=${selectedPolicy.policyAssignmentId}`);
+      router.push(
+        `/appeal/create/reason?id=${selectedPolicy.policyAssignmentId}&policy=${encodeURIComponent(APPEAL_TYPE_LABEL.MANUAL_BLOCK)}&unblock=true`,
+      );
     } else {
       router.push('/appeal');
     }
