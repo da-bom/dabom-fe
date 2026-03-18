@@ -19,16 +19,30 @@ export default function LoginPage() {
   const { mutateAsync: login, isPending: isLoading } = useServiceLogin();
   const { subscribe } = usePushSubscription();
 
+  const formatPhoneNumber = (value: string) => {
+    const digits = value.replace(/\D/g, '');
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+  };
+
+  const handlePhoneNumberChange = (value: string) => {
+    const formatted = formatPhoneNumber(value);
+    setPhoneNumber(formatted);
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!phoneNumber || !password) {
+    const purePhoneNumber = phoneNumber.replace(/-/g, '');
+
+    if (!purePhoneNumber || !password) {
       showToast.error('전화번호와 비밀번호를 입력해주세요.');
       return;
     }
 
     try {
-      await login({ phoneNumber, password });
+      await login({ phoneNumber: purePhoneNumber, password });
       await subscribe();
       router.push('/home');
     } catch (error) {
@@ -47,7 +61,8 @@ export default function LoginPage() {
               type="tel"
               placeholder="전화번호를 입력해주세요"
               value={phoneNumber}
-              onValueChange={(value) => setPhoneNumber(value)}
+              onValueChange={handlePhoneNumberChange}
+              maxLength={13}
             />
 
             <InputField
