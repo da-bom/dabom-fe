@@ -18,7 +18,6 @@ interface BlockedApp {
 export const AppBlockBox = () => {
   const [isAppBlockOn, setIsAppBlockOn] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedApp, setSelectedApp] = useState('');
 
   const allApps: {
     name: string;
@@ -46,7 +45,6 @@ export const AppBlockBox = () => {
     .map((app) => app.name);
 
   const handleSelectApp = (appName: string) => {
-    setSelectedApp(appName);
     const appToAdd = allApps.find((app) => app.name === appName);
 
     if (appToAdd && !blockedApps.find((app) => app.appId === appToAdd.appId)) {
