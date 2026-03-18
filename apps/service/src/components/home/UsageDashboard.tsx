@@ -6,10 +6,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { DaboIcon, MainBox, bytesToGB } from '@shared';
 
+import { useGetAppeals } from 'src/api/appeal/useGetAppeals';
 import { useGetFamilyUsage, useGetFamilyUsageCurrent } from 'src/api/family/useGetFamilyUsage';
 import { useSSE } from 'src/api/family/useUsageSSE';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
-import { mockAppealList } from 'src/data/appealList';
 import { getCurrentUserRole } from 'src/utils/auth';
 
 import MonthNavigator from '../common/MonthNavigator';
@@ -41,6 +41,7 @@ const UsageDashboard = () => {
 
   const { data: usageData, isLoading: isMonthlyLoading, isError } = useGetFamilyUsage(year, month);
   const { data: currentData, isLoading: isCurrentLoading } = useGetFamilyUsageCurrent();
+  const { data: appealData } = useGetAppeals(undefined, undefined, 100);
 
   const isCurrentMonth = year === now.getFullYear() && month === now.getMonth() + 1;
   const { totalRealtime, memberRealtime } = useSSE(isCurrentMonth && isClient);
@@ -122,9 +123,16 @@ const UsageDashboard = () => {
   const userRole = getCurrentUserRole();
   const isMember = userRole === 'MEMBER';
 
-  const isEmergencyUsed = mockAppealList.some(
-    (appeal) => appeal.type === 'EMERGENCY' && appeal.status !== 'CANCELLED',
-  );
+  const isEmergencyUsed =
+    appealData?.appeals.some((appeal) => {
+      const appealDate = new Date(appeal.createdAt);
+      return (
+        appeal.type === 'EMERGENCY' &&
+        appeal.status !== 'CANCELLED' &&
+        appealDate.getFullYear() === year &&
+        appealDate.getMonth() + 1 === month
+      );
+    }) ?? false;
 
   return (
     <div className="mb-20 flex w-full flex-col items-center gap-7 p-5">
@@ -157,8 +165,9 @@ const UsageDashboard = () => {
           )
         }
         onBegClick={() => router.push('/appeal/objection')}
-        isEmergencyUsed={isCurrentMonth && isEmergencyUsed}
+        isEmergencyUsed={isEmergencyUsed}
         isMember={isMember}
+        isCurrentMonth={isCurrentMonth}
       />
 
       <MonthNavigator year={year} month={month} onPrev={handlePrevMonth} onNext={handleNextMonth} />
