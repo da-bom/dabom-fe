@@ -28,6 +28,6 @@ export const useCustomerMe = () => {
     refetchInterval: 30000,
     refetchOnWindowFocus: true,
     notifyOnChangeProps: ['data', 'error'],
-    staleTime: 0,
+    staleTime: 1000 * 60 * 5,
   });
 };

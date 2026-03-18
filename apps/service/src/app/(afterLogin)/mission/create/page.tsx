@@ -61,10 +61,14 @@ function MissionCreateForm() {
 }
 
 export default function MissionCreatePage() {
-  const { data: user } = useCustomerMe();
+  const { data: user, isLoading } = useCustomerMe();
   const isOwner = user?.role === 'OWNER';
 
-  if (isOwner) {
+  if (isLoading) {
+    return <div className="p-5 text-center">사용자 정보를 불러오는 중...</div>;
+  }
+
+  if (!isOwner) {
     <div className="text-body2 flex items-center justify-center">
       미션 생성은 OWNER만 가능합니다.
     </div>;
