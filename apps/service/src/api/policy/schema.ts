@@ -49,10 +49,12 @@ export const FamilyPoliciesDataSchema = z.object({
 });
 
 export const UpdatePolicyRequestSchema = z.object({
-  customerId: z.number(),
-  type: z.union([PolicyTypeEnum, z.array(PolicyTypeEnum)]),
-  value: ApiPolicyRulesSchema.optional(),
-  isActive: z.boolean().optional(),
+  updateInfo: z.object({
+    customerId: z.number(),
+    type: z.union([PolicyTypeEnum, z.array(PolicyTypeEnum)]),
+    value: ApiPolicyRulesSchema.optional(),
+    isActive: z.boolean().optional(),
+  }),
 });
 
 export const UpdatePolicyResponseSchema = z.object({

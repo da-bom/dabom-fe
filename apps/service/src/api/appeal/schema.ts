@@ -8,7 +8,7 @@ export type AppealStatus = z.infer<typeof AppealStatusSchema>;
 
 const DesiredRulesSchema = z
   .object({
-    limitBytes: z.number().optional(),
+    limitBytes: z.number().nullable().optional(),
     startTime: z.string().optional(),
     endTime: z.string().optional(),
   })

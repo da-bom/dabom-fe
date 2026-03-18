@@ -30,9 +30,14 @@ function AppealConfirmContent() {
       if (policy === APPEAL_TYPE_LABEL.EMERGENCY) {
         await postEmergency(reason);
       } else {
-        const desiredRules: { limitBytes?: number; startTime?: string; endTime?: string } = {};
+        const desiredRules: { limitBytes?: number | null; startTime?: string; endTime?: string } =
+          {};
 
-        if (!isUnblock) {
+        if (isUnblock) {
+          if (policy === APPEAL_TYPE_LABEL.NORMAL) {
+            desiredRules.limitBytes = null;
+          }
+        } else {
           if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {
             desiredRules.limitBytes = gbToBytes(Number(amount));
           } else if (policy === APPEAL_TYPE_LABEL.TIME_BLOCK && start && end) {
@@ -45,7 +50,7 @@ function AppealConfirmContent() {
           policyAssignmentId,
           requestReason: reason,
           policyActive: !isUnblock,
-          desiredRules: isUnblock ? null : desiredRules,
+          desiredRules: Object.keys(desiredRules).length > 0 ? desiredRules : null,
         };
         await postAppeal(requestData);
       }

@@ -15,7 +15,7 @@ export default function ObjectionPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [userSelectedOption, setUserSelectedOption] = useState<string>('');
 
-  const policies = data?.policies || [];
+  const policies = (data?.policies || []).filter((p) => p.policyType !== 'APP_BLOCK');
   const options = policies.map((p) => p.policyName);
 
   const currentOption = userSelectedOption || options[0] || '';
