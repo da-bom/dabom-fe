@@ -2,7 +2,7 @@
 
 import React, { Suspense, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 import { ApprovedIcon, RejectedIcon } from '@icons';
 import { Button, formatSize } from '@shared';
@@ -27,8 +27,9 @@ const isValidStatus = (status: string | null): status is AppealStatus => {
 
 function AppealCommentContent() {
   const router = useRouter();
+  const params = useParams();
+  const appealId = Number(params.id);
   const searchParams = useSearchParams();
-  const appealId = Number(searchParams.get('id'));
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const selectedPolicy = searchParams.get('policy') || APPEAL_TYPE_LABEL.NORMAL;
