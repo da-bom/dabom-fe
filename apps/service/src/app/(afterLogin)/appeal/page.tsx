@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation';
 import { Button, formatSize } from '@shared';
 
 import { useGetAppeals } from 'src/api/appeal/useGetAppeals';
+import { useCustomerMe } from 'src/api/auth/useCustomerMe';
 import { AppealRequestCard, AppealStatus, FilterSegment } from 'src/components/appeal';
 import { APPEAL_TYPE_LABEL } from 'src/constants/appeal';
-import { getCurrentUserRole } from 'src/utils/auth';
 
 const AppealPageContent = () => {
   const router = useRouter();
@@ -18,8 +18,8 @@ const AppealPageContent = () => {
 
   const { data, isLoading, isError, refetch } = useGetAppeals();
 
-  const userRole = getCurrentUserRole();
-  const isOwner = userRole === 'OWNER';
+  const { data: user } = useCustomerMe();
+  const isOwner = user?.role === 'OWNER';
 
   if (isLoading) {
     return (
