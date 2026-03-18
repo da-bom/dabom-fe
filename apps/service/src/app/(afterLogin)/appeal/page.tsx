@@ -9,6 +9,7 @@ import { Skeleton } from '@mui/material';
 import { Button, formatSize } from '@shared';
 
 import { useGetAppeals } from 'src/api/appeal/useGetAppeals';
+import { useCustomerMe } from 'src/api/auth/useCustomerMe';
 import { AppealRequestCard, AppealStatus, FilterSegment } from 'src/components/appeal';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
 import { getCurrentUserRole } from 'src/utils/auth';
@@ -18,8 +19,8 @@ const AppealPageContent = () => {
   const [activeTab, setActiveTab] = useState<'progress' | 'completed'>('progress');
   const { data, isLoading, isError, refetch } = useGetAppeals();
 
-  const userRole = getCurrentUserRole();
-  const isOwner = userRole === 'OWNER';
+  const { data: user } = useCustomerMe();
+  const isOwner = user?.role === 'OWNER';
 
   if (isLoading) {
     return (
