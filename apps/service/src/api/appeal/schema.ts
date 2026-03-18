@@ -81,7 +81,6 @@ export const EmergencyAppealResponseSchema = z.object({
 
 export const EmergencyAppealRequestSchema = z.object({
   requestReason: z.string(),
-  additionalBytes: z.number(),
 });
 
 /** 이의제기 승인/거절 */
