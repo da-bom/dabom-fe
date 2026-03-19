@@ -53,8 +53,16 @@ http.interceptors.request.use((config) => {
 
 http.interceptors.response.use(
   (response) => {
-    if (response.data?.success) {
-      return response.data.data;
+    const { success, data, timestamp } = response.data;
+
+    if (success) {
+      if (data && typeof data === 'object' && !Array.isArray(data)) {
+        return {
+          ...data,
+          timestamp,
+        };
+      }
+      return data;
     }
     return response;
   },
