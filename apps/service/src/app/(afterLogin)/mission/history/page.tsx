@@ -12,7 +12,9 @@ const MissionHistoryPage = () => {
   if (isLoading) return <div className="m-4 text-center text-gray-500">불러오는 중...</div>;
   if (isError) return <div className="m-4 text-center text-red-500">데이터 로드 실패</div>;
 
-  const historyList = data?.requests ?? [];
+  const historyList = (data?.requests ?? []).sort((a, b) =>
+    dayjs(b.requestedAt).diff(dayjs(a.requestedAt)),
+  );
 
   return (
     <div className="m-4 flex flex-col gap-4 pb-20">

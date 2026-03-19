@@ -107,6 +107,7 @@ const AppealPageContent = () => {
             size="lg"
             color="dark"
             isFullWidth
+            className="pointer-events-auto"
             onClick={() => router.push('/appeal/objection')}
           >
             이의 제기 하기
