@@ -1,5 +1,5 @@
 import { http } from '@shared';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { DashboardData, DashboardDataSchema } from './schema';
 
@@ -25,7 +25,7 @@ const getDashboard = async (): Promise<DashboardData & { timestamp: string }> =>
 export const useGetDashboard = <T = DashboardData & { timestamp: string }>(
   select?: (data: DashboardData & { timestamp: string }) => T,
 ) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['dashboard', 'stats'],
     queryFn: getDashboard,
     select,

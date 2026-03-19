@@ -1,7 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
-
 import { ResetIcon } from '@icons';
 import { MainBox } from '@shared';
 import dayjs from 'dayjs';
@@ -12,8 +10,10 @@ import HealthStatusCard from 'src/components/dashboard/HealthStatusCard';
 import SummaryCard from 'src/components/dashboard/SummaryCard';
 import TpsStatusCard from 'src/components/dashboard/TpsStatusCard';
 
-const DashboardContent = () => {
-  const { data, refetch } = useGetDashboard();
+const DashboardPage = () => {
+  const { data, refetch, isLoading } = useGetDashboard();
+
+  if (isLoading || !data) return <Loading />;
 
   return (
     <div className="flex h-[calc(100vh-110px)] flex-col gap-4">
@@ -61,7 +61,6 @@ const DashboardContent = () => {
               src="https://monitor.dabom.site/public-dashboards/ccaa274ea7764d32b70614e25184d31b"
               width="100%"
               height="300"
-              // frameborder="0"
             ></iframe>
           </div>
         </MainBox>
@@ -71,7 +70,7 @@ const DashboardContent = () => {
             최근 차단 내역
           </span>
           <div className="flex w-full flex-col gap-4 overflow-y-auto pr-2">
-            {data.recentBlocks.length > 0 ? (
+            {data.recentBlocks && data.recentBlocks.length > 0 ? (
               data.recentBlocks.map((item) => (
                 <MainBox
                   key={`${item.familyId}-${item.customerId}-${item.blockedAt}`}
@@ -100,20 +99,6 @@ const DashboardContent = () => {
         </MainBox>
       </div>
     </div>
-  );
-};
-
-const DashboardPage = () => {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen items-center justify-center">
-          <Loading />
-        </div>
-      }
-    >
-      <DashboardContent />
-    </Suspense>
   );
 };
 
