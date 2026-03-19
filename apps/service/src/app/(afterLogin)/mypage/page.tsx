@@ -20,7 +20,7 @@ const MyPage = () => {
         <MyInfo />
       </MainBox>
 
-      {isOwner && (
+      {!isOwner && (
         <Link href="/mypage/rewards">
           <MainBox className="flex cursor-pointer items-center justify-between rounded-2xl p-4">
             <span className="text-body1-m">내가 받은 보상 보기</span>
