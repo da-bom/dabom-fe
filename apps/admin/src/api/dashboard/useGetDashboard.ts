@@ -1,5 +1,6 @@
 import { http } from '@shared';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import z from 'zod';
 
 import { DashboardData, DashboardDataSchema } from './schema';
 
@@ -9,9 +10,9 @@ const getDashboard = async (): Promise<DashboardResponse> => {
   const response = await http.get<DashboardResponse>('/admin/dashboard', { timeout: 50000 });
 
   try {
-    const parsed = DashboardDataSchema.passthrough().parse(response);
+    const parsed = DashboardDataSchema.extend({ timestamp: z.string() }).parse(response);
 
-    return parsed as DashboardResponse;
+    return parsed;
   } catch (error) {
     console.error('❌ [Dashboard API] Zod 파싱 실패:', error);
     throw error;

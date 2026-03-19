@@ -51,7 +51,7 @@ export const FamilyResponseSchema = z.object({
 export const FamilyCustomerSchema = z.object({
   customerId: z.number(),
   name: z.string(),
-  role: z.string(),
+  role: z.enum(['OWNER', 'MEMBER']),
   monthlyLimitBytes: z.number().nullable(),
   monthlyUsedBytes: z.number(),
 });

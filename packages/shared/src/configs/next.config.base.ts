@@ -6,6 +6,12 @@ const nextConfigBase: NextConfig = {
 
   async rewrites() {
     const destinationHost = process.env.INTERNAL_API_SERVER_URL;
+
+    if (!destinationHost) {
+      console.warn('⚠️ SERVER URL이 존재하지 않습니다.');
+      return [];
+    }
+
     return [
       {
         source: '/api/:path*',
