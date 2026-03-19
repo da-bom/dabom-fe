@@ -36,7 +36,7 @@ const MyPage = () => {
         </MainBox>
       </Link>
       <button
-        className="text-body2-m ml-2 flex text-gray-800 underline"
+        className="text-body2-m ml-2 flex w-fit cursor-pointer text-gray-800 underline"
         onClick={() => handleLogout()}
       >
         로그아웃
