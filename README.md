@@ -155,8 +155,6 @@ pnpm install
 
 ### 2. 환경 변수 설정
 각 앱(`apps/service`, `apps/admin`) 폴더 내의 `.env.example` 파일을 참고하여 `.env` 파일을 생성하고 필요한 환경 변수를 입력합니다.
-- **API 서버 주소**: `NEXT_PUBLIC_API_BASE_URL`
-- **Noti API 서버 주소**: `NEXT_PUBLIC_NOTIFICATION_API_BASE_URL`
 
 ### 3. 개발 서버 실행
 전체 워크스페이스를 실행하거나 특정 서비스만 선택하여 실행할 수 있습니다.
