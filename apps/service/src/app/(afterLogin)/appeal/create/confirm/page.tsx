@@ -36,6 +36,9 @@ function AppealConfirmContent() {
         if (isUnblock) {
           if (policy === APPEAL_TYPE_LABEL.NORMAL) {
             desiredRules.limitBytes = null;
+          } else if (policy === APPEAL_TYPE_LABEL.TIME_BLOCK) {
+            desiredRules.startTime = undefined;
+            desiredRules.endTime = undefined;
           }
         } else {
           if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {
@@ -62,6 +65,15 @@ function AppealConfirmContent() {
 
   const getChangedValue = () => {
     if (isUnblock) {
+      if (policy === APPEAL_TYPE_LABEL.NORMAL) {
+        return APPEAL_UI_TEXT.UNBLOCK_LIMIT;
+      }
+      if (policy === APPEAL_TYPE_LABEL.TIME_BLOCK) {
+        return APPEAL_UI_TEXT.UNBLOCK_LIMIT;
+      }
+      if (policy === APPEAL_TYPE_LABEL.APP_BLOCK) {
+        return APPEAL_UI_TEXT.APP_BLOCK;
+      }
       return APPEAL_UI_TEXT.MANUAL_BLOCK;
     }
     if (policy === APPEAL_TYPE_LABEL.NORMAL && amount) {

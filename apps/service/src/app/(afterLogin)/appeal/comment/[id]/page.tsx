@@ -126,11 +126,20 @@ function AppealCommentContent() {
                     ? APPEAL_UI_TEXT.MANUAL_BLOCK
                     : data.policyType === 'APP_BLOCK'
                       ? APPEAL_UI_TEXT.APP_BLOCK
-                      : data.desiredRules?.limitBytes
+                      : data.desiredRules?.limitBytes !== undefined &&
+                          data.desiredRules?.limitBytes !== null
                         ? formatSize(data.desiredRules.limitBytes).total
-                        : data.desiredRules?.startTime && data.desiredRules?.endTime
-                          ? `${data.desiredRules.startTime} ~ ${data.desiredRules.endTime}`
-                          : '-'
+                        : data.policyType === 'MONTHLY_LIMIT' &&
+                            data.desiredRules?.limitBytes === null
+                          ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
+                          : data.desiredRules?.startTime !== undefined &&
+                              data.desiredRules?.startTime !== null
+                            ? `${data.desiredRules.startTime} ~ ${data.desiredRules.endTime}`
+                            : data.policyType === 'TIME_BLOCK' &&
+                                (data.desiredRules?.startTime === null ||
+                                  data.desiredRules?.startTime === undefined)
+                              ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
+                              : '-'
             }
             reasonText={
               status === 'rejected' ? (

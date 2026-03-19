@@ -42,6 +42,11 @@ const AppealPageContent = () => {
   }
 
   const filteredItems = data.appeals.filter((item) => {
+    const isMyAppeal = item.requesterId === user?.customerId;
+    const roleMatches = isOwner || isMyAppeal;
+
+    if (!roleMatches) return false;
+
     if (activeTab === 'progress') return item.status === 'PENDING';
     if (activeTab === 'completed') return item.status !== 'PENDING';
     return true;
@@ -57,26 +62,36 @@ const AppealPageContent = () => {
             const displayValue =
               item.type === 'EMERGENCY'
                 ? APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT
-                : item.desiredRules?.limitBytes
+                : item.desiredRules?.limitBytes !== undefined &&
+                    item.desiredRules?.limitBytes !== null
                   ? formatSize(item.desiredRules.limitBytes).total
-                  : item.desiredRules?.startTime
-                    ? `${item.desiredRules.startTime} ~ ${item.desiredRules.endTime}`
-                    : item.policyType === 'MANUAL_BLOCK'
-                      ? APPEAL_UI_TEXT.MANUAL_BLOCK
-                      : item.policyType === 'APP_BLOCK'
-                        ? APPEAL_UI_TEXT.APP_BLOCK
-                        : '-';
+                  : item.policyType === 'MONTHLY_LIMIT' && item.desiredRules?.limitBytes === null
+                    ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
+                    : item.desiredRules?.startTime !== undefined &&
+                        item.desiredRules?.startTime !== null
+                      ? `${item.desiredRules.startTime} ~ ${item.desiredRules.endTime}`
+                      : item.policyType === 'TIME_BLOCK' &&
+                          (item.desiredRules?.startTime === null ||
+                            item.desiredRules?.startTime === undefined)
+                        ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
+                        : item.policyType === 'MANUAL_BLOCK'
+                          ? APPEAL_UI_TEXT.MANUAL_BLOCK
+                          : item.policyType === 'APP_BLOCK'
+                            ? APPEAL_UI_TEXT.APP_BLOCK
+                            : '-';
 
             const policyType =
               item.type === 'EMERGENCY'
                 ? APPEAL_TYPE_LABEL.EMERGENCY
-                : item.policyType === 'MANUAL_BLOCK'
-                  ? APPEAL_TYPE_LABEL.MANUAL_BLOCK
-                  : item.policyType === 'APP_BLOCK'
-                    ? APPEAL_TYPE_LABEL.APP_BLOCK
-                    : item.desiredRules?.startTime
-                      ? APPEAL_TYPE_LABEL.TIME_BLOCK
-                      : APPEAL_TYPE_LABEL.NORMAL;
+                : item.policyType === 'MONTHLY_LIMIT'
+                  ? APPEAL_TYPE_LABEL.NORMAL
+                  : item.policyType === 'TIME_BLOCK'
+                    ? APPEAL_TYPE_LABEL.TIME_BLOCK
+                    : item.policyType === 'MANUAL_BLOCK'
+                      ? APPEAL_TYPE_LABEL.MANUAL_BLOCK
+                      : item.policyType === 'APP_BLOCK'
+                        ? APPEAL_TYPE_LABEL.APP_BLOCK
+                        : APPEAL_TYPE_LABEL.NORMAL;
 
             const uiStatus = (
               item.type === 'EMERGENCY' ? 'emergency' : item.status.toLowerCase()
