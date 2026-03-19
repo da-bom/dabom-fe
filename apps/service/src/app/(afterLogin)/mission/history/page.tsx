@@ -15,7 +15,7 @@ const MissionHistoryPage = () => {
   const historyList = data?.requests ?? [];
 
   return (
-    <div className="m-4 flex flex-col gap-4">
+    <div className="m-4 flex flex-col gap-4 pb-20">
       {historyList.length > 0 ? (
         historyList.map((item, index) => {
           const currentDate = dayjs(item.requestedAt).format('M/D');

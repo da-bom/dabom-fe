@@ -48,7 +48,7 @@ const AppealPageContent = () => {
   });
 
   return (
-    <div className="flex h-full flex-col px-5 py-5">
+    <div className="flex min-h-full flex-col px-5 pt-5 pb-30">
       <div className="flex flex-col gap-5">
         <FilterSegment activeTab={activeTab} onTabChange={setActiveTab} />
 
