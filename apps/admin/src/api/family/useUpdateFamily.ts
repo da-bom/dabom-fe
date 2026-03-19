@@ -1,6 +1,7 @@
 import { http } from '@shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { showToast } from './../../../../service/src/utils/toast';
 import { UpdateFamilyRequest, UpdateFamilyResponse, UpdateFamilyResponseSchema } from './schema';
 
 export const updateFamily = async (
@@ -37,7 +38,7 @@ export const useUpdateFamily = (familyId: number) => {
       queryClient.invalidateQueries({ queryKey: ['family', familyId] });
     },
     onError: (error: Error) => {
-      alert(error.message || '수정 중 오류가 발생했습니다.');
+      showToast.error(error.message || '수정 중 오류가 발생했습니다.');
     },
   });
 };

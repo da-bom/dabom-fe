@@ -8,16 +8,14 @@ export type DashboardResponse = DashboardData & { timestamp: string };
 const getDashboard = async (): Promise<DashboardData & { timestamp: string }> => {
   try {
     const response = await http.get('/admin/dashboard');
-
-    try {
-      const parsed = DashboardDataSchema.passthrough().parse(response);
-      return parsed as DashboardResponse;
-    } catch (zodError) {
-      console.error('❌ [Dashboard API] Zod 파싱 실패:', zodError);
-      throw zodError;
-    }
+    const parsed = DashboardDataSchema.passthrough().parse(response);
+    return parsed as DashboardResponse;
   } catch (error) {
-    console.error('❌ [Dashboard API] 데이터 페칭 에러:', error);
+    if (error instanceof (await import('zod')).ZodError) {
+      console.error('❌ [Dashboard API] Zod 파싱 실패:', error);
+    } else {
+      console.error('❌ [Dashboard API] 데이터 페칭 에러:', error);
+    }
     throw error;
   }
 };
