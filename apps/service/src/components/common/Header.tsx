@@ -24,7 +24,7 @@ const Header = ({
   const pathname = usePathname();
 
   const HIDE_BACK_BTN_PATHS = ['/home', '/notification', '/policy'];
-  const HIDE_NOTI_BTN_PATHS = ['/home', '/notification', '/policy'];
+  const HIDE_NOTI_BTN_PATHS = ['/notification', '/policy'];
 
   const shouldShowBack = isBackVisible ?? !HIDE_BACK_BTN_PATHS.includes(pathname);
   const shouldShowNoti = isNotiVisible ?? !HIDE_NOTI_BTN_PATHS.includes(pathname);
