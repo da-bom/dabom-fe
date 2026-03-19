@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 import { ACCESS_TOKEN_KEY } from '@shared';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const session = request.cookies.get(ACCESS_TOKEN_KEY);
   const { pathname } = request.nextUrl;
 
@@ -18,10 +18,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const authRequiredPaths = ['/home', '/dashboard', '/reward', '/family'];
-  const isAuthRequired = authRequiredPaths.some((path) => pathname.startsWith(path));
-
-  if (!session && isAuthRequired) {
+  if (!session && pathname !== '/login') {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('from', pathname);
     return NextResponse.redirect(loginUrl);
