@@ -16,7 +16,7 @@ const DashboardContent = () => {
   const { data, refetch } = useGetDashboard();
 
   return (
-    <div className="flex h-screen flex-col gap-4">
+    <div className="flex h-[calc(100vh-110px)] flex-col gap-4">
       <div className="flex w-full items-center justify-end gap-1 text-gray-800">
         <button
           onClick={() => refetch()}
@@ -57,7 +57,12 @@ const DashboardContent = () => {
         <MainBox className="flex w-full flex-col items-center gap-4 p-5">
           <span className="text-body1-d font-bold">실시간 처리량(TPS)</span>
           <div className="flex h-full w-full items-center justify-center rounded-md bg-gray-50">
-            <span className="text-gray-400 italic">Chart Visualizing TPS: {data.currentTps}</span>
+            <iframe
+              src="https://monitor.dabom.site/public-dashboards/ccaa274ea7764d32b70614e25184d31b"
+              width="100%"
+              height="300"
+              // frameborder="0"
+            ></iframe>
           </div>
         </MainBox>
 

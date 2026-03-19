@@ -1,22 +1,17 @@
+import { http } from '@shared';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { DashboardData, DashboardDataSchema } from './schema';
 
-// 리턴 타입에 timestamp 추가
+export type DashboardResponse = DashboardData & { timestamp: string };
+
 const getDashboard = async (): Promise<DashboardData & { timestamp: string }> => {
   try {
-    const response = await fetch('/api/admin/dashboard');
-
-    const result = await response.json();
-    const { data, timestamp } = result;
+    const response = await http.get('/admin/dashboard');
 
     try {
-      const parsedData = DashboardDataSchema.parse(data);
-
-      return {
-        ...parsedData,
-        timestamp,
-      };
+      const parsed = DashboardDataSchema.passthrough().parse(response);
+      return parsed as DashboardResponse;
     } catch (zodError) {
       console.error('❌ [Dashboard API] Zod 파싱 실패:', zodError);
       throw zodError;
