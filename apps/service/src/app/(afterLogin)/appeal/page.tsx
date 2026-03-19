@@ -12,7 +12,6 @@ import { useGetAppeals } from 'src/api/appeal/useGetAppeals';
 import { useCustomerMe } from 'src/api/auth/useCustomerMe';
 import { AppealRequestCard, AppealStatus, FilterSegment } from 'src/components/appeal';
 import { APPEAL_TYPE_LABEL, APPEAL_UI_TEXT } from 'src/constants/appeal';
-import { getCurrentUserRole } from 'src/utils/auth';
 
 const AppealPageContent = () => {
   const router = useRouter();
@@ -70,60 +69,70 @@ const AppealPageContent = () => {
         <FilterSegment activeTab={activeTab} onTabChange={setActiveTab} />
 
         <div className="flex flex-col gap-2">
-          {filteredItems.map((item) => {
-            const displayValue =
-              item.type === 'EMERGENCY'
-                ? APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT
-                : item.desiredRules?.limitBytes !== undefined &&
-                    item.desiredRules?.limitBytes !== null
-                  ? formatSize(item.desiredRules.limitBytes).total
-                  : item.policyType === 'MONTHLY_LIMIT' && item.desiredRules?.limitBytes === null
-                    ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
-                    : item.desiredRules?.start !== undefined && item.desiredRules?.start !== null
-                      ? `${item.desiredRules.start} ~ ${item.desiredRules.end}`
-                      : item.policyType === 'TIME_BLOCK' &&
-                          (item.desiredRules?.start === null ||
-                            item.desiredRules?.start === undefined)
-                        ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
-                        : item.policyType === 'MANUAL_BLOCK'
-                          ? APPEAL_UI_TEXT.MANUAL_BLOCK
-                          : item.policyType === 'APP_BLOCK'
-                            ? APPEAL_UI_TEXT.APP_BLOCK
-                            : '-';
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => {
+              const displayValue =
+                item.type === 'EMERGENCY'
+                  ? APPEAL_UI_TEXT.EMERGENCY_DATA_AMOUNT
+                  : item.desiredRules?.limitBytes !== undefined &&
+                      item.desiredRules?.limitBytes !== null
+                    ? formatSize(item.desiredRules.limitBytes).total
+                    : item.policyType === 'MONTHLY_LIMIT' && item.desiredRules?.limitBytes === null
+                      ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
+                      : item.desiredRules?.start !== undefined && item.desiredRules?.start !== null
+                        ? `${item.desiredRules.start} ~ ${item.desiredRules.end}`
+                        : item.policyType === 'TIME_BLOCK' &&
+                            (item.desiredRules?.start === null ||
+                              item.desiredRules?.start === undefined)
+                          ? APPEAL_UI_TEXT.UNBLOCK_LIMIT
+                          : item.policyType === 'MANUAL_BLOCK'
+                            ? APPEAL_UI_TEXT.MANUAL_BLOCK
+                            : item.policyType === 'APP_BLOCK'
+                              ? APPEAL_UI_TEXT.APP_BLOCK
+                              : '-';
 
-            const policyType =
-              item.type === 'EMERGENCY'
-                ? APPEAL_TYPE_LABEL.EMERGENCY
-                : item.policyType === 'MONTHLY_LIMIT'
-                  ? APPEAL_TYPE_LABEL.NORMAL
-                  : item.policyType === 'TIME_BLOCK'
-                    ? APPEAL_TYPE_LABEL.TIME_BLOCK
-                    : item.policyType === 'MANUAL_BLOCK'
-                      ? APPEAL_TYPE_LABEL.MANUAL_BLOCK
-                      : item.policyType === 'APP_BLOCK'
-                        ? APPEAL_TYPE_LABEL.APP_BLOCK
-                        : APPEAL_TYPE_LABEL.NORMAL;
+              const policyType =
+                item.type === 'EMERGENCY'
+                  ? APPEAL_TYPE_LABEL.EMERGENCY
+                  : item.policyType === 'MONTHLY_LIMIT'
+                    ? APPEAL_TYPE_LABEL.NORMAL
+                    : item.policyType === 'TIME_BLOCK'
+                      ? APPEAL_TYPE_LABEL.TIME_BLOCK
+                      : item.policyType === 'MANUAL_BLOCK'
+                        ? APPEAL_TYPE_LABEL.MANUAL_BLOCK
+                        : item.policyType === 'APP_BLOCK'
+                          ? APPEAL_TYPE_LABEL.APP_BLOCK
+                          : APPEAL_TYPE_LABEL.NORMAL;
 
-            const uiStatus = (
-              item.type === 'EMERGENCY' ? 'emergency' : item.status.toLowerCase()
-            ) as AppealStatus;
+              const uiStatus = (
+                item.type === 'EMERGENCY' ? 'emergency' : item.status.toLowerCase()
+              ) as AppealStatus;
 
-            return (
-              <AppealRequestCard
-                key={item.appealId}
-                policyType={policyType}
-                dataLimit={displayValue}
-                reason={item.requestReason}
-                status={uiStatus}
-                requesterName={isOwner ? item.requesterName : undefined}
-                onClick={() => {
-                  router.push(
-                    `/appeal/comment/${item.appealId}?policy=${encodeURIComponent(policyType)}&status=${item.status}`,
-                  );
-                }}
-              />
-            );
-          })}
+              return (
+                <AppealRequestCard
+                  key={item.appealId}
+                  policyType={policyType}
+                  dataLimit={displayValue}
+                  reason={item.requestReason}
+                  status={uiStatus}
+                  requesterName={isOwner ? item.requesterName : undefined}
+                  onClick={() => {
+                    router.push(
+                      `/appeal/comment/${item.appealId}?policy=${encodeURIComponent(policyType)}&status=${item.status}`,
+                    );
+                  }}
+                />
+              );
+            })
+          ) : (
+            <div className="flex h-40 items-center justify-center">
+              <p className="text-body1-m text-gray-400">
+                {activeTab === 'progress'
+                  ? '진행중인 이의제기가 없습니다.'
+                  : '완료된 이의제기가 없습니다.'}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
