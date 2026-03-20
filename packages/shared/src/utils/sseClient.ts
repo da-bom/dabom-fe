@@ -13,6 +13,9 @@ let abortController: AbortController | null = null;
 const handlers = new Set<SSEHandler>();
 let isConnecting = false;
 let retryCount = 0;
+let disconnectTimeout: NodeJS.Timeout | null = null;
+
+const DISCONNECT_DELAY = 1000;
 
 const processSSEStream = async (
   reader: ReadableStreamDefaultReader<Uint8Array>,
@@ -101,15 +104,28 @@ const connectInternal = async () => {
 };
 export const sseClient = {
   subscribe: (handler: SSEHandler) => {
+    if (disconnectTimeout) {
+      clearTimeout(disconnectTimeout);
+      disconnectTimeout = null;
+    }
+
     handlers.add(handler);
-    if (handlers.size === 1) connectInternal();
+    if (handlers.size === 1 && !isConnecting) {
+      connectInternal();
+    }
 
     return () => {
       handlers.delete(handler);
       if (handlers.size === 0) {
-        abortController?.abort();
-        abortController = null;
-        retryCount = 0;
+        disconnectTimeout = setTimeout(() => {
+          if (handlers.size === 0) {
+            abortController?.abort();
+            abortController = null;
+            retryCount = 0;
+            isConnecting = false;
+          }
+          disconnectTimeout = null;
+        }, DISCONNECT_DELAY);
       }
     };
   },
