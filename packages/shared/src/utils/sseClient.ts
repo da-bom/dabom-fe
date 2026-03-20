@@ -10,6 +10,7 @@ const getFinalUrl = (url: string) => {
 let abortController: AbortController | null = null;
 const handlers = new Set<SSEHandler>();
 let isConnecting = false;
+let retryCount = 0;
 
 const processSSEStream = async (
   reader: ReadableStreamDefaultReader<Uint8Array>,
@@ -68,13 +69,25 @@ const connectInternal = async () => {
 
     if (!response.ok || !response.body) throw new Error('SSE connection failed');
 
+    retryCount = 0;
+
     await processSSEStream(response.body.getReader(), (event, data) => {
       handlers.forEach((handler) => handler(event, data));
     });
   } catch (error: unknown) {
     if (error instanceof Error && error.name !== 'AbortError') {
-      console.error('[SSE] 연결 오류, 5초 후 재시도...', error.message);
-      setTimeout(connectInternal, 5000);
+      retryCount++;
+
+      if (retryCount >= 3) {
+        console.error('[SSE] 3회 연속 연결 실패, 페이지를 새로고침합니다.');
+        if (typeof window !== 'undefined') {
+          window.location.reload();
+        }
+        return;
+      }
+
+      console.error(`[SSE] 연결 오류 (시도 ${retryCount}/3), 1초 후 재시도...`, error.message);
+      setTimeout(connectInternal, 1000);
     }
   } finally {
     isConnecting = false;
@@ -90,6 +103,7 @@ export const sseClient = {
       if (handlers.size === 0) {
         abortController?.abort();
         abortController = null;
+        retryCount = 0;
       }
     };
   },
